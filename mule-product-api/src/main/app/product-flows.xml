@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http"
+      xmlns:db="http://www.mulesoft.org/schema/mule/db"
+      xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="
+        http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+        http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+        http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+        http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+
+    <http:listener-config name="HTTP_Listener_config">
+        <http:listener-connection host="0.0.0.0" port="8081"/>
+    </http:listener-config>
+
+    <db:config name="Database_Config">
+        <db:generic-connection url="jdbc:h2:mem:productdb" driverClassName="org.h2.Driver"/>
+    </db:config>
+
+    <flow name="get-all-products-flow">
+        <http:listener config-ref="HTTP_Listener_config" path="/api/products" allowedMethods="GET"/>
+        <db:select config-ref="Database_Config">
+            <db:sql>
+                SELECT * FROM products 
+                WHERE (:category IS NULL OR category = :category)
+                AND (:active IS NULL OR active = :active)
+            </db:sql>
+            <db:input-parameters>
+                <db:input-parameter key="category" value="#[attributes.queryParams.category]"/>
+                <db:input-parameter key="active" value="#[attributes.queryParams.active]"/>
+            </db:input-parameters>
+        </db:select>
+        <ee:transform>
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+
+    <flow name="get-product-by-id-flow">
+        <http:listener config-ref="HTTP_Listener_config" path="/api/products/{productId}" allowedMethods="GET"/>
+        <db:select config-ref="Database_Config">
+            <db:sql>SELECT * FROM products WHERE id = :id</db:sql>
+            <db:input-parameters>
+                <db:input-parameter key="id" value="#[attributes.uriParams.productId]"/>
+            </db:input-parameters>
+        </db:select>
+        <choice>
+            <when expression="#[sizeOf(payload) > 0]">
+                <ee:transform>
+                    <ee:message>
+                        <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+payload[0]]]></ee:set-payload>
+                    </ee:message>
+                </ee:transform>
+            </when>
+            <otherwise>
+                <ee:transform>
+                    <ee:message>
+                        <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+    message: "Product not found"
+}]]></ee:set-payload>
+                    </ee:message>
+                </ee:transform>
+                <http:response statusCode="404"/>
+            </otherwise>
+        </choice>
+    </flow>
+
+    <flow name="create-product-flow">
+        <http:listener config-ref="HTTP_Listener_config" path="/api/products" allowedMethods="POST"/>
+        <set-variable variableName="product" value="#[payload]"/>
+        <db:insert config-ref="Database_Config" autoGenerateKeys="true">
+            <db:sql>
+                INSERT INTO products (name, description, price, category, stock, active) 
+                VALUES (:name, :description, :price, :category, :stock, :active)
+            </db:sql>
+            <db:input-parameters>
+                <db:input-parameter key="name" value="#[payload.name]"/>
+                <db:input-parameter key="description" value="#[payload.description]"/>
+                <db:input-parameter key="price" value="#[payload.price]"/>
+                <db:input-parameter key="category" value="#[payload.category]"/>
+                <db:input-parameter key="stock" value="#[payload.stock]"/>
+                <db:input-parameter key="active" value="#[payload.active default true]"/>
+            </db:input-parameters>
+        </db:insert>
+        <ee:transform>
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+vars.product ++ { id: payload.generatedKeys[0] }]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+        <http:response statusCode="201"/>
+    </flow>
+
+    <flow name="update-product-flow">
+        <http:listener config-ref="HTTP_Listener_config" path="/api/products/{productId}" allowedMethods="PUT"/>
+        <set-variable variableName="productId" value="#[attributes.uriParams.productId]"/>
+        <db:update config-ref="Database_Config">
+            <db:sql>
+                UPDATE products 
+                SET name = :name, 
+                    description = :description, 
+                    price = :price, 
+                    category = :category,
+                    stock = :stock,
+                    active = :active
+                WHERE id = :id
+            </db:sql>
+            <db:input-parameters>
+                <db:input-parameter key="name" value="#[payload.name]"/>
+                <db:input-parameter key="description" value="#[payload.description]"/>
+                <db:input-parameter key="price" value="#[payload.price]"/>
+                <db:input-parameter key="category" value="#[payload.category]"/>
+                <db:input-parameter key="stock" value="#[payload.stock]"/>
+                <db:input-parameter key="active" value="#[payload.active]"/>
+                <db:input-parameter key="id" value="#[vars.productId]"/>
+            </db:input-parameters>
+        </db:update>
+        <choice>
+            <when expression="#[payload > 0]">
+                <db:select config-ref="Database_Config">
+                    <db:sql>SELECT * FROM products WHERE id = :id</db:sql>
+                    <db:input-parameters>
+                        <db:input-parameter key="id" value="#[vars.productId]"/>
+                    </db:input-parameters>
+                </db:select>
+                <ee:transform>
+                    <ee:message>
+                        <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+payload[0]]]></ee:set-payload>
+                    </ee:message>
+                </ee:transform>
+            </when>
+            <otherwise>
+                <ee:transform>
+                    <ee:message>
+                        <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+    message: "Product not found"
+}]]></ee:set-payload>
+                    </ee:message>
+                </ee:transform>
+                <http:response statusCode="404"/>
+            </otherwise>
+        </choice>
+    </flow>
+
+    <flow name="delete-product-flow">
+        <http:listener config-ref="HTTP_Listener_config" path="/api/products/{productId}" allowedMethods="DELETE"/>
+        <db:delete config-ref="Database_Config">
+            <db:sql>DELETE FROM products WHERE id = :id</db:sql>
+            <db:input-parameters>
+                <db:input-parameter key="id" value="#[attributes.uriParams.productId]"/>
+            </db:input-parameters>
+        </db:delete>
+        <choice>
+            <when expression="#[payload > 0]">
+                <http:response statusCode="204"/>
+            </when>
+            <otherwise>
+                <ee:transform>
+                    <ee:message>
+                        <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+    message: "Product not found"
+}]]></ee:set-payload>
+                    </ee:message>
+                </ee:transform>
+                <http:response statusCode="404"/>
+            </otherwise>
+        </choice>
+    </flow>
+</mule> 

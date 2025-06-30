@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http"
+      xmlns:db="http://www.mulesoft.org/schema/mule/db"
+      xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="
+        http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+        http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+        http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+        http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+
+    <configuration-properties file="application.properties"/>
+    
+    <http:listener-config name="HTTP_Listener_config">
+        <http:listener-connection host="0.0.0.0" port="${http.port}"/>
+    </http:listener-config>
+
+    <db:config name="Database_Config">
+        <db:generic-connection url="${db.url}" driverClassName="${db.driver}" user="${db.user}" password="${db.password}"/>
+    </db:config>
+
+    <flow name="init-database-flow" initialState="started">
+        <scheduler>
+            <scheduling-strategy>
+                <fixed-frequency frequency="1" timeUnit="SECONDS" startDelay="1"/>
+            </scheduling-strategy>
+        </scheduler>
+        <db:execute-script config-ref="Database_Config">
+            <db:sql><![CDATA[
+                CREATE TABLE IF NOT EXISTS employees (
+                    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                    first_name VARCHAR(50) NOT NULL,
+                    last_name VARCHAR(50) NOT NULL,
+                    email VARCHAR(100) NOT NULL UNIQUE,
+                    department_id BIGINT,
+                    hire_date DATE
+                );
+                
+                MERGE INTO employees (id, first_name, last_name, email, department_id, hire_date) VALUES
+                    (1, 'John', 'Doe', 'john.doe@company.com', 1, '2022-01-15'),
+                    (2, 'Jane', 'Smith', 'jane.smith@company.com', 2, '2021-11-20'),
+                    (3, 'Bob', 'Johnson', 'bob.johnson@company.com', 1, '2023-03-10');
+            ]]></db:sql>
+        </db:execute-script>
+        <logger level="INFO" message="Database initialized successfully"/>
+    </flow>
+
+    <flow name="get-all-employees-flow">
+        <http:listener config-ref="HTTP_Listener_config" path="/api/employees" allowedMethods="GET"/>
+        <db:select config-ref="Database_Config">
+            <db:sql>SELECT * FROM employees</db:sql>
+        </db:select>
+        <ee:transform>
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+
+    <flow name="get-employee-by-id-flow">
+        <http:listener config-ref="HTTP_Listener_config" path="/api/employees/{id}" allowedMethods="GET"/>
+        <db:select config-ref="Database_Config">
+            <db:sql>SELECT * FROM employees WHERE id = :id</db:sql>
+            <db:input-parameters>
+                <db:input-parameter key="id" value="#[attributes.uriParams.id]"/>
+            </db:input-parameters>
+        </db:select>
+        <ee:transform>
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+payload[0] default null]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+
+    <flow name="create-employee-flow">
+        <http:listener config-ref="HTTP_Listener_config" path="/api/employees" allowedMethods="POST"/>
+        <set-variable variableName="employee" value="#[payload]"/>
+        <db:insert config-ref="Database_Config" autoGenerateKeys="true">
+            <db:sql>
+                INSERT INTO employees (first_name, last_name, email, department_id, hire_date) 
+                VALUES (:firstName, :lastName, :email, :departmentId, :hireDate)
+            </db:sql>
+            <db:input-parameters>
+                <db:input-parameter key="firstName" value="#[payload.firstName]"/>
+                <db:input-parameter key="lastName" value="#[payload.lastName]"/>
+                <db:input-parameter key="email" value="#[payload.email]"/>
+                <db:input-parameter key="departmentId" value="#[payload.departmentId]"/>
+                <db:input-parameter key="hireDate" value="#[payload.hireDate]"/>
+            </db:input-parameters>
+        </db:insert>
+        <ee:transform>
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+vars.employee ++ { id: payload.generatedKeys[0] }]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+        <http:response statusCode="201"/>
+    </flow>
+
+    <flow name="update-employee-flow">
+        <http:listener config-ref="HTTP_Listener_config" path="/api/employees/{id}" allowedMethods="PUT"/>
+        <set-variable variableName="employeeId" value="#[attributes.uriParams.id]"/>
+        <set-variable variableName="updateData" value="#[payload]"/>
+        <db:update config-ref="Database_Config">
+            <db:sql>
+                UPDATE employees 
+                SET first_name = :firstName, 
+                    last_name = :lastName, 
+                    email = :email, 
+                    department_id = :departmentId 
+                WHERE id = :id
+            </db:sql>
+            <db:input-parameters>
+                <db:input-parameter key="firstName" value="#[payload.firstName]"/>
+                <db:input-parameter key="lastName" value="#[payload.lastName]"/>
+                <db:input-parameter key="email" value="#[payload.email]"/>
+                <db:input-parameter key="departmentId" value="#[payload.departmentId]"/>
+                <db:input-parameter key="id" value="#[attributes.uriParams.id]"/>
+            </db:input-parameters>
+        </db:update>
+        <ee:transform>
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+vars.updateData ++ { id: vars.employeeId as Number }]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+
+    <flow name="delete-employee-flow">
+        <http:listener config-ref="HTTP_Listener_config" path="/api/employees/{id}" allowedMethods="DELETE"/>
+        <db:delete config-ref="Database_Config">
+            <db:sql>DELETE FROM employees WHERE id = :id</db:sql>
+            <db:input-parameters>
+                <db:input-parameter key="id" value="#[attributes.uriParams.id]"/>
+            </db:input-parameters>
+        </db:delete>
+        <http:response statusCode="204"/>
+    </flow>
+</mule>

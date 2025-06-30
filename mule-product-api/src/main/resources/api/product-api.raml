@@ -1,0 +1,123 @@
+#%RAML 1.0
+title: Product Catalog API
+version: v1
+baseUri: http://localhost:8081/api
+mediaType: application/json
+
+types:
+  Product:
+    type: object
+    properties:
+      id:
+        type: integer
+        required: false
+      name:
+        type: string
+        required: true
+        minLength: 1
+        maxLength: 100
+      description:
+        type: string
+        required: false
+        maxLength: 500
+      price:
+        type: number
+        required: true
+        minimum: 0
+      category:
+        type: string
+        required: true
+        enum: [Electronics, Clothing, Food, Books, Other]
+      stock:
+        type: integer
+        required: true
+        minimum: 0
+      active:
+        type: boolean
+        required: false
+        default: true
+
+/products:
+  get:
+    description: Get all products
+    queryParameters:
+      category:
+        type: string
+        required: false
+        description: Filter by category
+      active:
+        type: boolean
+        required: false
+        description: Filter by active status
+    responses:
+      200:
+        body:
+          type: Product[]
+          example: |
+            [
+              {
+                "id": 1,
+                "name": "Laptop",
+                "description": "High performance laptop",
+                "price": 999.99,
+                "category": "Electronics",
+                "stock": 50,
+                "active": true
+              }
+            ]
+  
+  post:
+    description: Create a new product
+    body:
+      type: Product
+    responses:
+      201:
+        body:
+          type: Product
+      400:
+        body:
+          example: |
+            {
+              "message": "Invalid product data"
+            }
+
+  /{productId}:
+    get:
+      description: Get product by ID
+      responses:
+        200:
+          body:
+            type: Product
+        404:
+          body:
+            example: |
+              {
+                "message": "Product not found"
+              }
+    
+    put:
+      description: Update product
+      body:
+        type: Product
+      responses:
+        200:
+          body:
+            type: Product
+        404:
+          body:
+            example: |
+              {
+                "message": "Product not found"
+              }
+    
+    delete:
+      description: Delete product
+      responses:
+        204:
+          description: Product deleted successfully
+        404:
+          body:
+            example: |
+              {
+                "message": "Product not found"
+              } 
