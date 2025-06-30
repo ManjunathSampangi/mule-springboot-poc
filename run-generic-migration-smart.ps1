@@ -5,6 +5,16 @@ param (
     [string]$JavaVersion = "11"
 )
 
+# Utility function to write files without BOM
+function Write-FileWithoutBom {
+    param(
+        [string]$Path,
+        [string]$Content
+    )
+    $utf8NoBom = New-Object System.Text.UTF8Encoding $false
+    [System.IO.File]::WriteAllText($Path, $Content, $utf8NoBom)
+}
+
 Write-Host "================================================" -ForegroundColor Cyan
 Write-Host "Smart Mule to Spring Boot Migration Tool" -ForegroundColor Cyan
 Write-Host "================================================" -ForegroundColor Cyan
@@ -459,8 +469,7 @@ $setParams            return ps;
 "@
     
     # Write service file without BOM
-    $utf8NoBom = New-Object System.Text.UTF8Encoding $false
-    [System.IO.File]::WriteAllText("$servicePath\${entityName}Service.java", $serviceClass, $utf8NoBom)
+    Write-FileWithoutBom "$servicePath\${entityName}Service.java" $serviceClass
     Write-Host "  Generated service: ${entityName}Service.java" -ForegroundColor White
 }
 
@@ -534,8 +543,7 @@ public class AddressService {
 }
 "@
     
-    $utf8NoBom = New-Object System.Text.UTF8Encoding $false
-    [System.IO.File]::WriteAllText("$servicePath\AddressService.java", $addressService, $utf8NoBom)
+    Write-FileWithoutBom "$servicePath\AddressService.java" $addressService
     Write-Host "  Generated service: AddressService.java" -ForegroundColor White
 }
 
@@ -603,8 +611,7 @@ INSERT INTO addresses (customer_id, street, city, state, zip_code, country, is_p
 (3, '321 Elm St', 'Chicago', 'IL', '60601', 'USA', true);
 "@
 
-$utf8NoBom = New-Object System.Text.UTF8Encoding $false
-[System.IO.File]::WriteAllText("$OutputPath\src\main\resources\schema.sql", $schemaContent, $utf8NoBom)
+Write-FileWithoutBom "$OutputPath\src\main\resources\schema.sql" $schemaContent
 
 # Generate exception classes
 $exceptionPath = "$OutputPath\src\main\java\$($PackageName -replace '\.','\\')\exception"
@@ -627,8 +634,7 @@ public class ResourceNotFoundException extends RuntimeException {
 }
 "@
     
-    $utf8NoBom = New-Object System.Text.UTF8Encoding $false
-    [System.IO.File]::WriteAllText("$exceptionPath\ResourceNotFoundException.java", $resourceNotFound, $utf8NoBom)
+    Write-FileWithoutBom "$exceptionPath\ResourceNotFoundException.java" $resourceNotFound
 }
 
 Write-Host "`n================================================" -ForegroundColor Green
