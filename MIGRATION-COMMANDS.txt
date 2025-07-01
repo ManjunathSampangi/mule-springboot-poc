@@ -1,0 +1,25 @@
+=== MULE PROJECTS TO SPRING BOOT MIGRATION ===
+
+SCRIPT TO USE: run-generic-migration-smart.ps1
+(This ONE script works for ALL Mule projects)
+
+-------------------------------------------
+PROJECT 1: EMPLOYEE API
+-------------------------------------------
+Mule Project Location: .\mule-source
+Command to Run:
+.\run-generic-migration-smart.ps1 -MuleProjectPath ".\mule-source" -OutputPath "employee-spring" -PackageName "com.company.employee" -JavaVersion "17"
+
+-------------------------------------------
+PROJECT 2: PRODUCT API  
+-------------------------------------------
+Mule Project Location: .\mule-product-api
+Command to Run:
+.\run-generic-migration-smart.ps1 -MuleProjectPath ".\mule-product-api" -OutputPath "product-spring" -PackageName "com.company.product" -JavaVersion "17"
+
+-------------------------------------------
+SUMMARY:
+- You have 2 Mule projects: mule-source and mule-product-api
+- Both use the SAME script: run-generic-migration-smart.ps1
+- Just change the MuleProjectPath parameter to point to different projects
+------------------------------------------- 

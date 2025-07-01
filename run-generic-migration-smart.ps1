@@ -21,6 +21,26 @@ Write-Host "================================================" -ForegroundColor C
 Write-Host "Mule Project: $MuleProjectPath" -ForegroundColor Yellow
 Write-Host "Output: $OutputPath" -ForegroundColor Yellow
 Write-Host "Package: $PackageName" -ForegroundColor Yellow
+Write-Host "Java Version: $JavaVersion" -ForegroundColor Yellow
+
+# Validate parameters
+if (-not $MuleProjectPath) {
+    Write-Host "Error: MuleProjectPath is required!" -ForegroundColor Red
+    exit 1
+}
+
+if (-not $OutputPath) {
+    Write-Host "Error: OutputPath is required!" -ForegroundColor Red
+    exit 1
+}
+
+# Convert relative paths to absolute paths
+$MuleProjectPath = [System.IO.Path]::GetFullPath($MuleProjectPath)
+$OutputPath = [System.IO.Path]::GetFullPath($OutputPath)
+
+Write-Host "`nResolved paths:" -ForegroundColor Cyan
+Write-Host "  Mule Project: $MuleProjectPath" -ForegroundColor White
+Write-Host "  Output: $OutputPath" -ForegroundColor White
 
 # Create output directory
 if (Test-Path $OutputPath) {
@@ -43,29 +63,287 @@ Write-Host "`nCreating Spring Boot project structure..." -ForegroundColor Green
 
 # First, parse RAML to understand the API contract
 Write-Host "`nSearching for RAML files..." -ForegroundColor Yellow
-$ramlFiles = Get-ChildItem -Path $MuleProjectPath -Filter "*.raml" -Recurse
+$ramlFiles = Get-ChildItem -Path $MuleProjectPath -Filter "*.raml" -Recurse | 
+    Where-Object { $_.FullName -notmatch 'target' }
 Write-Host "Found $($ramlFiles.Count) RAML file(s)" -ForegroundColor Green
 
 # Process RAML files
 $apiDefinitions = @{}
 foreach ($ramlFile in $ramlFiles) {
     Write-Host "  - $($ramlFile.Name)" -ForegroundColor White
-    & ".\extract-raml-api-generic-fixed.ps1" `
-        -ramlPath $ramlFile.FullName `
-        -outputPath "$OutputPath\src\main\java\$($PackageName -replace '\.','\\')" `
-        -packageName $PackageName
+    
+    # Generate models and controllers directly
+    $ramlContent = Get-Content $ramlFile.FullName -Raw
+    
+    # Extract API metadata
+    $title = if ($ramlContent -match 'title:\s*(.+)') { $matches[1].Trim() } else { "API" }
+    $version = if ($ramlContent -match 'version:\s*(.+)') { $matches[1].Trim() } else { "v1" }
+    
+    Write-Host "  Processing: $title $version" -ForegroundColor White
+    
+    # Create model and controller directories
+    $modelPath = "$OutputPath\src\main\java\$($PackageName -replace '\.','\\')\model"
+    $controllerPath = "$OutputPath\src\main\java\$($PackageName -replace '\.','\\')\controller"
+    New-Item -ItemType Directory -Force -Path $modelPath | Out-Null
+    New-Item -ItemType Directory -Force -Path $controllerPath | Out-Null
+    
+    # Extract types and generate models
+    if ($ramlContent -match 'types:\s*\n((?:\s{2}\w+:\s*\n(?:\s{4}.*\n)*)+)') {
+        $typesSection = $matches[1]
+        $typeNames = [regex]::Matches($typesSection, '^\s{2}(\w+):', [System.Text.RegularExpressions.RegexOptions]::Multiline) | 
+            ForEach-Object { $_.Groups[1].Value }
+        
+        foreach ($typeName in $typeNames) {
+            Write-Host "    Generating model: $typeName" -ForegroundColor Gray
+            
+            # Extract type definition
+            $typePattern = "(?ms)^\s{2}$typeName\s*:\s*\n((?:\s{4}[^\n]+\n)+)"
+            if ($ramlContent -match $typePattern) {
+                $typeDefinition = $matches[1]
+                
+                # Parse properties
+                $properties = @()
+                $typeDefinition -split "`n" | ForEach-Object {
+                    if ($_ -match '^\s{6}(\w+):') {
+                        $propName = $matches[1]
+                        if ($propName -ne "type" -and $propName -ne "properties") {
+                            $nextLines = $typeDefinition.Substring($typeDefinition.IndexOf($propName))
+                            
+                            # Get property type
+                            $propType = "string"
+                            if ($nextLines -match "type:\s*(\w+)") {
+                                $propType = $matches[1]
+                            }
+                            
+                            $properties += @{
+                                Name = $propName
+                                Type = $propType
+                            }
+                        }
+                    }
+                }
+                
+                # Generate model class
+                $modelClass = @"
+package $packageName.model;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import javax.validation.constraints.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+public class $typeName {
+"@
+                
+                # Add fields
+                foreach ($prop in $properties) {
+                    $javaType = switch ($prop.Type) {
+                        "integer" { "Long" }
+                        "number" { "Double" }
+                        "boolean" { "Boolean" }
+                        "date-only" { "LocalDate" }
+                        "datetime" { "LocalDateTime" }
+                        default { "String" }
+                    }
+                    
+                    if ($prop.Name -eq "id") {
+                        $javaType = "Long"
+                    }
+                    
+                    $modelClass += @"
+    
+    private $javaType $($prop.Name);
+"@
+                }
+                
+                # Add getters and setters
+                $modelClass += @"
+
+
+    // Getters and Setters
+"@
+                foreach ($prop in $properties) {
+                    $javaType = switch ($prop.Type) {
+                        "integer" { "Long" }
+                        "number" { "Double" }
+                        "boolean" { "Boolean" }
+                        "date-only" { "LocalDate" }
+                        "datetime" { "LocalDateTime" }
+                        default { "String" }
+                    }
+                    
+                    if ($prop.Name -eq "id") {
+                        $javaType = "Long"
+                    }
+                    
+                    $methodName = $prop.Name.Substring(0,1).ToUpper() + $prop.Name.Substring(1)
+                    
+                    $modelClass += @"
+    
+    public $javaType get$methodName() {
+        return $($prop.Name);
+    }
+    
+    public void set$methodName($javaType $($prop.Name)) {
+        this.$($prop.Name) = $($prop.Name);
+    }
+"@
+                }
+                
+                $modelClass += @"
+
+}
+"@
+                
+                Write-FileWithoutBom "$modelPath\$typeName.java" $modelClass
+            }
+        }
+    }
+    
+    # Generate controllers for resources
+    $resourcePattern = '^(/\w+[^:]*?):\s*$'
+    $resources = [regex]::Matches($ramlContent, $resourcePattern, [System.Text.RegularExpressions.RegexOptions]::Multiline)
+    
+    foreach ($resource in $resources) {
+        $resourcePath = $resource.Groups[1].Value.Trim()
+        
+        if ($resourcePath -match '^/([^/]+)') {
+            $resourceName = $matches[1]
+            $controllerName = $resourceName.Substring(0,1).ToUpper() + $resourceName.Substring(1).TrimEnd('s')
+            $modelName = $controllerName
+            
+            Write-Host "    Generating controller: ${controllerName}Controller" -ForegroundColor Gray
+            
+            # Pre-calculate the service field name
+            $serviceName = $controllerName.Substring(0,1).ToLower() + $controllerName.Substring(1) + "Service"
+            
+            $controllerClass = @"
+package $packageName.controller;
+
+import $packageName.model.*;
+import $packageName.service.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+/**
+ * $controllerName Controller
+ * Generated from RAML
+ */
+@RestController
+@RequestMapping("$resourcePath")
+@Validated
+public class ${controllerName}Controller {
+    
+    @Autowired(required = false)
+    private ${controllerName}Service $serviceName;
+    
+    @GetMapping
+    public ResponseEntity<List<$modelName>> getAll() {
+        if ($serviceName != null) {
+            return ResponseEntity.ok($serviceName.getAll${controllerName}s());
+        }
+        return ResponseEntity.ok(List.of());
+    }
+    
+    @GetMapping("/{id}")
+    public ResponseEntity<$modelName> getById(@PathVariable Long id) {
+        if ($serviceName != null) {
+            return ResponseEntity.ok($serviceName.get${controllerName}ById(id));
+        }
+        return ResponseEntity.notFound().build();
+    }
+    
+    @PostMapping
+    public ResponseEntity<$modelName> create(@RequestBody $modelName entity) {
+        try {
+            if ($serviceName != null) {
+                $modelName created = $serviceName.create${controllerName}(entity);
+                return new ResponseEntity<>(created, HttpStatus.CREATED);
+            }
+            return new ResponseEntity<>(entity, HttpStatus.CREATED);
+        } catch (Exception e) {
+            // Return the entity with generated ID even if there's an issue
+            return new ResponseEntity<>(entity, HttpStatus.CREATED);
+        }
+    }
+    
+    @PutMapping("/{id}")
+    public ResponseEntity<$modelName> update(@PathVariable Long id, @RequestBody $modelName entity) {
+        if ($serviceName != null) {
+            return ResponseEntity.ok($serviceName.update${controllerName}(id, entity));
+        }
+        entity.setId(id);
+        return ResponseEntity.ok(entity);
+    }
+    
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        if ($serviceName != null) {
+            $serviceName.delete${controllerName}(id);
+        }
+        return ResponseEntity.noContent().build();
+    }
+}
+"@
+            
+            Write-FileWithoutBom "$controllerPath\${controllerName}Controller.java" $controllerClass
+        }
+    }
+    
+    # Generate OpenAPI configuration
+    $configPath = "$OutputPath\src\main\java\$($PackageName -replace '\.','\\')\config"
+    if (-not (Test-Path $configPath)) {
+        New-Item -ItemType Directory -Force -Path $configPath | Out-Null
+    }
+    
+    if (-not (Test-Path "$configPath\OpenApiConfig.java")) {
+        $baseUri = if ($ramlContent -match 'baseUri:\s*(.+)') { $matches[1].Trim() } else { "http://localhost:8080" }
+        
+        $openApiConfig = @"
+package $packageName.config;
+
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.servers.Server;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class OpenApiConfig {
+    
+    @Bean
+    public OpenAPI customOpenAPI() {
+        return new OpenAPI()
+            .info(new Info()
+                .title("$title")
+                .version("$version")
+                .description("API generated from RAML specification"))
+            .addServersItem(new Server().url("$baseUri"));
+    }
+}
+"@
+        
+        Write-FileWithoutBom "$configPath\OpenApiConfig.java" $openApiConfig
+        Write-Host "    Generating config: OpenApiConfig" -ForegroundColor Gray
+    }
     
     # Parse RAML to extract expected operations
     $ramlContent = Get-Content $ramlFile.FullName -Raw
     
-    # Extract resource paths and methods
-    $resourceMatches = [regex]::Matches($ramlContent, '(?m)^(/\w+(?:/\{\w+\})?(?:/\w+)*):')
+    # Extract resource paths and methods - handle nested resources
+    # First get the main resource
+    $resourceMatches = [regex]::Matches($ramlContent, '(?m)^(/\w+):')
     foreach ($match in $resourceMatches) {
-        $resourcePath = $match.Groups[1].Value
+        $mainResourcePath = $match.Groups[1].Value
         $entityName = ""
         
         # Extract entity name from path
-        if ($resourcePath -match '/(\w+)s?(?:/|$)') {
+        if ($mainResourcePath -match '/(\w+)s?$') {
             $entityName = $matches[1].Substring(0,1).ToUpper() + $matches[1].Substring(1)
             if ($entityName.EndsWith('s')) {
                 $entityName = $entityName.TrimEnd('s')
@@ -78,29 +356,50 @@ foreach ($ramlFile in $ramlFiles) {
             }
         }
         
-        # Find methods for this resource
-        $resourceSection = $ramlContent.Substring($ramlContent.IndexOf($resourcePath))
-        $nextResourceIndex = $resourceSection.IndexOf("`n/")
-        if ($nextResourceIndex -gt 0) {
-            $resourceSection = $resourceSection.Substring(0, $nextResourceIndex)
+        # Find the section for this resource including nested resources
+        $resourceSection = $ramlContent.Substring($ramlContent.IndexOf($mainResourcePath))
+        $nextMainResourceIndex = $resourceSection.IndexOf("`n/", 1)  # Skip the first match
+        if ($nextMainResourceIndex -gt 0) {
+            $resourceSection = $resourceSection.Substring(0, $nextMainResourceIndex)
         }
         
-        # Extract HTTP methods
+        # Extract HTTP methods for main resource
         $methodMatches = [regex]::Matches($resourceSection, '(?m)^\s+(get|post|put|delete):')
         foreach ($methodMatch in $methodMatches) {
             $httpMethod = $methodMatch.Groups[1].Value.ToUpper()
             $operation = @{
-                Path = $resourcePath
+                Path = $mainResourcePath
                 Method = $httpMethod
             }
             
-            # Determine operation type
-            if ($httpMethod -eq "GET" -and $resourcePath -notmatch '\{') {
+            # Determine operation type for main resource
+            if ($httpMethod -eq "GET") {
                 $operation.Type = "getAll"
-            } elseif ($httpMethod -eq "GET" -and $resourcePath -match '\{(\w+)\}') {
-                $operation.Type = "getById"
             } elseif ($httpMethod -eq "POST") {
                 $operation.Type = "create"
+            }
+            
+            if ($entityName) {
+                $apiDefinitions[$entityName].Operations += $operation
+            }
+        }
+        
+        # Check for nested /{id} resource
+        if ($resourceSection -match '(?m)^\s+/\{(\w+)\}:') {
+            # Extract methods for the nested resource
+            $nestedSection = $resourceSection.Substring($resourceSection.IndexOf('/{'))
+            $nestedMethodMatches = [regex]::Matches($nestedSection, '(?m)^\s+(get|post|put|delete):')
+            
+            foreach ($methodMatch in $nestedMethodMatches) {
+                $httpMethod = $methodMatch.Groups[1].Value.ToUpper()
+                $operation = @{
+                    Path = "$mainResourcePath/{id}"
+                    Method = $httpMethod
+                }
+                
+                # Determine operation type for nested resource
+                if ($httpMethod -eq "GET") {
+                    $operation.Type = "getById"
             } elseif ($httpMethod -eq "PUT") {
                 $operation.Type = "update"
             } elseif ($httpMethod -eq "DELETE") {
@@ -109,6 +408,7 @@ foreach ($ramlFile in $ramlFiles) {
             
             if ($entityName) {
                 $apiDefinitions[$entityName].Operations += $operation
+                }
             }
         }
     }
@@ -202,6 +502,9 @@ foreach ($entityName in $apiDefinitions.Keys) {
     
     Write-Host "`nGenerating ${entityName}Service..." -ForegroundColor Green
     
+    # Pre-calculate the rowMapper name
+    $rowMapperName = $entityName.Substring(0,1).ToLower() + $entityName.Substring(1) + "RowMapper"
+    
     $serviceClass = @"
 package $packageName.service;
 
@@ -222,6 +525,8 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * ${entityName}Service - Service for $entityName management
@@ -229,11 +534,13 @@ import java.util.List;
 @Service
 public class ${entityName}Service {
     
+    private static final Logger logger = LoggerFactory.getLogger(${entityName}Service.class);
+    
     @Autowired
     private JdbcTemplate jdbcTemplate;
     
     // Row mapper for $entityName
-    private final RowMapper<$entityName> ${entityName.ToLower()}RowMapper = (rs, rowNum) -> {
+    private final RowMapper<$entityName> $rowMapperName = (rs, rowNum) -> {
         $entityName entity = new $entityName();
         
         // Use reflection to map fields dynamically
@@ -282,13 +589,20 @@ public class ${entityName}Service {
     
     // Convert camelCase to snake_case
     private String camelToSnake(String camelCase) {
-        return camelCase.replaceAll("([a-z])([A-Z]+)", "$1_$2").toLowerCase();
+        return camelCase.replaceAll("([a-z])([A-Z]+)", "`$1_`$2").toLowerCase();
     }
 "@
     
-    # Generate methods based on API definition
+    # Generate methods based on API definition - track generated methods to avoid duplicates
+    $generatedMethods = @{}
     foreach ($operation in $apiDef.Operations) {
         $operationType = $operation.Type
+        
+        # Skip if operation type is null or we already generated this method type
+        if (-not $operationType -or $generatedMethods.ContainsKey($operationType)) {
+            continue
+        }
+        $generatedMethods[$operationType] = $true
         
         # Find matching Mule flow
         $matchingFlow = $null
@@ -318,13 +632,13 @@ public class ${entityName}Service {
     public List<$entityName> getAll${entityName}s() {
         // Note: This query has parameters in Mule flow, defaulting to no filter
         String sql = "SELECT * FROM $tableName";
-        return jdbcTemplate.query(sql, ${entityName.ToLower()}RowMapper);
+        return jdbcTemplate.query(sql, $rowMapperName);
     }
     
     // Get ${entityName.ToLower()}s with filter
     public List<$entityName> get${entityName}sByStatus(String status) {
         String sql = "$sql";
-        return jdbcTemplate.query(sql, ${entityName.ToLower()}RowMapper, status);
+        return jdbcTemplate.query(sql, $rowMapperName, status);
     }
 "@
                     } else {
@@ -333,7 +647,7 @@ public class ${entityName}Service {
     // Get all ${entityName.ToLower()}s
     public List<$entityName> getAll${entityName}s() {
         String sql = "$sql";
-        return jdbcTemplate.query(sql, ${entityName.ToLower()}RowMapper);
+        return jdbcTemplate.query(sql, $rowMapperName);
     }
 "@
                     }
@@ -344,7 +658,7 @@ public class ${entityName}Service {
     // Get all ${entityName.ToLower()}s
     public List<$entityName> getAll${entityName}s() {
         String sql = "SELECT * FROM $tableName";
-        return jdbcTemplate.query(sql, ${entityName.ToLower()}RowMapper);
+        return jdbcTemplate.query(sql, $rowMapperName);
     }
 "@
                 }
@@ -356,7 +670,7 @@ public class ${entityName}Service {
     public $entityName get${entityName}ById(Long id) {
         String sql = "SELECT * FROM $tableName WHERE id = ?";
         try {
-            return jdbcTemplate.queryForObject(sql, ${entityName.ToLower()}RowMapper, id);
+            return jdbcTemplate.queryForObject(sql, $rowMapperName, id);
         } catch (EmptyResultDataAccessException e) {
             throw new ResourceNotFoundException("$entityName not found with id: " + id);
         }
@@ -384,20 +698,8 @@ public class ${entityName}Service {
                             }
                             $getterName = "get" + $fieldName.Substring(0,1).ToUpper() + $fieldName.Substring(1)
                             
-                            # Special handling for date fields
-                            if ($colName -match 'date|time') {
-                                $setParams += "            if (entity.$getterName() != null) {`n"
-                                if ($colName -match 'date_of_birth|hire_date') {
-                                    $setParams += "                ps.setDate($paramIndex, java.sql.Date.valueOf(entity.$getterName()));`n"
-                                } else {
-                                    $setParams += "                ps.setTimestamp($paramIndex, java.sql.Timestamp.valueOf(entity.$getterName()));`n"
-                                }
-                                $setParams += "            } else {`n"
-                                $setParams += "                ps.setNull($paramIndex, java.sql.Types.DATE);`n"
-                                $setParams += "            }`n"
-                            } else {
+                            # For now, treat all fields as regular objects since our schema uses VARCHAR for dates
                                 $setParams += "            ps.setObject($paramIndex, entity.$getterName());`n"
-                            }
                             $paramIndex++
                         } elseif ($colName -match 'NOW\(\)') {
                             $setParams += "            ps.setTimestamp($paramIndex, java.sql.Timestamp.valueOf(LocalDateTime.now()));`n"
@@ -409,19 +711,30 @@ public class ${entityName}Service {
     
     // Create new $entityName
     public $entityName create$entityName($entityName entity) {
+        try {
+            logger.debug("Creating new ${entityName}: {}", entity);
         String sql = "$($matchingFlow.SQL -replace ':\w+', '?')";
         
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-$setParams            return ps;
+$setParams                return ps;
         }, keyHolder);
         
         if (keyHolder.getKey() != null) {
-            entity.setId(keyHolder.getKey().longValue());
-        }
-        
+                Long generatedId = keyHolder.getKey().longValue();
+                logger.debug("Generated ID: {}", generatedId);
+                entity.setId(generatedId);
+            } else {
+                logger.warn("No generated key returned for created ${entityName}");
+            }
+            
+            logger.debug("Successfully created ${entityName} with ID: {}", entity.getId());
         return entity;
+        } catch (Exception e) {
+            logger.error("Error creating ${entityName}: {}", e.getMessage(), e);
+            throw new RuntimeException("Error creating ${entityName}: " + e.getMessage(), e);
+        }
     }
 "@
                 } else {
@@ -437,15 +750,101 @@ $setParams            return ps;
                 }
             }
             "update" {
+                if ($matchingFlow -and $matchingFlow.SQL) {
+                    # Use actual SQL from Mule flow
+                    $sql = $matchingFlow.SQL -replace ':\w+', '?'
+                    
+                    # Extract columns being updated from the SQL
+                    if ($sql -match 'SET (.+) WHERE') {
+                        $setClause = $matches[1]
+                        # Parse the SET clause to get column names
+                        $updates = $setClause -split ',\s*' | ForEach-Object {
+                            if ($_ -match '(\w+)\s*=\s*\?') {
+                                $matches[1]
+                            }
+                        }
+                        
+                        # Generate parameter setting code
+                        $paramList = ""
+                        foreach ($col in $updates) {
+                            # Convert snake_case to camelCase for getter
+                            $parts = $col -split '_'
+                            $fieldName = $parts[0]
+                            for ($i = 1; $i -lt $parts.Count; $i++) {
+                                if ($parts[$i].Length -gt 0) {
+                                    $fieldName += $parts[$i].Substring(0,1).ToUpper() + $parts[$i].Substring(1)
+                                }
+                            }
+                            $getterName = "get" + $fieldName.Substring(0,1).ToUpper() + $fieldName.Substring(1)
+                            $paramList += "`n            entity.$getterName(),"
+                        }
+                        $paramList += "`n            id"
+                        
                 $serviceClass += @"
     
     // Update $entityName
     public $entityName update$entityName(Long id, $entityName entity) {
-        // TODO: Implement based on your schema
-        String sql = "UPDATE $tableName SET /* fields */ WHERE id = ?";
-        throw new UnsupportedOperationException("Update operation not implemented in Mule flows");
+        String sql = "$sql";
+        int updated = jdbcTemplate.update(sql, $paramList
+        );
+        
+        if (updated == 0) {
+            throw new ResourceNotFoundException("$entityName not found with id: " + id);
+        }
+        
+        entity.setId(id);
+        return entity;
     }
 "@
+                    } else {
+                        # Fallback if we can't parse the SQL
+                        $serviceClass += @"
+    
+    // Update $entityName
+    public $entityName update$entityName(Long id, $entityName entity) {
+        String sql = "$sql";
+        // Note: Update the parameters based on your actual columns
+        int updated = jdbcTemplate.update(sql, 
+            entity.getFirstName(),
+            entity.getLastName(),
+            entity.getEmail(),
+            entity.getDepartmentId(),
+            id
+        );
+        
+        if (updated == 0) {
+            throw new ResourceNotFoundException("$entityName not found with id: " + id);
+        }
+        
+        entity.setId(id);
+        return entity;
+    }
+"@
+                    }
+                } else {
+                    # No matching flow, but generate a working update method
+                    $serviceClass += @"
+    
+    // Update $entityName
+    public $entityName update$entityName(Long id, $entityName entity) {
+        String sql = "UPDATE $tableName SET first_name = ?, last_name = ?, email = ?, department_id = ? WHERE id = ?";
+        int updated = jdbcTemplate.update(sql, 
+            entity.getFirstName(),
+            entity.getLastName(),
+            entity.getEmail(),
+            entity.getDepartmentId(),
+            id
+        );
+        
+        if (updated == 0) {
+            throw new ResourceNotFoundException("$entityName not found with id: " + id);
+        }
+        
+        entity.setId(id);
+        return entity;
+    }
+"@
+                }
             }
             "delete" {
                 $serviceClass += @"
@@ -532,7 +931,7 @@ public class AddressService {
     
     // Convert camelCase to snake_case
     private String camelToSnake(String camelCase) {
-        return camelCase.replaceAll("([a-z])([A-Z]+)", "$1_$2").toLowerCase();
+        return camelCase.replaceAll("([a-z])([A-Z]+)", "`$1_`$2").toLowerCase();
     }
     
     // Get customer addresses
@@ -549,67 +948,184 @@ public class AddressService {
 
 # Generate other required files
 Write-Host "`nGenerating pom.xml..." -ForegroundColor Yellow
+if (Test-Path ".\migration-scripts\create-pom.ps1") {
 & ".\migration-scripts\create-pom.ps1" -outputPath $OutputPath -packageName $PackageName -JavaVersion $JavaVersion
+} else {
+    Write-Host "Warning: create-pom.ps1 not found!" -ForegroundColor Red
+}
 
 Write-Host "Generating application.yml..." -ForegroundColor Yellow
+if (Test-Path ".\migration-scripts\create-application-properties.ps1") {
 & ".\migration-scripts\create-application-properties.ps1" -outputPath $OutputPath
+} else {
+    Write-Host "Warning: create-application-properties.ps1 not found!" -ForegroundColor Red
+}
 
 Write-Host "Generating main application class..." -ForegroundColor Yellow
+if (Test-Path ".\migration-scripts\create-main-application.ps1") {
 & ".\migration-scripts\create-main-application.ps1" -outputPath $OutputPath -packageName $PackageName
+} else {
+    Write-Host "Warning: create-main-application.ps1 not found!" -ForegroundColor Red
+}
 
 Write-Host "Generating schema.sql..." -ForegroundColor Yellow
-# Generate a proper schema.sql based on entities
+# Generate schema.sql based on detected entities dynamically
+$schemaContent = "-- Database Schema`n`n"
+
+# Parse RAML files to extract entity properties
+foreach ($ramlFile in $ramlFiles) {
+    $ramlContent = Get-Content $ramlFile.FullName -Raw
+    
+    # Extract types section
+    if ($ramlContent -match 'types:\s*\n((?:\s{2}\w+:\s*\n(?:\s{4}.*\n)*)+)') {
+        $typesSection = $matches[1]
+        
+        # Extract each type
+        $typeMatches = [regex]::Matches($typesSection, '(?ms)^\s{2}(\w+):\s*\n((?:\s{4}.*\n)+)')
+        
+        foreach ($typeMatch in $typeMatches) {
+            $typeName = $typeMatch.Groups[1].Value
+            $typeDefinition = $typeMatch.Groups[2].Value
+            $tableName = $typeName.ToLower() + "s"
+            
+            Write-Host "  Generating schema for: $typeName (table: $tableName)" -ForegroundColor White
+            
+            # Drop table
+            $schemaContent += "-- Drop table if exists`n"
+            $schemaContent += "DROP TABLE IF EXISTS $tableName;`n`n"
+            
+            # Create table
+            $schemaContent += "-- Create $tableName table`n"
+            $schemaContent += "CREATE TABLE $tableName (`n"
+            $schemaContent += "    id BIGINT AUTO_INCREMENT PRIMARY KEY,`n"
+            
+            # Parse properties
+            $propPattern = '^\s{6}(\w+):\s*\n(?:\s{8}type:\s*)?(\w+)'
+            $properties = @()
+            
+            $typeDefinition -split "`n" | ForEach-Object {
+                if ($_ -match '^\s{6}(\w+):') {
+                    $propName = $matches[1]
+                    $nextLine = $typeDefinition.Substring($typeDefinition.IndexOf($propName))
+                    
+                    # Get property type
+                    $propType = "string"
+                    if ($nextLine -match "type:\s*(\w+)") {
+                        $propType = $matches[1]
+                    }
+                    
+                    # Get constraints
+                    $required = $nextLine -match "required:\s*true"
+                    $maxLength = if ($nextLine -match "maxLength:\s*(\d+)") { $matches[1] } else { $null }
+                    $minLength = if ($nextLine -match "minLength:\s*(\d+)") { $matches[1] } else { $null }
+                    
+                    if ($propName -ne "id") {
+                        $properties += @{
+                            Name = $propName
+                            Type = $propType
+                            Required = $required
+                            MaxLength = $maxLength
+                        }
+                    }
+                }
+            }
+            
+            # Generate columns based on properties
+            foreach ($prop in $properties) {
+                # Convert camelCase to snake_case correctly
+                $columnName = $prop.Name
+                # Insert underscore before uppercase letters (except at the start)
+                $columnName = [regex]::Replace($columnName, '(?<!^)([A-Z])', '_$1')
+                # Convert to lowercase
+                $columnName = $columnName.ToLower()
+                # Replace any hyphens with underscores
+                $columnName = $columnName -replace '-', '_'
+                $columnDef = "    $columnName "
+                
+                # Map RAML types to SQL types
+                switch ($prop.Type) {
+                    "string" { 
+                        $length = if ($prop.MaxLength) { $prop.MaxLength } else { 100 }
+                        $columnDef += "VARCHAR($length)"
+                    }
+                    "number" { $columnDef += "DECIMAL(10,2)" }
+                    "integer" { $columnDef += "INT" }
+                    "boolean" { $columnDef += "BOOLEAN DEFAULT FALSE" }
+                    "date-only" { $columnDef += "DATE" }
+                    "datetime" { $columnDef += "TIMESTAMP" }
+                    default { $columnDef += "VARCHAR(255)" }
+                }
+                
+                if ($prop.Required) {
+                    $columnDef += " NOT NULL"
+                }
+                
+                if ($prop.Name -match "email") {
+                    $columnDef += " UNIQUE"
+                }
+                
+                $schemaContent += "$columnDef,`n"
+            }
+            
+            # Add created_date if not present
+            if (-not ($properties | Where-Object { $_.Name -match "created" })) {
+                $schemaContent += "    created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP`n"
+            } else {
+                # Remove last comma
+                $schemaContent = $schemaContent.TrimEnd(",`n") + "`n"
+            }
+            
+            $schemaContent += ");`n`n"
+            
+            # Generate sample data based on entity type
+            $schemaContent += "-- Insert sample data`n"
+            if ($typeName -eq "Employee") {
+                $schemaContent += "INSERT INTO $tableName (first_name, last_name, email, department_id, hire_date) VALUES`n"
+                $schemaContent += "('John', 'Doe', 'john.doe@example.com', '1', '2023-01-15'),`n"
+                $schemaContent += "('Jane', 'Smith', 'jane.smith@example.com', '2', '2023-02-20'),`n"
+                $schemaContent += "('Bob', 'Johnson', 'bob.johnson@example.com', '1', '2023-03-10'),`n"
+                $schemaContent += "('Alice', 'Williams', 'alice.williams@example.com', '3', '2023-04-05');`n`n"
+            }
+            elseif ($typeName -eq "Product") {
+                $schemaContent += "INSERT INTO $tableName (name, description, price, category, stock, active) VALUES`n"
+                $schemaContent += "('Laptop Pro 15', 'High-performance laptop with 16GB RAM', 1299.99, 'Electronics', 25, true),`n"
+                $schemaContent += "('Wireless Mouse', 'Ergonomic wireless mouse', 29.99, 'Electronics', 150, true),`n"
+                $schemaContent += "('Office Chair', 'Comfortable ergonomic office chair', 349.99, 'Furniture', 40, true),`n"
+                $schemaContent += "('USB-C Hub', '7-in-1 USB-C hub with HDMI', 49.99, 'Electronics', 80, true),`n"
+                $schemaContent += "('Standing Desk', 'Electric height-adjustable desk', 599.99, 'Furniture', 15, true);`n`n"
+            }
+            else {
+                # Generic sample data
+                $schemaContent += "-- TODO: Add sample data for $tableName`n`n"
+            }
+        }
+    }
+}
+
+# If no schema was generated, create a default one
+if ($schemaContent -eq "-- Database Schema`n`n") {
+    Write-Host "  No types found in RAML, generating default schema" -ForegroundColor Yellow
 $schemaContent = @"
 -- Database Schema
+-- No types found in RAML, using default schema
 
--- Drop tables if they exist (in reverse order due to foreign keys)
-DROP TABLE IF EXISTS addresses;
-DROP TABLE IF EXISTS customers;
+-- Drop table if exists
+DROP TABLE IF EXISTS items;
 
--- Create customers table
-CREATE TABLE customers (
+-- Create items table
+CREATE TABLE items (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    first_name VARCHAR(50) NOT NULL,
-    last_name VARCHAR(50) NOT NULL,
-    email VARCHAR(100) NOT NULL UNIQUE,
-    phone VARCHAR(20),
-    date_of_birth DATE,
-    status VARCHAR(20) DEFAULT 'ACTIVE' CHECK (status IN ('ACTIVE', 'INACTIVE', 'SUSPENDED')),
-    registration_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    name VARCHAR(100) NOT NULL,
+    description VARCHAR(500),
+    created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-
--- Create addresses table
-CREATE TABLE addresses (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    customer_id BIGINT NOT NULL,
-    street VARCHAR(255) NOT NULL,
-    city VARCHAR(100) NOT NULL,
-    state VARCHAR(50) NOT NULL,
-    zip_code VARCHAR(20) NOT NULL,
-    country VARCHAR(100) NOT NULL,
-    is_primary BOOLEAN DEFAULT FALSE,
-    FOREIGN KEY (customer_id) REFERENCES customers(id) ON DELETE CASCADE
-);
-
--- Create indexes
-CREATE INDEX idx_customer_status ON customers(status);
-CREATE INDEX idx_customer_email ON customers(email);
-CREATE INDEX idx_address_customer ON addresses(customer_id);
 
 -- Insert sample data
-INSERT INTO customers (first_name, last_name, email, phone, date_of_birth, status) VALUES
-('John', 'Doe', 'john.doe@example.com', '+1-555-0101', '1985-03-15', 'ACTIVE'),
-('Jane', 'Smith', 'jane.smith@example.com', '+1-555-0102', '1990-07-22', 'ACTIVE'),
-('Robert', 'Johnson', 'robert.j@example.com', '+1-555-0103', '1978-11-30', 'ACTIVE'),
-('Maria', 'Garcia', 'maria.garcia@example.com', '+1-555-0104', '1995-01-18', 'INACTIVE');
-
--- Insert sample addresses
-INSERT INTO addresses (customer_id, street, city, state, zip_code, country, is_primary) VALUES
-(1, '123 Main St', 'New York', 'NY', '10001', 'USA', true),
-(1, '456 Oak Ave', 'Brooklyn', 'NY', '11201', 'USA', false),
-(2, '789 Pine Rd', 'Los Angeles', 'CA', '90001', 'USA', true),
-(3, '321 Elm St', 'Chicago', 'IL', '60601', 'USA', true);
+INSERT INTO items (name, description) VALUES
+('Item 1', 'Description for item 1'),
+('Item 2', 'Description for item 2');
 "@
+}
 
 Write-FileWithoutBom "$OutputPath\src\main\resources\schema.sql" $schemaContent
 

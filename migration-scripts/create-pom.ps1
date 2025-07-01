@@ -1,6 +1,18 @@
 ﻿param (
-    [string]$projectPath
+    [string]$outputPath,
+    [string]$packageName = "com.example.api",
+    [string]$JavaVersion = "11"
 )
+
+# Ensure outputPath is provided
+if (-not $outputPath) {
+    Write-Host "Error: outputPath parameter is required!" -ForegroundColor Red
+    exit 1
+}
+
+# Extract group ID and artifact ID from package name
+$groupId = if ($packageName -match '^([^.]+\.[^.]+)') { $matches[1] } else { "com.example" }
+$artifactId = if ($packageName -match '([^.]+)$') { $matches[1] + "-api" } else { "api" }
 
 # Create pom.xml
 $pomXml = @"
@@ -17,14 +29,14 @@ $pomXml = @"
         <relativePath/>
     </parent>
     
-    <groupId>com.example</groupId>
-    <artifactId>employee-api</artifactId>
+    <groupId>$groupId</groupId>
+    <artifactId>$artifactId</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>employee-api</name>
-    <description>Employee Master API</description>
+    <name>$artifactId</name>
+    <description>API generated from Mule ESB</description>
     
     <properties>
-        <java.version>11</java.version>
+        <java.version>$JavaVersion</java.version>
     </properties>
     
     <dependencies>
@@ -71,7 +83,8 @@ $pomXml = @"
 </project>
 "@
 
-# Write pom file
-$pomXml | Out-File -FilePath "$projectPath\pom.xml" -Encoding utf8
+# Write pom file without BOM
+$utf8NoBom = New-Object System.Text.UTF8Encoding $false
+[System.IO.File]::WriteAllText("$outputPath\pom.xml", $pomXml, $utf8NoBom)
 
-Write-Host "POM file created at: $projectPath\pom.xml"
+Write-Host "POM file created at: $outputPath\pom.xml"
