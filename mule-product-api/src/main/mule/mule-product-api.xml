@@ -17,8 +17,6 @@
 		<db:generic-connection url="jdbc:h2:mem:productdb;MODE=MySQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE" driverClassName="org.h2.Driver" user="sa"/>
 	</db:config>
 
-
-
     <flow name="init-database" doc:id="init-database-flow">
         <scheduler doc:name="Scheduler" doc:id="scheduler-init">
             <scheduling-strategy>
@@ -58,35 +56,6 @@
         <logger level="INFO" message="Product database initialized successfully" doc:name="Logger" doc:id="logger-success"/>
     </flow>
 
-    <!-- Simple API Documentation Endpoint -->
-    <flow name="api-documentation" doc:id="api-documentation-flow">
-        <http:listener config-ref="HTTP_Listener_config" path="/api-docs" doc:name="API Documentation Listener" doc:id="api-docs-listener">
-            <http:response statusCode="#[vars.httpStatus default 200]"/>
-        </http:listener>
-        <set-payload value='#[output application/json --- {
-            "title": "Product Catalog API",
-            "version": "1.0.0",
-            "description": "RESTful API for managing products with full CRUD operations",
-            "baseUrl": "http://localhost:8082/api",
-            "endpoints": {
-                "GET /api/products": "Get all products (supports ?category and ?active filters)",
-                "GET /api/products/{id}": "Get product by ID",
-                "POST /api/products": "Create new product",
-                "PUT /api/products/{id}": "Update product",
-                "DELETE /api/products/{id}": "Delete product",
-                "GET /api/test": "Health check endpoint"
-            }
-        }]' doc:name="Set API Documentation" doc:id="set-api-docs"/>
-    </flow>
-
-    <!-- RAML Documentation Endpoint -->
-    <flow name="raml-documentation" doc:id="raml-documentation-flow">
-        <http:listener config-ref="HTTP_Listener_config" path="/raml-docs" doc:name="RAML Documentation Listener" doc:id="raml-docs-listener">
-            <http:response statusCode="#[vars.httpStatus default 200]"/>
-        </http:listener>
-        <set-payload value='#[readUrl("classpath://api/product-api.raml")]' mimeType="application/raml+yaml" doc:name="Set RAML Content" doc:id="set-raml-content"/>
-    </flow>
-
     <flow name="get-all-products" doc:id="get-all-products-flow">
         <http:listener config-ref="HTTP_Listener_config" path="/api/products" allowedMethods="GET" doc:name="Listener" doc:id="get-all-listener">
             <http:response statusCode="#[vars.httpStatus default 200]"/>
@@ -120,7 +89,12 @@
         </choice>
     </flow>
 
-
+    <flow name="test-flow" doc:id="test-flow">
+        <http:listener config-ref="HTTP_Listener_config" path="/test" doc:name="Listener" doc:id="test-listener">
+            <http:response statusCode="#[vars.httpStatus default 200]"/>
+        </http:listener>
+        <set-payload value="Hello from Product API!" doc:name="Set Payload" doc:id="test-payload"/>
+    </flow>
 
     <flow name="create-product" doc:id="create-product-flow">
         <http:listener config-ref="HTTP_Listener_config" path="/api/products" allowedMethods="POST" doc:name="Listener" doc:id="create-listener">
@@ -130,12 +104,12 @@
         <db:insert config-ref="Database_Config" doc:name="Insert" doc:id="insert-new-product" autoGenerateKeys="true">
             <db:sql>INSERT INTO products (name, description, price, category, stock, active) VALUES (:name, :description, :price, :category, :stock, :active)</db:sql>
             <db:input-parameters><![CDATA[#[{
-                'name': vars.newProduct.name,
-                'description': vars.newProduct.description,
-                'price': vars.newProduct.price,
-                'category': vars.newProduct.category,
-                'stock': vars.newProduct.stock default 0,
-                'active': vars.newProduct.active default true
+                'name': payload.name,
+                'description': payload.description,
+                'price': payload.price,
+                'category': payload.category,
+                'stock': payload.stock default 0,
+                'active': payload.active default true
             }]]]></db:input-parameters>
         </db:insert>
         <set-payload value='#[output application/json --- vars.newProduct ++ {id: payload.generatedKeys[0]}]' doc:name="Set Response" doc:id="set-create-response"/>
@@ -147,17 +121,16 @@
             <http:response statusCode="#[vars.httpStatus default 200]"/>
         </http:listener>
         <set-variable variableName="productId" value="#[attributes.uriParams.id]" doc:name="Save Product ID" doc:id="save-product-id"/>
-        <set-variable variableName="updateData" value="#[payload]" doc:name="Save Update Data" doc:id="save-update-data"/>
         <db:update config-ref="Database_Config" doc:name="Update" doc:id="update-product-db">
             <db:sql>UPDATE products SET name = :name, description = :description, price = :price, category = :category, stock = :stock, active = :active WHERE id = :id</db:sql>
             <db:input-parameters><![CDATA[#[{
                 'id': vars.productId,
-                'name': vars.updateData.name,
-                'description': vars.updateData.description,
-                'price': vars.updateData.price,
-                'category': vars.updateData.category,
-                'stock': vars.updateData.stock,
-                'active': vars.updateData.active
+                'name': payload.name,
+                'description': payload.description,
+                'price': payload.price,
+                'category': payload.category,
+                'stock': payload.stock,
+                'active': payload.active
             }]]]></db:input-parameters>
         </db:update>
         <choice doc:name="Choice" doc:id="choice-updated">
@@ -196,17 +169,6 @@
                 <set-variable variableName="httpStatus" value="404" doc:name="Set Not Found Status" doc:id="set-delete-404"/>
             </otherwise>
         </choice>
-    </flow>
-
-    <flow name="test-flow" doc:id="test-flow">
-        <http:listener config-ref="HTTP_Listener_config" path="/api/test" doc:name="Listener" doc:id="test-listener">
-            <http:response statusCode="#[vars.httpStatus default 200]"/>
-        </http:listener>
-        <set-payload value='#[output application/json --- {
-            "message": "Hello from Product API!",
-            "status": "OK",
-            "timestamp": now() as String
-        }]' doc:name="Set Test Response" doc:id="test-payload"/>
     </flow>
 
 </mule>

@@ -27,7 +27,7 @@ types:
       category:
         type: string
         required: true
-        enum: [Electronics, Clothing, Food, Books, Furniture, Other]
+        enum: [Electronics, Clothing, Food, Books, Other]
       stock:
         type: integer
         required: true
@@ -52,38 +52,34 @@ types:
     responses:
       200:
         body:
-          application/json:
-            type: Product[]
-            example: |
-              [
-                {
-                  "id": 1,
-                  "name": "Laptop",
-                  "description": "High performance laptop",
-                  "price": 999.99,
-                  "category": "Electronics",
-                  "stock": 50,
-                  "active": true
-                }
-              ]
+          type: Product[]
+          example: |
+            [
+              {
+                "id": 1,
+                "name": "Laptop",
+                "description": "High performance laptop",
+                "price": 999.99,
+                "category": "Electronics",
+                "stock": 50,
+                "active": true
+              }
+            ]
   
   post:
     description: Create a new product
     body:
-      application/json:
-        type: Product
+      type: Product
     responses:
       201:
         body:
-          application/json:
-            type: Product
+          type: Product
       400:
         body:
-          application/json:
-            example: |
-              {
-                "message": "Invalid product data"
-              }
+          example: |
+            {
+              "message": "Invalid product data"
+            }
 
   /{id}:
     get:
@@ -91,33 +87,28 @@ types:
       responses:
         200:
           body:
-            application/json:
-              type: Product
+            type: Product
         404:
           body:
-            application/json:
-              example: |
-                {
-                  "message": "Product not found"
-                }
+            example: |
+              {
+                "message": "Product not found"
+              }
     
     put:
       description: Update product
       body:
-        application/json:
-          type: Product
+        type: Product
       responses:
         200:
           body:
-            application/json:
-              type: Product
+            type: Product
         404:
           body:
-            application/json:
-              example: |
-                {
-                  "message": "Product not found"
-                }
+            example: |
+              {
+                "message": "Product not found"
+              }
     
     delete:
       description: Delete product
@@ -126,22 +117,7 @@ types:
           description: Product deleted successfully
         404:
           body:
-            application/json:
-              example: |
-                {
-                  "message": "Product not found"
-                }
-
-/test:
-  get:
-    description: Test endpoint for health checks
-    responses:
-      200:
-        body:
-          application/json:
             example: |
               {
-                "message": "Hello from Product API!",
-                "status": "OK",
-                "timestamp": "2024-01-01T12:00:00Z"
-              }
+                "message": "Product not found"
+              } 
