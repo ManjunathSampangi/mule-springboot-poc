@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http"
+      xmlns:db="http://www.mulesoft.org/schema/mule/db"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
+      xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="
+        http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+        http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+        http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd">
+    
+    <http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="b1c7c2ab-3c4d-4e5f-8a9b-1c2d3e4f5a6b">
+        <http:listener-connection host="0.0.0.0" port="8082"/>
+    </http:listener-config>
+
+    	<db:config name="Database_Config" doc:name="Database Config" doc:id="a1b2c3d4-e5f6-7890-abcd-ef1234567890">
+		<db:generic-connection url="jdbc:h2:mem:productdb;MODE=MySQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE" driverClassName="org.h2.Driver" user="sa"/>
+	</db:config>
+
+
+
+    <flow name="init-database" doc:id="init-database-flow">
+        <scheduler doc:name="Scheduler" doc:id="scheduler-init">
+            <scheduling-strategy>
+                <fixed-frequency frequency="999999999" startDelay="100" timeUnit="MILLISECONDS"/>
+            </scheduling-strategy>
+        </scheduler>
+        <db:execute-ddl config-ref="Database_Config" doc:name="Create Table" doc:id="create-table-ddl">
+            <db:sql><![CDATA[
+                CREATE TABLE IF NOT EXISTS products (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    name VARCHAR(255) NOT NULL,
+                    description TEXT,
+                    price DECIMAL(10,2) NOT NULL,
+                    category VARCHAR(100),
+                    stock INT DEFAULT 0,
+                    active BOOLEAN DEFAULT TRUE,
+                    createdDate DATE DEFAULT CURRENT_DATE
+                )
+            ]]></db:sql>
+        </db:execute-ddl>
+        <try doc:name="Try" doc:id="try-insert-data">
+            <db:insert config-ref="Database_Config" doc:name="Insert Product 1" doc:id="insert-product-1">
+                <db:sql>INSERT INTO products (name, description, price, category, stock, active) VALUES ('Laptop Pro', 'High-performance laptop for professionals', 1299.99, 'Electronics', 50, true)</db:sql>
+            </db:insert>
+            <db:insert config-ref="Database_Config" doc:name="Insert Product 2" doc:id="insert-product-2">
+                <db:sql>INSERT INTO products (name, description, price, category, stock, active) VALUES ('Wireless Mouse', 'Ergonomic wireless mouse', 29.99, 'Electronics', 200, true)</db:sql>
+            </db:insert>
+            <db:insert config-ref="Database_Config" doc:name="Insert Product 3" doc:id="insert-product-3">
+                <db:sql>INSERT INTO products (name, description, price, category, stock, active) VALUES ('Office Chair', 'Comfortable ergonomic office chair', 199.99, 'Furniture', 25, true)</db:sql>
+            </db:insert>
+            <error-handler>
+                <on-error-continue doc:name="On Error Continue" doc:id="error-continue-init">
+                    <logger level="INFO" message="Sample data might already exist, continuing..." doc:name="Logger" doc:id="logger-error"/>
+                </on-error-continue>
+            </error-handler>
+        </try>
+        <logger level="INFO" message="Product database initialized successfully" doc:name="Logger" doc:id="logger-success"/>
+    </flow>
+
+    <!-- Simple API Documentation Endpoint -->
+    <flow name="api-documentation" doc:id="api-documentation-flow">
+        <http:listener config-ref="HTTP_Listener_config" path="/api-docs" doc:name="API Documentation Listener" doc:id="api-docs-listener">
+            <http:response statusCode="#[vars.httpStatus default 200]"/>
+        </http:listener>
+        <set-payload value='#[output application/json --- {
+            "title": "Product Catalog API",
+            "version": "1.0.0",
+            "description": "RESTful API for managing products with full CRUD operations",
+            "baseUrl": "http://localhost:8082/api",
+            "endpoints": {
+                "GET /api/products": "Get all products (supports ?category and ?active filters)",
+                "GET /api/products/{id}": "Get product by ID",
+                "POST /api/products": "Create new product",
+                "PUT /api/products/{id}": "Update product",
+                "DELETE /api/products/{id}": "Delete product",
+                "GET /api/test": "Health check endpoint"
+            }
+        }]' doc:name="Set API Documentation" doc:id="set-api-docs"/>
+    </flow>
+
+    <!-- RAML Documentation Endpoint -->
+    <flow name="raml-documentation" doc:id="raml-documentation-flow">
+        <http:listener config-ref="HTTP_Listener_config" path="/raml-docs" doc:name="RAML Documentation Listener" doc:id="raml-docs-listener">
+            <http:response statusCode="#[vars.httpStatus default 200]"/>
+        </http:listener>
+        <set-payload value='#[readUrl("classpath://api/product-api.raml")]' mimeType="application/raml+yaml" doc:name="Set RAML Content" doc:id="set-raml-content"/>
+    </flow>
+
+    <flow name="get-all-products" doc:id="get-all-products-flow">
+        <http:listener config-ref="HTTP_Listener_config" path="/api/products" allowedMethods="GET" doc:name="Listener" doc:id="get-all-listener">
+            <http:response statusCode="#[vars.httpStatus default 200]"/>
+        </http:listener>
+        <db:select config-ref="Database_Config" doc:name="Select" doc:id="select-all-products">
+            <db:sql>SELECT * FROM products WHERE (:category IS NULL OR category = :category) AND (:active IS NULL OR active = :active)</db:sql>
+            <db:input-parameters><![CDATA[#[{
+                'category': attributes.queryParams.category,
+                'active': attributes.queryParams.active
+            }]]]></db:input-parameters>
+        </db:select>
+        <set-payload value='#[output application/json --- payload]' doc:name="Set Payload" doc:id="set-all-payload"/>
+    </flow>
+
+    <flow name="get-product-by-id" doc:id="get-product-by-id-flow">
+        <http:listener config-ref="HTTP_Listener_config" path="/api/products/{id}" allowedMethods="GET" doc:name="Listener" doc:id="get-by-id-listener">
+            <http:response statusCode="#[vars.httpStatus default 200]"/>
+        </http:listener>
+        <db:select config-ref="Database_Config" doc:name="Select" doc:id="select-product-by-id">
+            <db:sql>SELECT * FROM products WHERE id = :id</db:sql>
+            <db:input-parameters><![CDATA[#[{'id': attributes.uriParams.id}]]]></db:input-parameters>
+        </db:select>
+        <choice doc:name="Choice" doc:id="choice-found">
+            <when expression="#[sizeOf(payload) > 0]">
+                <set-payload value='#[output application/json --- payload[0]]' doc:name="Set Product" doc:id="set-product-found"/>
+            </when>
+            <otherwise>
+                <set-payload value='#[output application/json --- {"message": "Product not found"}]' doc:name="Set Not Found" doc:id="set-not-found"/>
+                <set-variable variableName="httpStatus" value="404" doc:name="Set 404 Status" doc:id="set-404-status"/>
+            </otherwise>
+        </choice>
+    </flow>
+
+
+
+    <flow name="create-product" doc:id="create-product-flow">
+        <http:listener config-ref="HTTP_Listener_config" path="/api/products" allowedMethods="POST" doc:name="Listener" doc:id="create-listener">
+            <http:response statusCode="#[vars.httpStatus default 200]"/>
+        </http:listener>
+        <set-variable variableName="newProduct" value="#[payload]" doc:name="Save New Product" doc:id="save-new-product"/>
+        <db:insert config-ref="Database_Config" doc:name="Insert" doc:id="insert-new-product" autoGenerateKeys="true">
+            <db:sql>INSERT INTO products (name, description, price, category, stock, active) VALUES (:name, :description, :price, :category, :stock, :active)</db:sql>
+            <db:input-parameters><![CDATA[#[{
+                'name': vars.newProduct.name,
+                'description': vars.newProduct.description,
+                'price': vars.newProduct.price,
+                'category': vars.newProduct.category,
+                'stock': vars.newProduct.stock default 0,
+                'active': vars.newProduct.active default true
+            }]]]></db:input-parameters>
+        </db:insert>
+        <set-payload value='#[output application/json --- vars.newProduct ++ {id: payload.generatedKeys[0]}]' doc:name="Set Response" doc:id="set-create-response"/>
+        <set-variable variableName="httpStatus" value="201" doc:name="Set Status Code" doc:id="set-201-status"/>
+    </flow>
+
+    <flow name="update-product" doc:id="update-product-flow">
+        <http:listener config-ref="HTTP_Listener_config" path="/api/products/{id}" allowedMethods="PUT" doc:name="Listener" doc:id="update-listener">
+            <http:response statusCode="#[vars.httpStatus default 200]"/>
+        </http:listener>
+        <set-variable variableName="productId" value="#[attributes.uriParams.id]" doc:name="Save Product ID" doc:id="save-product-id"/>
+        <set-variable variableName="updateData" value="#[payload]" doc:name="Save Update Data" doc:id="save-update-data"/>
+        <db:update config-ref="Database_Config" doc:name="Update" doc:id="update-product-db">
+            <db:sql>UPDATE products SET name = :name, description = :description, price = :price, category = :category, stock = :stock, active = :active WHERE id = :id</db:sql>
+            <db:input-parameters><![CDATA[#[{
+                'id': vars.productId,
+                'name': vars.updateData.name,
+                'description': vars.updateData.description,
+                'price': vars.updateData.price,
+                'category': vars.updateData.category,
+                'stock': vars.updateData.stock,
+                'active': vars.updateData.active
+            }]]]></db:input-parameters>
+        </db:update>
+        <choice doc:name="Choice" doc:id="choice-updated">
+            <when expression="#[(payload.affectedRows default 0) > 0]">
+                <db:select config-ref="Database_Config" doc:name="Get Updated Product" doc:id="get-updated-product">
+                    <db:sql>SELECT * FROM products WHERE id = :id</db:sql>
+                    <db:input-parameters><![CDATA[#[{'id': vars.productId}]]]></db:input-parameters>
+                </db:select>
+                <set-payload value='#[output application/json --- if (sizeOf(payload) > 0) payload[0] else null]' doc:name="Set Response" doc:id="set-update-response"/>
+            </when>
+            <otherwise>
+                <set-payload value='#[output application/json --- {"message": "Product not found"}]' doc:name="Set Error Response" doc:id="set-update-error"/>
+                <set-variable variableName="httpStatus" value="404" doc:name="Set Not Found Status" doc:id="set-update-404"/>
+            </otherwise>
+        </choice>
+    </flow>
+
+    <flow name="delete-product" doc:id="delete-product-flow">
+        <http:listener config-ref="HTTP_Listener_config" path="/api/products/{id}" allowedMethods="DELETE" doc:name="Listener" doc:id="delete-listener">
+            <http:response statusCode="#[vars.httpStatus default 200]"/>
+        </http:listener>
+        <set-variable variableName="productId" value="#[attributes.uriParams.id]" doc:name="Save Product ID" doc:id="save-delete-id"/>
+        <logger level="INFO" message="#['DELETE request for product ID: ' ++ vars.productId]" doc:name="Log Delete Request" doc:id="log-delete-request"/>
+        <db:delete config-ref="Database_Config" doc:name="Delete" doc:id="delete-product-db">
+            <db:sql>DELETE FROM products WHERE id = :id</db:sql>
+            <db:input-parameters><![CDATA[#[{'id': vars.productId}]]]></db:input-parameters>
+        </db:delete>
+        <logger level="INFO" message="#['Delete result - affected rows: ' ++ payload]" doc:name="Log Delete Result" doc:id="log-delete-result"/>
+        <choice doc:name="Choice" doc:id="choice-deleted">
+            <when expression="#[payload > 0]">
+                <set-variable variableName="httpStatus" value="204" doc:name="Set No Content Status" doc:id="set-204-status"/>
+                <set-payload value="#[null]" doc:name="Set Empty Payload" doc:id="set-empty-payload"/>
+            </when>
+            <otherwise>
+                <set-payload value='#[output application/json --- {"message": "Product not found"}]' doc:name="Set Error Response" doc:id="set-delete-error"/>
+                <set-variable variableName="httpStatus" value="404" doc:name="Set Not Found Status" doc:id="set-delete-404"/>
+            </otherwise>
+        </choice>
+    </flow>
+
+    <flow name="test-flow" doc:id="test-flow">
+        <http:listener config-ref="HTTP_Listener_config" path="/api/test" doc:name="Listener" doc:id="test-listener">
+            <http:response statusCode="#[vars.httpStatus default 200]"/>
+        </http:listener>
+        <set-payload value='#[output application/json --- {
+            "message": "Hello from Product API!",
+            "status": "OK",
+            "timestamp": now() as String
+        }]' doc:name="Set Test Response" doc:id="test-payload"/>
+    </flow>
+
+</mule>

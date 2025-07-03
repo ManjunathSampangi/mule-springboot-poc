@@ -1,7 +1,7 @@
 #%RAML 1.0
 title: Product Catalog API
 version: v1
-baseUri: http://localhost:8081/api
+baseUri: http://localhost:8082/api
 mediaType: application/json
 
 types:
@@ -27,7 +27,7 @@ types:
       category:
         type: string
         required: true
-        enum: [Electronics, Clothing, Food, Books, Other]
+        enum: [Electronics, Clothing, Food, Books, Furniture, Other]
       stock:
         type: integer
         required: true
@@ -52,63 +52,72 @@ types:
     responses:
       200:
         body:
-          type: Product[]
-          example: |
-            [
-              {
-                "id": 1,
-                "name": "Laptop",
-                "description": "High performance laptop",
-                "price": 999.99,
-                "category": "Electronics",
-                "stock": 50,
-                "active": true
-              }
-            ]
+          application/json:
+            type: Product[]
+            example: |
+              [
+                {
+                  "id": 1,
+                  "name": "Laptop",
+                  "description": "High performance laptop",
+                  "price": 999.99,
+                  "category": "Electronics",
+                  "stock": 50,
+                  "active": true
+                }
+              ]
   
   post:
     description: Create a new product
     body:
-      type: Product
+      application/json:
+        type: Product
     responses:
       201:
         body:
-          type: Product
+          application/json:
+            type: Product
       400:
         body:
-          example: |
-            {
-              "message": "Invalid product data"
-            }
+          application/json:
+            example: |
+              {
+                "message": "Invalid product data"
+              }
 
-  /{productId}:
+  /{id}:
     get:
       description: Get product by ID
       responses:
         200:
           body:
-            type: Product
+            application/json:
+              type: Product
         404:
           body:
-            example: |
-              {
-                "message": "Product not found"
-              }
+            application/json:
+              example: |
+                {
+                  "message": "Product not found"
+                }
     
     put:
       description: Update product
       body:
-        type: Product
+        application/json:
+          type: Product
       responses:
         200:
           body:
-            type: Product
+            application/json:
+              type: Product
         404:
           body:
-            example: |
-              {
-                "message": "Product not found"
-              }
+            application/json:
+              example: |
+                {
+                  "message": "Product not found"
+                }
     
     delete:
       description: Delete product
@@ -117,7 +126,22 @@ types:
           description: Product deleted successfully
         404:
           body:
+            application/json:
+              example: |
+                {
+                  "message": "Product not found"
+                }
+
+/test:
+  get:
+    description: Test endpoint for health checks
+    responses:
+      200:
+        body:
+          application/json:
             example: |
               {
-                "message": "Product not found"
-              } 
+                "message": "Hello from Product API!",
+                "status": "OK",
+                "timestamp": "2024-01-01T12:00:00Z"
+              }
