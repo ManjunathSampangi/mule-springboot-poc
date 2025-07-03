@@ -90,35 +90,8 @@ public class EmployeeService {
     }    
     // Create new Employee
     public Employee createEmployee(Employee entity) {
-        try {
-            logger.debug("Creating new Employee: {}", entity);
-        String sql = "INSERT INTO employees (first_name, last_name, email, department_id, hire_date) VALUES (?, ?, ?, ?, ?)";
-        
-        KeyHolder keyHolder = new GeneratedKeyHolder();
-        jdbcTemplate.update(connection -> {
-            PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setObject(1, entity.getFirstName());
-            ps.setObject(2, entity.getLastName());
-            ps.setObject(3, entity.getEmail());
-            ps.setObject(4, entity.getDepartmentId());
-            ps.setObject(5, entity.getHireDate());
-                return ps;
-        }, keyHolder);
-        
-        if (keyHolder.getKey() != null) {
-                Long generatedId = keyHolder.getKey().longValue();
-                logger.debug("Generated ID: {}", generatedId);
-                entity.setId(generatedId);
-            } else {
-                logger.warn("No generated key returned for created Employee");
-            }
-            
-            logger.debug("Successfully created Employee with ID: {}", entity.getId());
-        return entity;
-        } catch (Exception e) {
-            logger.error("Error creating Employee: {}", e.getMessage(), e);
-            throw new RuntimeException("Error creating Employee: " + e.getMessage(), e);
-        }
+        // TODO: Implement based on your schema
+        throw new UnsupportedOperationException("Create operation not implemented in Mule flows");
     }    
     // Get Employee by ID
     public Employee getEmployeeById(Long id) {

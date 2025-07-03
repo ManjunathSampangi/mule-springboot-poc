@@ -1,6 +1,0 @@
-com\company\product\model\Product.class
-com\company\product\controller\ProductController.class
-com\company\product\exception\ResourceNotFoundException.class
-com\company\product\config\OpenApiConfig.class
-com\company\product\ProductApplication.class
-com\company\product\service\ProductService.class

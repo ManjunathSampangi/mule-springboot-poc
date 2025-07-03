@@ -1,0 +1,165 @@
+{
+  "info": {
+    "name": "Mule Employee API",
+    "description": "Complete test collection for Mule Employee API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8081/test",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["test"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get All Employees",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8081/api/employees",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["api", "employees"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Employee by ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8081/api/employees/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["api", "employees", "1"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create Employee - John Doe",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"email\": \"john.doe@company.com\",\n  \"departmentId\": 1,\n  \"hireDate\": \"2024-01-15\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8081/api/employees",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["api", "employees"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create Employee - Alice Johnson",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"firstName\": \"Alice\",\n  \"lastName\": \"Johnson\",\n  \"email\": \"alice.johnson@company.com\",\n  \"departmentId\": 2,\n  \"hireDate\": \"2024-02-20\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8081/api/employees",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["api", "employees"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create Employee - Bob Smith",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"firstName\": \"Bob\",\n  \"lastName\": \"Smith\",\n  \"email\": \"bob.smith@company.com\",\n  \"departmentId\": 3,\n  \"hireDate\": \"2024-03-10\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8081/api/employees",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["api", "employees"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update Employee",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"firstName\": \"Jane\",\n  \"lastName\": \"Doe\",\n  \"email\": \"jane.doe@company.com\",\n  \"departmentId\": 2,\n  \"hireDate\": \"2024-01-20\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8081/api/employees/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["api", "employees", "1"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete Employee",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8081/api/employees/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["api", "employees", "1"]
+        }
+      },
+      "response": []
+    }
+  ]
+} 

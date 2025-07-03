@@ -302,7 +302,11 @@ public class ${controllerName}Controller {
     }
     
     if (-not (Test-Path "$configPath\OpenApiConfig.java")) {
-        $baseUri = if ($ramlContent -match 'baseUri:\s*(.+)') { $matches[1].Trim() } else { "http://localhost:8080" }
+        # Extract baseUri from RAML but update port for Spring Boot
+        $ramlBaseUri = if ($ramlContent -match 'baseUri:\s*(.+)') { $matches[1].Trim() } else { "http://localhost:8080" }
+        
+        # Replace any Mule port with Spring Boot port (8080) and remove /api suffix - GENERIC
+        $baseUri = $ramlBaseUri -replace ':(80\d{2})', ':8080' -replace '/api$', ''
         
         $openApiConfig = @"
 package $packageName.config;
@@ -330,6 +334,56 @@ public class OpenApiConfig {
         
         Write-FileWithoutBom "$configPath\OpenApiConfig.java" $openApiConfig
         Write-Host "    Generating config: OpenApiConfig" -ForegroundColor Gray
+    }
+    
+    # Generate CORS Configuration
+    if (-not (Test-Path "$configPath\CorsConfig.java")) {
+        $corsConfig = @"
+package $packageName.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
+
+import java.util.Arrays;
+
+@Configuration
+public class CorsConfig {
+    
+    @Bean
+    public CorsFilter corsFilter() {
+        CorsConfiguration corsConfiguration = new CorsConfiguration();
+        
+        // Allow all origins for development (adjust for production)
+        corsConfiguration.setAllowedOriginPatterns(Arrays.asList("*"));
+        
+        // Allow common headers
+        corsConfiguration.setAllowedHeaders(Arrays.asList(
+            "Origin", "Content-Type", "Accept", "Authorization", 
+            "Access-Control-Allow-Origin", "Access-Control-Allow-Headers",
+            "Access-Control-Allow-Credentials", "X-Requested-With"
+        ));
+        
+        // Allow all HTTP methods
+        corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD"));
+        
+        // Allow credentials
+        corsConfiguration.setAllowCredentials(true);
+        
+        // Configure URL patterns
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", corsConfiguration);
+        
+        return new CorsFilter(source);
+    }
+}
+"@
+        
+        Write-FileWithoutBom "$configPath\CorsConfig.java" $corsConfig
+        Write-Host "    Generating config: CorsConfig" -ForegroundColor Gray
     }
     
     # Parse RAML to extract expected operations
@@ -827,14 +881,31 @@ $setParams                return ps;
     
     // Update $entityName
     public $entityName update$entityName(Long id, $entityName entity) {
-        String sql = "UPDATE $tableName SET first_name = ?, last_name = ?, email = ?, department_id = ? WHERE id = ?";
-        int updated = jdbcTemplate.update(sql, 
-            entity.getFirstName(),
-            entity.getLastName(),
-            entity.getEmail(),
-            entity.getDepartmentId(),
-            id
-        );
+        // Generate UPDATE query dynamically based on entity fields
+        java.lang.reflect.Field[] fields = entity.getClass().getDeclaredFields();
+        java.util.List<String> setClause = new java.util.ArrayList<>();
+        java.util.List<Object> parameters = new java.util.ArrayList<>();
+        
+        for (java.lang.reflect.Field field : fields) {
+            if ("id".equals(field.getName()) || "serialVersionUID".equals(field.getName())) {
+                continue; // Skip ID and serialVersionUID
+            }
+            
+            field.setAccessible(true);
+            String columnName = camelToSnake(field.getName());
+            setClause.add(columnName + " = ?");
+            
+            try {
+                parameters.add(field.get(entity));
+            } catch (IllegalAccessException e) {
+                parameters.add(null);
+            }
+        }
+        
+        parameters.add(id); // Add ID for WHERE clause
+        
+        String sql = "UPDATE $tableName SET " + String.join(", ", setClause) + " WHERE id = ?";
+        int updated = jdbcTemplate.update(sql, parameters.toArray());
         
         if (updated == 0) {
             throw new ResourceNotFoundException("$entityName not found with id: " + id);

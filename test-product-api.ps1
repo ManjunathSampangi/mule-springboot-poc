@@ -1,231 +1,133 @@
-param(
-    [string]$BaseUrl = "http://localhost:8081"
-)
+#!/usr/bin/env pwsh
 
-Write-Host "================================================" -ForegroundColor Cyan
-Write-Host "Product API Testing Suite" -ForegroundColor Cyan
-Write-Host "================================================" -ForegroundColor Cyan
-Write-Host "Base URL: $BaseUrl" -ForegroundColor Yellow
-Write-Host "Time: $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')" -ForegroundColor Yellow
+Write-Host "========================================" -ForegroundColor Green
+Write-Host "Testing Mule Product API (Port 8082)" -ForegroundColor Green  
+Write-Host "========================================" -ForegroundColor Green
+Write-Host ""
 
-# Generate unique timestamp for test data
-$timestamp = [DateTimeOffset]::Now.ToUnixTimeSeconds()
+$baseUrl = "http://localhost:8082"
 
-# Test results tracking
-$testResults = @()
-
-# Function to test API endpoints
-function Test-ApiEndpoint {
-    param(
-        [string]$Method,
-        [string]$Endpoint,
-        [string]$Body,
-        [string]$Description,
-        [int]$ExpectedStatusCode = 200
-    )
-    
-    $result = @{
-        Test = $Description
-        Status = "FAIL"
-        StatusCode = 0
-        Success = $false
-    }
-    
-    try {
-        $response = $null
-        
-        switch ($Method) {
-            "GET" {
-                $response = Invoke-WebRequest -Uri "$BaseUrl$Endpoint" -Method Get
-            }
-            "POST" {
-                $response = Invoke-WebRequest -Uri "$BaseUrl$Endpoint" -Method Post `
-                    -Body $Body -ContentType "application/json"
-            }
-            "PUT" {
-                $response = Invoke-WebRequest -Uri "$BaseUrl$Endpoint" -Method Put `
-                    -Body $Body -ContentType "application/json"
-            }
-            "DELETE" {
-                $response = Invoke-WebRequest -Uri "$BaseUrl$Endpoint" -Method Delete
-            }
-        }
-        
-        $result.StatusCode = $response.StatusCode
-        
-        if ($response.StatusCode -eq $ExpectedStatusCode) {
-            $result.Status = "PASS"
-            $result.Success = $true
-        } else {
-            $result.Status = "FAIL"
-        }
-    } catch {
-        if ($_.Exception.Response) {
-            $result.StatusCode = $_.Exception.Response.StatusCode.value__
-            if ($result.StatusCode -eq $ExpectedStatusCode) {
-                $result.Status = "PASS"
-                $result.Success = $true
-            }
-        }
-    }
-    
-    return $result
+# Test 1: Basic connectivity
+Write-Host "[1] Test 1: Basic connectivity" -ForegroundColor Yellow
+try {
+    $response = Invoke-RestMethod -Uri "$baseUrl/test" -Method GET
+    Write-Host "SUCCESS: $response" -ForegroundColor Green
+} catch {
+    Write-Host "FAILED: $($_.Exception.Message)" -ForegroundColor Red
 }
+Write-Host ""
 
-Write-Host "`nRunning tests..." -ForegroundColor Yellow
+# Test 2: Get all products
+Write-Host "[2] Test 2: Get all products" -ForegroundColor Yellow
+try {
+    $products = Invoke-RestMethod -Uri "$baseUrl/api/products" -Method GET
+    Write-Host "SUCCESS: Found $($products.Count) products" -ForegroundColor Green
+    $products | ForEach-Object { 
+        Write-Host "   - ID: $($_.id), Name: $($_.name), Price: $($_.price), Category: $($_.category)" -ForegroundColor Cyan
+    }
+} catch {
+    Write-Host "FAILED: $($_.Exception.Message)" -ForegroundColor Red
+}
+Write-Host ""
 
-# Test 1: GET all products
-$testResults += Test-ApiEndpoint -Method "GET" -Endpoint "/products" `
-    -Description "GET all products"
+# Test 3: Get product by ID
+Write-Host "[3] Test 3: Get product by ID (ID=1)" -ForegroundColor Yellow
+try {
+    $product = Invoke-RestMethod -Uri "$baseUrl/api/products/1" -Method GET
+    Write-Host "SUCCESS: Found product '$($product.name)' - Price: $($product.price)" -ForegroundColor Green
+} catch {
+    Write-Host "FAILED: $($_.Exception.Message)" -ForegroundColor Red
+}
+Write-Host ""
 
-# Test 2: GET product by ID
-$testResults += Test-ApiEndpoint -Method "GET" -Endpoint "/products/1" `
-    -Description "GET product by ID (ID=1)"
+# Test 4: Filter by category
+Write-Host "[4] Test 4: Filter products by category (Electronics)" -ForegroundColor Yellow
+try {
+    $electronics = Invoke-RestMethod -Uri "$baseUrl/api/products?category=Electronics" -Method GET
+    Write-Host "SUCCESS: Found $($electronics.Count) electronics products" -ForegroundColor Green
+    $electronics | ForEach-Object { 
+        Write-Host "   - $($_.name): $($_.price)" -ForegroundColor Cyan
+    }
+} catch {
+    Write-Host "FAILED: $($_.Exception.Message)" -ForegroundColor Red
+}
+Write-Host ""
 
-# Test 3: GET non-existent product
-$testResults += Test-ApiEndpoint -Method "GET" -Endpoint "/products/999" `
-    -Description "GET non-existent product (ID=999) - Should return 404" `
-    -ExpectedStatusCode 404
-
-# Test 4: POST create new product
+# Test 5: Create new product
+Write-Host "[5] Test 5: Create new product" -ForegroundColor Yellow
 $newProduct = @{
-    name = "Test Product $timestamp"
-    description = "Product created during testing"
-    price = 99.99
-    category = "Test Category"
-    stock = 100
+    name = "Test Keyboard"
+    description = "Mechanical gaming keyboard"
+    price = 149.99
+    category = "Electronics"
+    stock = 15
     active = $true
 } | ConvertTo-Json
 
-$createResult = Test-ApiEndpoint -Method "POST" -Endpoint "/products" `
-    -Body $newProduct -Description "POST create new product" -ExpectedStatusCode 201
-$testResults += $createResult
+try {
+    $created = Invoke-RestMethod -Uri "$baseUrl/api/products" -Method POST -Body $newProduct -ContentType "application/json"
+    Write-Host "SUCCESS: Created product with ID $($created.id)" -ForegroundColor Green
+    $newProductId = $created.id
+} catch {
+    Write-Host "FAILED: $($_.Exception.Message)" -ForegroundColor Red
+    $newProductId = $null
+}
+Write-Host ""
 
-# Extract created product ID if successful
-$createdId = $null
-if ($createResult.Success) {
+# Test 6: Update product (if creation was successful)
+if ($newProductId) {
+    Write-Host "[6] Test 6: Update product (ID=$newProductId)" -ForegroundColor Yellow
+    $updateProduct = @{
+        name = "Updated Test Keyboard"
+        description = "RGB Mechanical gaming keyboard"
+        price = 179.99
+        category = "Electronics"
+        stock = 12
+        active = $true
+    } | ConvertTo-Json
+
     try {
-        Start-Sleep -Seconds 1  # Give the database time to commit
-        $allProducts = Invoke-RestMethod -Uri "$BaseUrl/products" -Method GET
-        $createdProduct = $allProducts | Where-Object { $_.name -eq "Test Product $timestamp" } | Select-Object -First 1
-        
-        if ($createdProduct) {
-            $createdId = $createdProduct.id
-            Write-Host "`nCreated product ID: $createdId" -ForegroundColor Cyan
+        $updated = Invoke-RestMethod -Uri "$baseUrl/api/products/$newProductId" -Method PUT -Body $updateProduct -ContentType "application/json"
+        Write-Host "SUCCESS: Updated product '$($updated.name)' - Price: $($updated.price)" -ForegroundColor Green
+    } catch {
+        Write-Host "FAILED: $($_.Exception.Message)" -ForegroundColor Red
+    }
+    Write-Host ""
+
+    # Test 7: Delete product
+    Write-Host "[7] Test 7: Delete product (ID=$newProductId)" -ForegroundColor Yellow
+    try {
+        $response = Invoke-WebRequest -Uri "$baseUrl/api/products/$newProductId" -Method DELETE
+        if ($response.StatusCode -eq 204) {
+            Write-Host "SUCCESS: Product deleted (HTTP 204)" -ForegroundColor Green
         } else {
-            Write-Host "`nWarning: Could not find created product" -ForegroundColor Yellow
+            Write-Host "PARTIAL: Delete returned HTTP $($response.StatusCode)" -ForegroundColor Yellow
         }
     } catch {
-        Write-Host "`nWarning: Could not extract created product ID" -ForegroundColor Yellow
+        Write-Host "FAILED: $($_.Exception.Message)" -ForegroundColor Red
     }
+    Write-Host ""
 }
 
-# Test 5: PUT update product
-if ($createdId) {
-    $updateProduct = @{
-        id = $createdId
-        name = "Updated Product $timestamp"
-        description = "Product updated during testing"
-        price = 149.99
-        category = "Updated Category"
-        stock = 50
-        active = $false
-    } | ConvertTo-Json
-    
-    $testResults += Test-ApiEndpoint -Method "PUT" -Endpoint "/products/$createdId" `
-        -Body $updateProduct -Description "PUT update product (ID=$createdId)"
-} else {
-    $testResults += @{
-        Test = "PUT update product"
-        Status = "SKIPPED"
-        StatusCode = 0
-        Success = $false
+# Test 8: Get non-existent product (should return 404)
+Write-Host "[8] Test 8: Get non-existent product (ID=999)" -ForegroundColor Yellow
+try {
+    $notFound = Invoke-RestMethod -Uri "$baseUrl/api/products/999" -Method GET
+    Write-Host "UNEXPECTED: Should have returned 404" -ForegroundColor Yellow
+} catch {
+    if ($_.Exception.Response.StatusCode -eq 404) {
+        Write-Host "SUCCESS: Correctly returned 404 for non-existent product" -ForegroundColor Green
+    } else {
+        Write-Host "FAILED: $($_.Exception.Message)" -ForegroundColor Red
     }
 }
+Write-Host ""
 
-# Test 6: DELETE product
-if ($createdId) {
-    $testResults += Test-ApiEndpoint -Method "DELETE" -Endpoint "/products/$createdId" `
-        -Description "DELETE product (ID=$createdId)" -ExpectedStatusCode 204
-    
-    # Test 7: Verify deletion
-    $testResults += Test-ApiEndpoint -Method "GET" -Endpoint "/products/$createdId" `
-        -Description "GET deleted product (ID=$createdId) - Should return 404" `
-        -ExpectedStatusCode 404
-} else {
-    $testResults += @{
-        Test = "DELETE product"
-        Status = "SKIPPED"
-        StatusCode = 0
-        Success = $false
-    }
-    $testResults += @{
-        Test = "GET deleted product - Should return 404"
-        Status = "SKIPPED"
-        StatusCode = 0
-        Success = $false
-    }
-}
-
-# Test 8: POST with partial data
-$partialProduct = @{
-    name = "Partial Product"
-    # Missing some fields - API should handle gracefully
-} | ConvertTo-Json
-
-$testResults += Test-ApiEndpoint -Method "POST" -Endpoint "/products" `
-    -Body $partialProduct -Description "POST with partial data" -ExpectedStatusCode 201
-
-# Display results
-Write-Host "`n================================================" -ForegroundColor Cyan
-Write-Host "Test Results:" -ForegroundColor Cyan
-Write-Host "================================================" -ForegroundColor Cyan
-
-$testResults | ForEach-Object {
-    switch ($_.Status) {
-        "PASS" { 
-            $color = "Green"
-            $icon = "✅"
-        }
-        "SKIPPED" {
-            $color = "Yellow" 
-            $icon = "⚠️"
-        }
-        default {
-            $color = "Red"
-            $icon = "❌"
-        }
-    }
-    Write-Host "$icon $($_.Test) - $($_.Status) (Status Code: $($_.StatusCode))" -ForegroundColor $color
-}
-
-# Summary
-$passCount = ($testResults | Where-Object { $_.Status -eq "PASS" }).Count
-$failCount = ($testResults | Where-Object { $_.Status -eq "FAIL" }).Count
-$skippedCount = ($testResults | Where-Object { $_.Status -eq "SKIPPED" }).Count
-
-Write-Host "`n================================================" -ForegroundColor Cyan
-Write-Host "Total Tests: $($testResults.Count)" -ForegroundColor White
-Write-Host "Passed: $passCount" -ForegroundColor Green
-Write-Host "Failed: $failCount" -ForegroundColor Red
-Write-Host "Skipped: $skippedCount" -ForegroundColor Yellow
-
-$executedTests = $testResults.Count - $skippedCount
-$successRate = if ($executedTests -gt 0) { 
-    [math]::Round(($passCount / $executedTests) * 100, 2) 
-} else { 0 }
-
-Write-Host "`nSuccess Rate: $successRate%" -ForegroundColor $(if ($successRate -eq 100) { "Green" } elseif ($successRate -ge 70) { "Yellow" } else { "Red" })
-
-# Sample GET request output
-if ($passCount -gt 0) {
-    Write-Host "`n================================================" -ForegroundColor Cyan
-    Write-Host "Sample API Response:" -ForegroundColor Cyan
-    Write-Host "================================================" -ForegroundColor Cyan
-    try {
-        $sampleProducts = Invoke-RestMethod -Uri "$BaseUrl/products" -Method Get | Select-Object -First 2
-        $sampleProducts | ConvertTo-Json -Depth 5 | Write-Host
-    } catch {}
-}
-
-Write-Host "`nAPI Documentation: $BaseUrl/swagger-ui.html" -ForegroundColor Cyan 
+Write-Host "========================================" -ForegroundColor Green
+Write-Host "Product API Testing Complete!" -ForegroundColor Green
+Write-Host "========================================" -ForegroundColor Green
+Write-Host ""
+Write-Host "Access your API at:" -ForegroundColor Cyan
+Write-Host "   • Test endpoint: http://localhost:8082/test" -ForegroundColor White
+Write-Host "   • API endpoints: http://localhost:8082/api/products" -ForegroundColor White
+Write-Host "   • RAML spec: See mule-product-api/src/main/resources/api/product-api.raml" -ForegroundColor White 

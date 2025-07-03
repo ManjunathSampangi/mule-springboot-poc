@@ -1,3 +1,4 @@
+com\company\employee\config\CorsConfig.class
 com\company\employee\model\Employee.class
 com\company\employee\EmployeeApplication.class
 com\company\employee\controller\EmployeeController.class

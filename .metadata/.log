@@ -1,0 +1,2136 @@
+!SESSION 2025-07-02 12:44:12.167 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=17.0.12
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_IN
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY org.eclipse.ant.launching 4 0 2025-07-02 12:44:13.488
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.ant.launching [107]
+  Unresolved requirement: Require-Bundle: org.apache.ant; bundle-version="1.9.4"
+  Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching; bundle-version="[3.12.0,4.0.0)"
+    -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+       org.eclipse.jdt.launching [254]
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.debug; bundle-version="[3.21.0,4.0.0)"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2073)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:143)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2064)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2004)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1967)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1883)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
+
+!ENTRY org.eclipse.ant.ui 4 0 2025-07-02 12:44:13.488
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.ant.ui [108]
+  Unresolved requirement: Require-Bundle: org.apache.ant; bundle-version="1.9.4"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2073)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:143)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2064)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2004)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1967)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1883)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
+
+!ENTRY org.eclipse.jdt.apt.core 4 0 2025-07-02 12:44:15.039
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.jdt.apt.core [240]
+  Unresolved requirement: Require-Bundle: org.apache.ant; bundle-version="1.6.5"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2073)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:143)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2064)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2004)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1967)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1883)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
+
+!ENTRY org.eclipse.jdt.apt.pluggable.core 4 0 2025-07-02 12:44:15.060
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.jdt.apt.pluggable.core [241]
+  Unresolved requirement: Require-Bundle: org.eclipse.jdt.apt.core
+    -> Bundle-SymbolicName: org.eclipse.jdt.apt.core; bundle-version="3.8.300.v20231214-1504"; singleton:="true"
+       org.eclipse.jdt.apt.core [240]
+         Unresolved requirement: Require-Bundle: org.apache.ant; bundle-version="1.6.5"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2073)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:143)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2064)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2004)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1967)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1883)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
+
+!ENTRY org.eclipse.jdt.apt.ui 4 0 2025-07-02 12:44:15.060
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.jdt.apt.ui [242]
+  Unresolved requirement: Require-Bundle: org.eclipse.jdt.ui; bundle-version="[3.14.0,4.0.0)"
+    -> Bundle-SymbolicName: org.eclipse.jdt.ui; bundle-version="3.32.0.v20240215-0312"; singleton:="true"
+       org.eclipse.jdt.ui [255]
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.core.manipulation; bundle-version="[1.15.200,2.0.0)"
+           -> Bundle-SymbolicName: org.eclipse.jdt.core.manipulation; bundle-version="1.21.0.v20240221-0406"; singleton:="true"
+              org.eclipse.jdt.core.manipulation [246]
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching; bundle-version="3.19.400"
+                  -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+                     org.eclipse.jdt.launching [254]
+                       Unresolved requirement: Require-Bundle: org.eclipse.jdt.debug; bundle-version="[3.21.0,4.0.0)"
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching; bundle-version="[3.19.400,4.0.0)"
+           -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+  Unresolved requirement: Require-Bundle: org.eclipse.jdt.apt.core; bundle-version="[3.6.0,4.0.0)"
+    -> Bundle-SymbolicName: org.eclipse.jdt.apt.core; bundle-version="3.8.300.v20231214-1504"; singleton:="true"
+       org.eclipse.jdt.apt.core [240]
+         Unresolved requirement: Require-Bundle: org.apache.ant; bundle-version="1.6.5"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2073)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:143)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2064)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2004)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1967)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1883)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
+
+!ENTRY org.eclipse.jdt.core.manipulation 4 0 2025-07-02 12:44:15.068
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.jdt.core.manipulation [246]
+  Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching; bundle-version="3.19.400"
+    -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+       org.eclipse.jdt.launching [254]
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.debug; bundle-version="[3.21.0,4.0.0)"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2073)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:143)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2064)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2004)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1967)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1883)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
+
+!ENTRY org.eclipse.jdt.debug.ui 4 0 2025-07-02 12:44:15.068
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.jdt.debug.ui [247]
+  Unresolved requirement: Require-Bundle: org.eclipse.jdt.debug; bundle-version="[3.20.0,4.0.0)"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2073)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:143)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2064)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2004)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1967)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1883)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
+
+!ENTRY org.eclipse.jdt.junit 4 0 2025-07-02 12:44:15.072
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.jdt.junit [249]
+  Unresolved requirement: Require-Bundle: org.eclipse.jdt.ui; bundle-version="[3.30.0,4.0.0)"
+    -> Bundle-SymbolicName: org.eclipse.jdt.ui; bundle-version="3.32.0.v20240215-0312"; singleton:="true"
+       org.eclipse.jdt.ui [255]
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.core.manipulation; bundle-version="[1.15.200,2.0.0)"
+           -> Bundle-SymbolicName: org.eclipse.jdt.core.manipulation; bundle-version="1.21.0.v20240221-0406"; singleton:="true"
+              org.eclipse.jdt.core.manipulation [246]
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching; bundle-version="3.19.400"
+                  -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+                     org.eclipse.jdt.launching [254]
+                       Unresolved requirement: Require-Bundle: org.eclipse.jdt.debug; bundle-version="[3.21.0,4.0.0)"
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching; bundle-version="[3.19.400,4.0.0)"
+           -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+  Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching; bundle-version="[3.20.0,4.0.0)"
+    -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2073)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:143)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2064)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2004)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1967)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1883)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
+
+!ENTRY org.eclipse.jdt.junit.core 4 0 2025-07-02 12:44:15.072
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.jdt.junit.core [250]
+  Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching; bundle-version="[3.13.0,4.0.0)"
+    -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+       org.eclipse.jdt.launching [254]
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.debug; bundle-version="[3.21.0,4.0.0)"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2073)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:143)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2064)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2004)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1967)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1883)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
+
+!ENTRY org.eclipse.jdt.launching 4 0 2025-07-02 12:44:15.072
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.jdt.launching [254]
+  Unresolved requirement: Require-Bundle: org.eclipse.jdt.debug; bundle-version="[3.21.0,4.0.0)"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2073)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:143)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2064)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2004)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1967)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1883)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
+
+!ENTRY org.eclipse.jdt.ui 4 0 2025-07-02 12:44:15.084
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.jdt.ui [255]
+  Unresolved requirement: Require-Bundle: org.eclipse.jdt.core.manipulation; bundle-version="[1.15.200,2.0.0)"
+    -> Bundle-SymbolicName: org.eclipse.jdt.core.manipulation; bundle-version="1.21.0.v20240221-0406"; singleton:="true"
+       org.eclipse.jdt.core.manipulation [246]
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching; bundle-version="3.19.400"
+           -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+              org.eclipse.jdt.launching [254]
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.debug; bundle-version="[3.21.0,4.0.0)"
+  Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching; bundle-version="[3.19.400,4.0.0)"
+    -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2073)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:143)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2064)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2004)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1967)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1883)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
+
+!ENTRY org.eclipse.text.quicksearch 4 0 2025-07-02 12:44:15.088
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.text.quicksearch [302]
+  Unresolved requirement: Require-Bundle: org.apache.ant; bundle-version="[1.10.0,2.0.0)"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2073)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:143)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2064)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2004)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1967)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1883)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
+
+!ENTRY org.mule.alsp 4 0 2025-07-02 12:44:15.101
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.mule.alsp [408]
+  Unresolved requirement: Import-Package: org.eclipse.jdt.internal.ui.javaeditor
+    -> Export-Package: org.eclipse.jdt.internal.ui.javaeditor; bundle-symbolic-name="org.eclipse.jdt.ui"; bundle-version="3.32.0.v20240215-0312"; version="0.0.0"; x-friends:="org.eclipse.jdt.junit,org.eclipse.jdt.debug.ui, org.eclipse.jdt.ui.tests, org.eclipse.jdt.ui.tests.refactoring, org.eclipse.jdt.text.tests"
+       org.eclipse.jdt.ui [255]
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching; bundle-version="[3.19.400,4.0.0)"
+           -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+              org.eclipse.jdt.launching [254]
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.debug; bundle-version="[3.21.0,4.0.0)"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2073)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:143)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2064)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2004)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1967)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1883)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
+
+!ENTRY org.mule.soapkit.tooling 4 0 2025-07-02 12:44:15.110
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.mule.soapkit.tooling [410]
+  Unresolved requirement: Require-Bundle: org.mule.tooling.client; bundle-version="[7.4.0,7.99.99)"
+    -> Bundle-SymbolicName: org.mule.tooling.client; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.client [414]
+         Unresolved requirement: Require-Bundle: org.mule.tooling.core
+           -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+              org.mule.tooling.core [417]
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching
+                  -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+                     org.eclipse.jdt.launching [254]
+                       Unresolved requirement: Require-Bundle: org.eclipse.jdt.debug; bundle-version="[3.21.0,4.0.0)"
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.ui
+                  -> Bundle-SymbolicName: org.eclipse.jdt.ui; bundle-version="3.32.0.v20240215-0312"; singleton:="true"
+                     org.eclipse.jdt.ui [255]
+                       Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching; bundle-version="[3.19.400,4.0.0)"
+                         -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+         Unresolved requirement: Import-Package: org.mule.tooling.runtime.controller
+           -> Export-Package: org.mule.tooling.runtime.controller; bundle-symbolic-name="org.mule.tooling.runtime"; bundle-version="7.21.0.202502052220"; version="0.0.0"
+              org.mule.tooling.runtime [443]
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching
+                  -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.runtime
+           -> Bundle-SymbolicName: org.mule.tooling.runtime; bundle-version="7.21.0.202502052220"; singleton:="true"
+  Unresolved requirement: Require-Bundle: org.mule.tooling.ui; bundle-version="[7.4.0,7.99.99)"
+    -> Bundle-SymbolicName: org.mule.tooling.ui; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.ui [450]
+         Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.ui
+           -> Bundle-SymbolicName: org.eclipse.jdt.ui; bundle-version="3.32.0.v20240215-0312"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.ui.widgets; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.ui.widgets; bundle-version="7.21.0.202502052220"; singleton:="true"
+              org.mule.tooling.ui.widgets [460]
+                Unresolved requirement: Require-Bundle: org.mule.tooling.browser
+  Unresolved requirement: Require-Bundle: org.mule.tooling.runtime; bundle-version="[7.4.0,7.99.99)"
+    -> Bundle-SymbolicName: org.mule.tooling.runtime; bundle-version="7.21.0.202502052220"; singleton:="true"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2073)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:143)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2064)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2004)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1967)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1883)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
+
+!ENTRY org.mule.tooling.apidesigner 4 0 2025-07-02 12:44:15.120
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.mule.tooling.apidesigner [411]
+  Unresolved requirement: Require-Bundle: org.mule.tooling.ui.authentication; bundle-version="[7.21.0,7.22.0)"
+  Unresolved requirement: Require-Bundle: org.mule.tooling.ui; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.ui; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.ui [450]
+         Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+              org.mule.tooling.core [417]
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching
+                  -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+                     org.eclipse.jdt.launching [254]
+                       Unresolved requirement: Require-Bundle: org.eclipse.jdt.debug; bundle-version="[3.21.0,4.0.0)"
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.ui
+                  -> Bundle-SymbolicName: org.eclipse.jdt.ui; bundle-version="3.32.0.v20240215-0312"; singleton:="true"
+                     org.eclipse.jdt.ui [255]
+                       Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching; bundle-version="[3.19.400,4.0.0)"
+                         -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.ui
+           -> Bundle-SymbolicName: org.eclipse.jdt.ui; bundle-version="3.32.0.v20240215-0312"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.ui.widgets; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.ui.widgets; bundle-version="7.21.0.202502052220"; singleton:="true"
+              org.mule.tooling.ui.widgets [460]
+                Unresolved requirement: Require-Bundle: org.mule.tooling.browser
+  Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2073)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:143)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2064)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2004)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1967)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1883)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
+
+!ENTRY org.mule.tooling.apikit.deps 4 0 2025-07-02 12:44:15.124
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.mule.tooling.apikit.deps [412]
+  Unresolved requirement: Require-Bundle: org.mule.tooling.weave.engine; bundle-version="7.18.0"
+    -> Bundle-SymbolicName: org.mule.tooling.weave.engine; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.weave.engine [464]
+         Unresolved requirement: Require-Bundle: org.mule.tooling.dfl; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.dfl; bundle-version="7.21.0.202502052220"; singleton:="true"
+              org.mule.tooling.dfl [420]
+                Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+                  -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+                     org.mule.tooling.core [417]
+                       Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching
+                         -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+                            org.eclipse.jdt.launching [254]
+                              Unresolved requirement: Require-Bundle: org.eclipse.jdt.debug; bundle-version="[3.21.0,4.0.0)"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.runtime; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.runtime; bundle-version="7.21.0.202502052220"; singleton:="true"
+              org.mule.tooling.runtime [443]
+                Unresolved requirement: Require-Bundle: org.mule.tooling.ui.widgets; bundle-version="[7.21.0,7.22.0)"
+                  -> Bundle-SymbolicName: org.mule.tooling.ui.widgets; bundle-version="7.21.0.202502052220"; singleton:="true"
+                     org.mule.tooling.ui.widgets [460]
+                       Unresolved requirement: Require-Bundle: org.mule.tooling.browser
+                Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+                  -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+                Unresolved requirement: Require-Bundle: org.mule.tooling.ui; bundle-version="[7.21.0,7.22.0)"
+                  -> Bundle-SymbolicName: org.mule.tooling.ui; bundle-version="7.21.0.202502052220"; singleton:="true"
+                     org.mule.tooling.ui [450]
+                       Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+                         -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching
+                  -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+                Unresolved requirement: Require-Bundle: org.mule.tooling.maven
+                  -> Bundle-SymbolicName: org.mule.tooling.maven; bundle-version="7.21.0.202502052220"; singleton:="true"
+                     org.mule.tooling.maven [429]
+                       Unresolved requirement: Import-Package: org.apache.maven.model; provider="anypoint"
+                         -> Export-Package: org.apache.maven.model; bundle-symbolic-name="org.mule.tooling.core"; bundle-version="7.21.0.202502052220"; provider="anypoint"; version="0.0.0"; x-friends:="org.mule.tooling.core.test"; mandatory:="provider"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.core
+           -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.client
+           -> Bundle-SymbolicName: org.mule.tooling.client; bundle-version="7.21.0.202502052220"; singleton:="true"
+              org.mule.tooling.client [414]
+                Unresolved requirement: Require-Bundle: org.mule.tooling.core
+                  -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+                Unresolved requirement: Import-Package: org.mule.tooling.runtime.controller
+                  -> Export-Package: org.mule.tooling.runtime.controller; bundle-symbolic-name="org.mule.tooling.runtime"; bundle-version="7.21.0.202502052220"; version="0.0.0"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2073)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:143)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2064)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2004)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1967)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1883)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
+
+!ENTRY org.mule.tooling.client 4 0 2025-07-02 12:44:15.130
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.mule.tooling.client [414]
+  Unresolved requirement: Require-Bundle: org.mule.tooling.core
+    -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.core [417]
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching
+           -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+              org.eclipse.jdt.launching [254]
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.debug; bundle-version="[3.21.0,4.0.0)"
+  Unresolved requirement: Import-Package: org.mule.tooling.runtime.controller
+    -> Export-Package: org.mule.tooling.runtime.controller; bundle-symbolic-name="org.mule.tooling.runtime"; bundle-version="7.21.0.202502052220"; version="0.0.0"
+       org.mule.tooling.runtime [443]
+         Unresolved requirement: Require-Bundle: org.mule.tooling.ui.widgets; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.ui.widgets; bundle-version="7.21.0.202502052220"; singleton:="true"
+              org.mule.tooling.ui.widgets [460]
+                Unresolved requirement: Require-Bundle: org.mule.tooling.browser
+         Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.ui; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.ui; bundle-version="7.21.0.202502052220"; singleton:="true"
+              org.mule.tooling.ui [450]
+                Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+                  -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching
+           -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.maven
+           -> Bundle-SymbolicName: org.mule.tooling.maven; bundle-version="7.21.0.202502052220"; singleton:="true"
+              org.mule.tooling.maven [429]
+                Unresolved requirement: Import-Package: org.apache.maven.model; provider="anypoint"
+                  -> Export-Package: org.apache.maven.model; bundle-symbolic-name="org.mule.tooling.core"; bundle-version="7.21.0.202502052220"; provider="anypoint"; version="0.0.0"; x-friends:="org.mule.tooling.core.test"; mandatory:="provider"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2073)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:143)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2064)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2004)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1967)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1883)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
+
+!ENTRY org.mule.tooling.connectivitytesting 4 0 2025-07-02 12:44:15.130
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.mule.tooling.connectivitytesting [415]
+  Unresolved requirement: Require-Bundle: org.mule.tooling.ui; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.ui; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.ui [450]
+         Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+              org.mule.tooling.core [417]
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching
+                  -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+                     org.eclipse.jdt.launching [254]
+                       Unresolved requirement: Require-Bundle: org.eclipse.jdt.debug; bundle-version="[3.21.0,4.0.0)"
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.ui
+                  -> Bundle-SymbolicName: org.eclipse.jdt.ui; bundle-version="3.32.0.v20240215-0312"; singleton:="true"
+                     org.eclipse.jdt.ui [255]
+                       Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching; bundle-version="[3.19.400,4.0.0)"
+                         -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.ui
+           -> Bundle-SymbolicName: org.eclipse.jdt.ui; bundle-version="3.32.0.v20240215-0312"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.ui.widgets; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.ui.widgets; bundle-version="7.21.0.202502052220"; singleton:="true"
+              org.mule.tooling.ui.widgets [460]
+                Unresolved requirement: Require-Bundle: org.mule.tooling.browser
+  Unresolved requirement: Require-Bundle: org.mule.tooling.ui.widgets; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.ui.widgets; bundle-version="7.21.0.202502052220"; singleton:="true"
+  Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+  Unresolved requirement: Require-Bundle: org.mule.tooling.messageflow; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.messageflow; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.messageflow [434]
+         Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.ui; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.ui; bundle-version="7.21.0.202502052220"; singleton:="true"
+  Unresolved requirement: Require-Bundle: org.mule.tooling.ui.modules.core; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.ui.modules.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.ui.modules.core [455]
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.ui
+           -> Bundle-SymbolicName: org.eclipse.jdt.ui; bundle-version="3.32.0.v20240215-0312"; singleton:="true"
+  Unresolved requirement: Require-Bundle: org.mule.tooling.metadata; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.metadata; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.metadata [436]
+         Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.ui; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.ui; bundle-version="7.21.0.202502052220"; singleton:="true"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2073)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:143)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2064)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2004)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1967)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1883)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
+
+!ENTRY org.mule.tooling.contextual.documentation 4 0 2025-07-02 12:44:15.148
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.mule.tooling.contextual.documentation [416]
+  Unresolved requirement: Require-Bundle: org.mule.tooling.ui.modules.core; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.ui.modules.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.ui.modules.core [455]
+         Unresolved requirement: Require-Bundle: org.mule.tooling.ui; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.ui; bundle-version="7.21.0.202502052220"; singleton:="true"
+              org.mule.tooling.ui [450]
+                Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+                  -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+                     org.mule.tooling.core [417]
+                       Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching
+                         -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+                            org.eclipse.jdt.launching [254]
+                              Unresolved requirement: Require-Bundle: org.eclipse.jdt.debug; bundle-version="[3.21.0,4.0.0)"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.ui.widgets; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.ui.widgets; bundle-version="7.21.0.202502052220"; singleton:="true"
+              org.mule.tooling.ui.widgets [460]
+                Unresolved requirement: Require-Bundle: org.mule.tooling.browser
+         Unresolved requirement: Require-Bundle: org.mule.tooling.messageflow; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.messageflow; bundle-version="7.21.0.202502052220"; singleton:="true"
+              org.mule.tooling.messageflow [434]
+                Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+                  -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.ui
+           -> Bundle-SymbolicName: org.eclipse.jdt.ui; bundle-version="3.32.0.v20240215-0312"; singleton:="true"
+              org.eclipse.jdt.ui [255]
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.core.manipulation; bundle-version="[1.15.200,2.0.0)"
+                  -> Bundle-SymbolicName: org.eclipse.jdt.core.manipulation; bundle-version="1.21.0.v20240221-0406"; singleton:="true"
+                     org.eclipse.jdt.core.manipulation [246]
+                       Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching; bundle-version="3.19.400"
+                         -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching; bundle-version="[3.19.400,4.0.0)"
+                  -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.ui.palette; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.ui.palette; bundle-version="7.21.0.202502052220"; singleton:="true"
+              org.mule.tooling.ui.palette [457]
+                Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+                  -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.metadata; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.metadata; bundle-version="7.21.0.202502052220"; singleton:="true"
+              org.mule.tooling.metadata [436]
+                Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+                  -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.client
+           -> Bundle-SymbolicName: org.mule.tooling.client; bundle-version="7.21.0.202502052220"; singleton:="true"
+              org.mule.tooling.client [414]
+                Unresolved requirement: Require-Bundle: org.mule.tooling.core
+                  -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+                Unresolved requirement: Import-Package: org.mule.tooling.runtime.controller
+                  -> Export-Package: org.mule.tooling.runtime.controller; bundle-symbolic-name="org.mule.tooling.runtime"; bundle-version="7.21.0.202502052220"; version="0.0.0"
+                     org.mule.tooling.runtime [443]
+                       Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching
+                         -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.utils.epl; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.utils.epl; bundle-version="7.21.0.202502052220"
+              org.mule.tooling.utils.epl [463]
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.ui
+                  -> Bundle-SymbolicName: org.eclipse.jdt.ui; bundle-version="3.32.0.v20240215-0312"; singleton:="true"
+                Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+                  -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.runtime
+           -> Bundle-SymbolicName: org.mule.tooling.runtime; bundle-version="7.21.0.202502052220"; singleton:="true"
+  Unresolved requirement: Require-Bundle: org.mule.tooling.core
+    -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2073)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:143)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2064)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2004)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1967)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1883)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
+
+!ENTRY org.mule.tooling.core 4 0 2025-07-02 12:44:15.162
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.mule.tooling.core [417]
+  Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching
+    -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+       org.eclipse.jdt.launching [254]
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.debug; bundle-version="[3.21.0,4.0.0)"
+  Unresolved requirement: Require-Bundle: org.eclipse.jdt.ui
+    -> Bundle-SymbolicName: org.eclipse.jdt.ui; bundle-version="3.32.0.v20240215-0312"; singleton:="true"
+       org.eclipse.jdt.ui [255]
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching; bundle-version="[3.19.400,4.0.0)"
+           -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2073)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:143)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2064)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2004)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1967)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1883)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
+
+!ENTRY org.mule.tooling.dfl 4 0 2025-07-02 12:44:15.167
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.mule.tooling.dfl [420]
+  Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.core [417]
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching
+           -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+              org.eclipse.jdt.launching [254]
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.debug; bundle-version="[3.21.0,4.0.0)"
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.ui
+           -> Bundle-SymbolicName: org.eclipse.jdt.ui; bundle-version="3.32.0.v20240215-0312"; singleton:="true"
+              org.eclipse.jdt.ui [255]
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching; bundle-version="[3.19.400,4.0.0)"
+                  -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+  Unresolved requirement: Require-Bundle: org.mule.tooling.client
+    -> Bundle-SymbolicName: org.mule.tooling.client; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.client [414]
+         Unresolved requirement: Require-Bundle: org.mule.tooling.core
+           -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+         Unresolved requirement: Import-Package: org.mule.tooling.runtime.controller
+           -> Export-Package: org.mule.tooling.runtime.controller; bundle-symbolic-name="org.mule.tooling.runtime"; bundle-version="7.21.0.202502052220"; version="0.0.0"
+              org.mule.tooling.runtime [443]
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching
+                  -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.runtime
+           -> Bundle-SymbolicName: org.mule.tooling.runtime; bundle-version="7.21.0.202502052220"; singleton:="true"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2073)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:143)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2064)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2004)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1967)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1883)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
+
+!ENTRY org.mule.tooling.dfl.ide 4 0 2025-07-02 12:44:15.172
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.mule.tooling.dfl.ide [421]
+  Unresolved requirement: Require-Bundle: org.mule.tooling.dfl
+    -> Bundle-SymbolicName: org.mule.tooling.dfl; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.dfl [420]
+         Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+              org.mule.tooling.core [417]
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching
+                  -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+                     org.eclipse.jdt.launching [254]
+                       Unresolved requirement: Require-Bundle: org.eclipse.jdt.debug; bundle-version="[3.21.0,4.0.0)"
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.ui
+                  -> Bundle-SymbolicName: org.eclipse.jdt.ui; bundle-version="3.32.0.v20240215-0312"; singleton:="true"
+                     org.eclipse.jdt.ui [255]
+                       Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching; bundle-version="[3.19.400,4.0.0)"
+                         -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.client
+           -> Bundle-SymbolicName: org.mule.tooling.client; bundle-version="7.21.0.202502052220"; singleton:="true"
+              org.mule.tooling.client [414]
+                Unresolved requirement: Require-Bundle: org.mule.tooling.core
+                  -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+                Unresolved requirement: Import-Package: org.mule.tooling.runtime.controller
+                  -> Export-Package: org.mule.tooling.runtime.controller; bundle-symbolic-name="org.mule.tooling.runtime"; bundle-version="7.21.0.202502052220"; version="0.0.0"
+                     org.mule.tooling.runtime [443]
+                       Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching
+                         -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+                Unresolved requirement: Require-Bundle: org.mule.tooling.runtime
+                  -> Bundle-SymbolicName: org.mule.tooling.runtime; bundle-version="7.21.0.202502052220"; singleton:="true"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2073)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:143)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2064)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2004)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1967)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1883)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
+
+!ENTRY org.mule.tooling.dfl.ui 4 0 2025-07-02 12:44:15.178
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.mule.tooling.dfl.ui [422]
+  Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.core [417]
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching
+           -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+              org.eclipse.jdt.launching [254]
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.debug; bundle-version="[3.21.0,4.0.0)"
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.ui
+           -> Bundle-SymbolicName: org.eclipse.jdt.ui; bundle-version="3.32.0.v20240215-0312"; singleton:="true"
+              org.eclipse.jdt.ui [255]
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching; bundle-version="[3.19.400,4.0.0)"
+                  -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+  Unresolved requirement: Require-Bundle: org.mule.tooling.metadata; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.metadata; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.metadata [436]
+         Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.ui; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.ui; bundle-version="7.21.0.202502052220"; singleton:="true"
+              org.mule.tooling.ui [450]
+                Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+                  -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.ui
+                  -> Bundle-SymbolicName: org.eclipse.jdt.ui; bundle-version="3.32.0.v20240215-0312"; singleton:="true"
+                Unresolved requirement: Require-Bundle: org.mule.tooling.ui.widgets; bundle-version="[7.21.0,7.22.0)"
+                  -> Bundle-SymbolicName: org.mule.tooling.ui.widgets; bundle-version="7.21.0.202502052220"; singleton:="true"
+                     org.mule.tooling.ui.widgets [460]
+                       Unresolved requirement: Require-Bundle: org.mule.tooling.browser
+         Unresolved requirement: Require-Bundle: org.mule.tooling.ui.widgets; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.ui.widgets; bundle-version="7.21.0.202502052220"; singleton:="true"
+  Unresolved requirement: Require-Bundle: org.mule.tooling.dfl.ide; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.dfl.ide; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.dfl.ide [421]
+         Unresolved requirement: Require-Bundle: org.mule.tooling.dfl
+           -> Bundle-SymbolicName: org.mule.tooling.dfl; bundle-version="7.21.0.202502052220"; singleton:="true"
+              org.mule.tooling.dfl [420]
+                Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+                  -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+                Unresolved requirement: Require-Bundle: org.mule.tooling.client
+                  -> Bundle-SymbolicName: org.mule.tooling.client; bundle-version="7.21.0.202502052220"; singleton:="true"
+                     org.mule.tooling.client [414]
+                       Unresolved requirement: Require-Bundle: org.mule.tooling.core
+                         -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+                       Unresolved requirement: Import-Package: org.mule.tooling.runtime.controller
+                         -> Export-Package: org.mule.tooling.runtime.controller; bundle-symbolic-name="org.mule.tooling.runtime"; bundle-version="7.21.0.202502052220"; version="0.0.0"
+                            org.mule.tooling.runtime [443]
+                              Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching
+                                -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+                       Unresolved requirement: Require-Bundle: org.mule.tooling.runtime
+                         -> Bundle-SymbolicName: org.mule.tooling.runtime; bundle-version="7.21.0.202502052220"; singleton:="true"
+  Unresolved requirement: Require-Bundle: org.mule.tooling.dfl; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.dfl; bundle-version="7.21.0.202502052220"; singleton:="true"
+  Unresolved requirement: Require-Bundle: org.mule.tooling.ui.widgets; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.ui.widgets; bundle-version="7.21.0.202502052220"; singleton:="true"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2073)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:143)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2064)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2004)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1967)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1883)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
+
+!ENTRY org.mule.tooling.extension.api 4 0 2025-07-02 12:44:15.178
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.mule.tooling.extension.api [424]
+  Unresolved requirement: Require-Bundle: org.mule.tooling.client; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.client; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.client [414]
+         Unresolved requirement: Require-Bundle: org.mule.tooling.core
+           -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+              org.mule.tooling.core [417]
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching
+                  -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+                     org.eclipse.jdt.launching [254]
+                       Unresolved requirement: Require-Bundle: org.eclipse.jdt.debug; bundle-version="[3.21.0,4.0.0)"
+         Unresolved requirement: Import-Package: org.mule.tooling.runtime.controller
+           -> Export-Package: org.mule.tooling.runtime.controller; bundle-symbolic-name="org.mule.tooling.runtime"; bundle-version="7.21.0.202502052220"; version="0.0.0"
+              org.mule.tooling.runtime [443]
+                Unresolved requirement: Require-Bundle: org.mule.tooling.ui.widgets; bundle-version="[7.21.0,7.22.0)"
+                  -> Bundle-SymbolicName: org.mule.tooling.ui.widgets; bundle-version="7.21.0.202502052220"; singleton:="true"
+                     org.mule.tooling.ui.widgets [460]
+                       Unresolved requirement: Require-Bundle: org.mule.tooling.browser
+                Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+                  -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+                Unresolved requirement: Require-Bundle: org.mule.tooling.ui; bundle-version="[7.21.0,7.22.0)"
+                  -> Bundle-SymbolicName: org.mule.tooling.ui; bundle-version="7.21.0.202502052220"; singleton:="true"
+                     org.mule.tooling.ui [450]
+                       Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+                         -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching
+                  -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+                Unresolved requirement: Require-Bundle: org.mule.tooling.maven
+                  -> Bundle-SymbolicName: org.mule.tooling.maven; bundle-version="7.21.0.202502052220"; singleton:="true"
+                     org.mule.tooling.maven [429]
+                       Unresolved requirement: Import-Package: org.apache.maven.model; provider="anypoint"
+                         -> Export-Package: org.apache.maven.model; bundle-symbolic-name="org.mule.tooling.core"; bundle-version="7.21.0.202502052220"; provider="anypoint"; version="0.0.0"; x-friends:="org.mule.tooling.core.test"; mandatory:="provider"
+  Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2073)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:143)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2064)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2004)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1967)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1883)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
+
+!ENTRY org.mule.tooling.maven 4 0 2025-07-02 12:44:15.185
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.mule.tooling.maven [429]
+  Unresolved requirement: Import-Package: org.apache.maven.model.building; provider="anypoint"
+    -> Export-Package: org.apache.maven.model.building; bundle-symbolic-name="org.mule.tooling.core"; bundle-version="7.21.0.202502052220"; provider="anypoint"; version="0.0.0"; x-friends:="org.mule.tooling.core.test"; mandatory:="provider"
+       org.mule.tooling.core [417]
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching
+           -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+              org.eclipse.jdt.launching [254]
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.debug; bundle-version="[3.21.0,4.0.0)"
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.ui
+           -> Bundle-SymbolicName: org.eclipse.jdt.ui; bundle-version="3.32.0.v20240215-0312"; singleton:="true"
+              org.eclipse.jdt.ui [255]
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching; bundle-version="[3.19.400,4.0.0)"
+                  -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+  Unresolved requirement: Import-Package: org.codehaus.plexus.util.xml.pull; provider="anypoint"
+    -> Export-Package: org.codehaus.plexus.util.xml.pull; bundle-symbolic-name="org.mule.tooling.core"; bundle-version="7.21.0.202502052220"; provider="anypoint"; version="0.0.0"; mandatory:="provider"
+  Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching; bundle-version="3.19.100"
+    -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+  Unresolved requirement: Import-Package: org.apache.maven.model; provider="anypoint"
+    -> Export-Package: org.apache.maven.model; bundle-symbolic-name="org.mule.tooling.core"; bundle-version="7.21.0.202502052220"; provider="anypoint"; version="0.0.0"; x-friends:="org.mule.tooling.core.test"; mandatory:="provider"
+  Unresolved requirement: Import-Package: org.apache.maven.model.io.xpp3; provider="anypoint"
+    -> Export-Package: org.apache.maven.model.io.xpp3; bundle-symbolic-name="org.mule.tooling.core"; bundle-version="7.21.0.202502052220"; provider="anypoint"; version="0.0.0"; x-friends:="org.mule.tooling.core.test"; mandatory:="provider"
+  Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2073)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:143)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2064)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2004)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1967)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1883)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
+
+!ENTRY org.mule.tooling.maven.embedded 4 0 2025-07-02 12:44:15.189
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.mule.tooling.maven.embedded [430]
+  Unresolved requirement: Require-Bundle: org.mule.tooling.maven
+    -> Bundle-SymbolicName: org.mule.tooling.maven; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.maven [429]
+         Unresolved requirement: Import-Package: org.apache.maven.model.building; provider="anypoint"
+           -> Export-Package: org.apache.maven.model.building; bundle-symbolic-name="org.mule.tooling.core"; bundle-version="7.21.0.202502052220"; provider="anypoint"; version="0.0.0"; x-friends:="org.mule.tooling.core.test"; mandatory:="provider"
+              org.mule.tooling.core [417]
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching
+                  -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+                     org.eclipse.jdt.launching [254]
+                       Unresolved requirement: Require-Bundle: org.eclipse.jdt.debug; bundle-version="[3.21.0,4.0.0)"
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.ui
+                  -> Bundle-SymbolicName: org.eclipse.jdt.ui; bundle-version="3.32.0.v20240215-0312"; singleton:="true"
+                     org.eclipse.jdt.ui [255]
+                       Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching; bundle-version="[3.19.400,4.0.0)"
+                         -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+         Unresolved requirement: Import-Package: org.codehaus.plexus.util.xml.pull; provider="anypoint"
+           -> Export-Package: org.codehaus.plexus.util.xml.pull; bundle-symbolic-name="org.mule.tooling.core"; bundle-version="7.21.0.202502052220"; provider="anypoint"; version="0.0.0"; mandatory:="provider"
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching; bundle-version="3.19.100"
+           -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+         Unresolved requirement: Import-Package: org.apache.maven.model; provider="anypoint"
+           -> Export-Package: org.apache.maven.model; bundle-symbolic-name="org.mule.tooling.core"; bundle-version="7.21.0.202502052220"; provider="anypoint"; version="0.0.0"; x-friends:="org.mule.tooling.core.test"; mandatory:="provider"
+         Unresolved requirement: Import-Package: org.apache.maven.model.io.xpp3; provider="anypoint"
+           -> Export-Package: org.apache.maven.model.io.xpp3; bundle-symbolic-name="org.mule.tooling.core"; bundle-version="7.21.0.202502052220"; provider="anypoint"; version="0.0.0"; x-friends:="org.mule.tooling.core.test"; mandatory:="provider"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2073)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:143)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2064)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2004)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1967)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1883)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
+
+!ENTRY org.mule.tooling.maven.external 4 0 2025-07-02 12:44:15.191
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.mule.tooling.maven.external [431]
+  Unresolved requirement: Require-Bundle: org.mule.tooling.maven
+    -> Bundle-SymbolicName: org.mule.tooling.maven; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.maven [429]
+         Unresolved requirement: Import-Package: org.apache.maven.model.building; provider="anypoint"
+           -> Export-Package: org.apache.maven.model.building; bundle-symbolic-name="org.mule.tooling.core"; bundle-version="7.21.0.202502052220"; provider="anypoint"; version="0.0.0"; x-friends:="org.mule.tooling.core.test"; mandatory:="provider"
+              org.mule.tooling.core [417]
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching
+                  -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+                     org.eclipse.jdt.launching [254]
+                       Unresolved requirement: Require-Bundle: org.eclipse.jdt.debug; bundle-version="[3.21.0,4.0.0)"
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.ui
+                  -> Bundle-SymbolicName: org.eclipse.jdt.ui; bundle-version="3.32.0.v20240215-0312"; singleton:="true"
+                     org.eclipse.jdt.ui [255]
+                       Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching; bundle-version="[3.19.400,4.0.0)"
+                         -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+         Unresolved requirement: Import-Package: org.codehaus.plexus.util.xml.pull; provider="anypoint"
+           -> Export-Package: org.codehaus.plexus.util.xml.pull; bundle-symbolic-name="org.mule.tooling.core"; bundle-version="7.21.0.202502052220"; provider="anypoint"; version="0.0.0"; mandatory:="provider"
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching; bundle-version="3.19.100"
+           -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+         Unresolved requirement: Import-Package: org.apache.maven.model; provider="anypoint"
+           -> Export-Package: org.apache.maven.model; bundle-symbolic-name="org.mule.tooling.core"; bundle-version="7.21.0.202502052220"; provider="anypoint"; version="0.0.0"; x-friends:="org.mule.tooling.core.test"; mandatory:="provider"
+         Unresolved requirement: Import-Package: org.apache.maven.model.io.xpp3; provider="anypoint"
+           -> Export-Package: org.apache.maven.model.io.xpp3; bundle-symbolic-name="org.mule.tooling.core"; bundle-version="7.21.0.202502052220"; provider="anypoint"; version="0.0.0"; x-friends:="org.mule.tooling.core.test"; mandatory:="provider"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+  Unresolved requirement: Require-Bundle: org.mule.tooling.core
+    -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2073)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:143)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2064)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2004)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1967)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1883)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
+
+!ENTRY org.mule.tooling.maven.ui 4 0 2025-07-02 12:44:15.194
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.mule.tooling.maven.ui [433]
+  Unresolved requirement: Require-Bundle: org.mule.tooling.ui.authentication; bundle-version="[7.21.0,7.22.0)"
+  Unresolved requirement: Import-Package: org.apache.maven.model; provider="anypoint"
+    -> Export-Package: org.apache.maven.model; bundle-symbolic-name="org.mule.tooling.core"; bundle-version="7.21.0.202502052220"; provider="anypoint"; version="0.0.0"; x-friends:="org.mule.tooling.core.test"; mandatory:="provider"
+       org.mule.tooling.core [417]
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching
+           -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+              org.eclipse.jdt.launching [254]
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.debug; bundle-version="[3.21.0,4.0.0)"
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.ui
+           -> Bundle-SymbolicName: org.eclipse.jdt.ui; bundle-version="3.32.0.v20240215-0312"; singleton:="true"
+              org.eclipse.jdt.ui [255]
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching; bundle-version="[3.19.400,4.0.0)"
+                  -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+  Unresolved requirement: Require-Bundle: org.mule.tooling.maven; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.maven; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.maven [429]
+         Unresolved requirement: Import-Package: org.apache.maven.model.building; provider="anypoint"
+           -> Export-Package: org.apache.maven.model.building; bundle-symbolic-name="org.mule.tooling.core"; bundle-version="7.21.0.202502052220"; provider="anypoint"; version="0.0.0"; x-friends:="org.mule.tooling.core.test"; mandatory:="provider"
+         Unresolved requirement: Import-Package: org.codehaus.plexus.util.xml.pull; provider="anypoint"
+           -> Export-Package: org.codehaus.plexus.util.xml.pull; bundle-symbolic-name="org.mule.tooling.core"; bundle-version="7.21.0.202502052220"; provider="anypoint"; version="0.0.0"; mandatory:="provider"
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching; bundle-version="3.19.100"
+           -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+         Unresolved requirement: Import-Package: org.apache.maven.model; provider="anypoint"
+           -> Export-Package: org.apache.maven.model; bundle-symbolic-name="org.mule.tooling.core"; bundle-version="7.21.0.202502052220"; provider="anypoint"; version="0.0.0"; x-friends:="org.mule.tooling.core.test"; mandatory:="provider"
+         Unresolved requirement: Import-Package: org.apache.maven.model.io.xpp3; provider="anypoint"
+           -> Export-Package: org.apache.maven.model.io.xpp3; bundle-symbolic-name="org.mule.tooling.core"; bundle-version="7.21.0.202502052220"; provider="anypoint"; version="0.0.0"; x-friends:="org.mule.tooling.core.test"; mandatory:="provider"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+  Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+  Unresolved requirement: Import-Package: org.apache.maven.model.building; provider="anypoint"
+    -> Export-Package: org.apache.maven.model.building; bundle-symbolic-name="org.mule.tooling.core"; bundle-version="7.21.0.202502052220"; provider="anypoint"; version="0.0.0"; x-friends:="org.mule.tooling.core.test"; mandatory:="provider"
+  Unresolved requirement: Require-Bundle: org.mule.tooling.ui; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.ui; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.ui [450]
+         Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.ui
+           -> Bundle-SymbolicName: org.eclipse.jdt.ui; bundle-version="3.32.0.v20240215-0312"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.ui.widgets; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.ui.widgets; bundle-version="7.21.0.202502052220"; singleton:="true"
+              org.mule.tooling.ui.widgets [460]
+                Unresolved requirement: Require-Bundle: org.mule.tooling.browser
+  Unresolved requirement: Require-Bundle: org.mule.tooling.runtime; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.runtime; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.runtime [443]
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching
+           -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2073)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:143)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2064)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2004)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1967)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1883)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
+
+!ENTRY org.mule.tooling.messageflow 4 0 2025-07-02 12:44:15.202
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.mule.tooling.messageflow [434]
+  Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.core [417]
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching
+           -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+              org.eclipse.jdt.launching [254]
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.debug; bundle-version="[3.21.0,4.0.0)"
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.ui
+           -> Bundle-SymbolicName: org.eclipse.jdt.ui; bundle-version="3.32.0.v20240215-0312"; singleton:="true"
+              org.eclipse.jdt.ui [255]
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching; bundle-version="[3.19.400,4.0.0)"
+                  -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+  Unresolved requirement: Require-Bundle: org.mule.tooling.ui; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.ui; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.ui [450]
+         Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.ui
+           -> Bundle-SymbolicName: org.eclipse.jdt.ui; bundle-version="3.32.0.v20240215-0312"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.ui.widgets; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.ui.widgets; bundle-version="7.21.0.202502052220"; singleton:="true"
+              org.mule.tooling.ui.widgets [460]
+                Unresolved requirement: Require-Bundle: org.mule.tooling.browser
+  Unresolved requirement: Require-Bundle: org.mule.tooling.ui.widgets; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.ui.widgets; bundle-version="7.21.0.202502052220"; singleton:="true"
+  Unresolved requirement: Require-Bundle: org.mule.tooling.metadata; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.metadata; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.metadata [436]
+         Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.ui; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.ui; bundle-version="7.21.0.202502052220"; singleton:="true"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2073)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:143)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2064)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2004)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1967)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1883)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
+
+!ENTRY org.mule.tooling.messageflow.editor.xml 4 0 2025-07-02 12:44:15.206
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.mule.tooling.messageflow.editor.xml [435]
+  Unresolved requirement: Require-Bundle: org.mule.tooling.messageflow; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.messageflow; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.messageflow [434]
+         Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+              org.mule.tooling.core [417]
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching
+                  -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+                     org.eclipse.jdt.launching [254]
+                       Unresolved requirement: Require-Bundle: org.eclipse.jdt.debug; bundle-version="[3.21.0,4.0.0)"
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.ui
+                  -> Bundle-SymbolicName: org.eclipse.jdt.ui; bundle-version="3.32.0.v20240215-0312"; singleton:="true"
+                     org.eclipse.jdt.ui [255]
+                       Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching; bundle-version="[3.19.400,4.0.0)"
+                         -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.ui; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.ui; bundle-version="7.21.0.202502052220"; singleton:="true"
+              org.mule.tooling.ui [450]
+                Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+                  -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.ui
+                  -> Bundle-SymbolicName: org.eclipse.jdt.ui; bundle-version="3.32.0.v20240215-0312"; singleton:="true"
+                Unresolved requirement: Require-Bundle: org.mule.tooling.ui.widgets; bundle-version="[7.21.0,7.22.0)"
+                  -> Bundle-SymbolicName: org.mule.tooling.ui.widgets; bundle-version="7.21.0.202502052220"; singleton:="true"
+                     org.mule.tooling.ui.widgets [460]
+                       Unresolved requirement: Require-Bundle: org.mule.tooling.browser
+         Unresolved requirement: Require-Bundle: org.mule.tooling.ui.widgets; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.ui.widgets; bundle-version="7.21.0.202502052220"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.metadata; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.metadata; bundle-version="7.21.0.202502052220"; singleton:="true"
+              org.mule.tooling.metadata [436]
+                Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+                  -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+                Unresolved requirement: Require-Bundle: org.mule.tooling.ui; bundle-version="[7.21.0,7.22.0)"
+                  -> Bundle-SymbolicName: org.mule.tooling.ui; bundle-version="7.21.0.202502052220"; singleton:="true"
+  Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+  Unresolved requirement: Require-Bundle: org.mule.tooling.ui
+    -> Bundle-SymbolicName: org.mule.tooling.ui; bundle-version="7.21.0.202502052220"; singleton:="true"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2073)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:143)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2064)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2004)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1967)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1883)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
+
+!ENTRY org.mule.tooling.metadata 4 0 2025-07-02 12:44:15.211
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.mule.tooling.metadata [436]
+  Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.core [417]
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching
+           -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+              org.eclipse.jdt.launching [254]
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.debug; bundle-version="[3.21.0,4.0.0)"
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.ui
+           -> Bundle-SymbolicName: org.eclipse.jdt.ui; bundle-version="3.32.0.v20240215-0312"; singleton:="true"
+              org.eclipse.jdt.ui [255]
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching; bundle-version="[3.19.400,4.0.0)"
+                  -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+  Unresolved requirement: Require-Bundle: org.mule.tooling.ui; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.ui; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.ui [450]
+         Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.ui
+           -> Bundle-SymbolicName: org.eclipse.jdt.ui; bundle-version="3.32.0.v20240215-0312"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.ui.widgets; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.ui.widgets; bundle-version="7.21.0.202502052220"; singleton:="true"
+              org.mule.tooling.ui.widgets [460]
+                Unresolved requirement: Require-Bundle: org.mule.tooling.browser
+  Unresolved requirement: Require-Bundle: org.mule.tooling.ui.widgets; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.ui.widgets; bundle-version="7.21.0.202502052220"; singleton:="true"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2073)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:143)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2064)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2004)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1967)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1883)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
+
+!ENTRY org.mule.tooling.platform 4 0 2025-07-02 12:44:15.214
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.mule.tooling.platform [441]
+  Unresolved requirement: Require-Bundle: org.eclipse.jdt.ui
+    -> Bundle-SymbolicName: org.eclipse.jdt.ui; bundle-version="3.32.0.v20240215-0312"; singleton:="true"
+       org.eclipse.jdt.ui [255]
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching; bundle-version="[3.19.400,4.0.0)"
+           -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+              org.eclipse.jdt.launching [254]
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.debug; bundle-version="[3.21.0,4.0.0)"
+  Unresolved requirement: Require-Bundle: org.mule.tooling.core
+    -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.core [417]
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching
+           -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.ui
+           -> Bundle-SymbolicName: org.eclipse.jdt.ui; bundle-version="3.32.0.v20240215-0312"; singleton:="true"
+  Unresolved requirement: Require-Bundle: org.mule.tooling.ui.widgets
+    -> Bundle-SymbolicName: org.mule.tooling.ui.widgets; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.ui.widgets [460]
+         Unresolved requirement: Require-Bundle: org.mule.tooling.browser
+
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2073)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:143)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2064)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2004)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1967)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1883)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
+
+!ENTRY org.mule.tooling.properties 4 0 2025-07-02 12:44:15.214
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.mule.tooling.properties [442]
+  Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.core [417]
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching
+           -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+              org.eclipse.jdt.launching [254]
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.debug; bundle-version="[3.21.0,4.0.0)"
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.ui
+           -> Bundle-SymbolicName: org.eclipse.jdt.ui; bundle-version="3.32.0.v20240215-0312"; singleton:="true"
+              org.eclipse.jdt.ui [255]
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching; bundle-version="[3.19.400,4.0.0)"
+                  -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+  Unresolved requirement: Require-Bundle: org.mule.tooling.client; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.client; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.client [414]
+         Unresolved requirement: Require-Bundle: org.mule.tooling.core
+           -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+         Unresolved requirement: Import-Package: org.mule.tooling.runtime.controller
+           -> Export-Package: org.mule.tooling.runtime.controller; bundle-symbolic-name="org.mule.tooling.runtime"; bundle-version="7.21.0.202502052220"; version="0.0.0"
+              org.mule.tooling.runtime [443]
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching
+                  -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.runtime
+           -> Bundle-SymbolicName: org.mule.tooling.runtime; bundle-version="7.21.0.202502052220"; singleton:="true"
+  Unresolved requirement: Require-Bundle: org.mule.tooling.metadata; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.metadata; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.metadata [436]
+         Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.ui; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.ui; bundle-version="7.21.0.202502052220"; singleton:="true"
+              org.mule.tooling.ui [450]
+                Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+                  -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.ui
+                  -> Bundle-SymbolicName: org.eclipse.jdt.ui; bundle-version="3.32.0.v20240215-0312"; singleton:="true"
+                Unresolved requirement: Require-Bundle: org.mule.tooling.ui.widgets; bundle-version="[7.21.0,7.22.0)"
+                  -> Bundle-SymbolicName: org.mule.tooling.ui.widgets; bundle-version="7.21.0.202502052220"; singleton:="true"
+                     org.mule.tooling.ui.widgets [460]
+                       Unresolved requirement: Require-Bundle: org.mule.tooling.browser
+  Unresolved requirement: Require-Bundle: org.mule.tooling.messageflow; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.messageflow; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.messageflow [434]
+         Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.ui; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.ui; bundle-version="7.21.0.202502052220"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.ui.widgets; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.ui.widgets; bundle-version="7.21.0.202502052220"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.metadata; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.metadata; bundle-version="7.21.0.202502052220"; singleton:="true"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2073)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:143)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2064)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2004)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1967)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1883)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
+
+!ENTRY org.mule.tooling.runtime 4 0 2025-07-02 12:44:15.220
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.mule.tooling.runtime [443]
+  Unresolved requirement: Require-Bundle: org.mule.tooling.ui.widgets; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.ui.widgets; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.ui.widgets [460]
+         Unresolved requirement: Require-Bundle: org.mule.tooling.browser
+  Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.core [417]
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching
+           -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+              org.eclipse.jdt.launching [254]
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.debug; bundle-version="[3.21.0,4.0.0)"
+  Unresolved requirement: Require-Bundle: org.mule.tooling.ui; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.ui; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.ui [450]
+         Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+  Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching
+    -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+  Unresolved requirement: Require-Bundle: org.mule.tooling.maven
+    -> Bundle-SymbolicName: org.mule.tooling.maven; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.maven [429]
+         Unresolved requirement: Import-Package: org.apache.maven.model; provider="anypoint"
+           -> Export-Package: org.apache.maven.model; bundle-symbolic-name="org.mule.tooling.core"; bundle-version="7.21.0.202502052220"; provider="anypoint"; version="0.0.0"; x-friends:="org.mule.tooling.core.test"; mandatory:="provider"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2073)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:143)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2064)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2004)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1967)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1883)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
+
+!ENTRY org.mule.tooling.runtime.ui 4 0 2025-07-02 12:44:15.225
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.mule.tooling.runtime.ui [444]
+  Unresolved requirement: Require-Bundle: org.mule.tooling.analytics
+  Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching
+    -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+       org.eclipse.jdt.launching [254]
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.debug; bundle-version="[3.21.0,4.0.0)"
+  Unresolved requirement: Require-Bundle: org.mule.tooling.runtime; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.runtime; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.runtime [443]
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching
+           -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+  Unresolved requirement: Require-Bundle: org.mule.tooling.ui.widgets; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.ui.widgets; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.ui.widgets [460]
+         Unresolved requirement: Require-Bundle: org.mule.tooling.browser
+  Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.core [417]
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching
+           -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+  Unresolved requirement: Require-Bundle: org.mule.tooling.messageflow; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.messageflow; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.messageflow [434]
+         Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+  Unresolved requirement: Require-Bundle: org.eclipse.jdt.debug.ui
+    -> Bundle-SymbolicName: org.eclipse.jdt.debug.ui; bundle-version="3.13.300.v20240207-1034"; singleton:="true"
+       org.eclipse.jdt.debug.ui [247]
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.debug; bundle-version="[3.20.0,4.0.0)"
+  Unresolved requirement: Require-Bundle: org.mule.tooling.ui; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.ui; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.ui [450]
+         Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2073)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:143)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2064)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2004)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1967)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1883)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
+
+!ENTRY org.mule.tooling.server.4.9.deps 4 0 2025-07-02 12:44:15.225
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.mule.tooling.server.4.9.deps [445]
+  Unresolved requirement: Require-Bundle: org.mule.tooling.server.4.9.ee
+
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2073)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:143)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2064)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2004)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1967)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1883)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
+
+!ENTRY org.mule.tooling.server.4.9.ee.extensions 4 0 2025-07-02 12:44:15.230
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.mule.tooling.server.4.9.ee.extensions [446]
+  Unresolved requirement: Require-Bundle: org.mule.tooling.server.4.9.ee
+
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2073)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:143)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2064)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2004)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1967)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1883)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
+
+!ENTRY org.mule.tooling.templatesrepo 4 0 2025-07-02 12:44:15.230
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.mule.tooling.templatesrepo [448]
+  Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.core [417]
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching
+           -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+              org.eclipse.jdt.launching [254]
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.debug; bundle-version="[3.21.0,4.0.0)"
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.ui
+           -> Bundle-SymbolicName: org.eclipse.jdt.ui; bundle-version="3.32.0.v20240215-0312"; singleton:="true"
+              org.eclipse.jdt.ui [255]
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching; bundle-version="[3.19.400,4.0.0)"
+                  -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+  Unresolved requirement: Require-Bundle: org.mule.tooling.ui.widgets; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.ui.widgets; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.ui.widgets [460]
+         Unresolved requirement: Require-Bundle: org.mule.tooling.browser
+  Unresolved requirement: Require-Bundle: org.mule.tooling.ui; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.ui; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.ui [450]
+         Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.ui
+           -> Bundle-SymbolicName: org.eclipse.jdt.ui; bundle-version="3.32.0.v20240215-0312"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.ui.widgets; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.ui.widgets; bundle-version="7.21.0.202502052220"; singleton:="true"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2073)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:143)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2064)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2004)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1967)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1883)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
+
+!ENTRY org.mule.tooling.troubleshooting 4 0 2025-07-02 12:44:15.235
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.mule.tooling.troubleshooting [449]
+  Unresolved requirement: Require-Bundle: org.mule.tooling.analytics; bundle-version="[7.21.0,7.22.0)"
+  Unresolved requirement: Require-Bundle: org.mule.tooling.client; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.client; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.client [414]
+         Unresolved requirement: Import-Package: org.mule.tooling.runtime.controller
+           -> Export-Package: org.mule.tooling.runtime.controller; bundle-symbolic-name="org.mule.tooling.runtime"; bundle-version="7.21.0.202502052220"; version="0.0.0"
+              org.mule.tooling.runtime [443]
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching
+                  -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+                     org.eclipse.jdt.launching [254]
+                       Unresolved requirement: Require-Bundle: org.eclipse.jdt.debug; bundle-version="[3.21.0,4.0.0)"
+  Unresolved requirement: Require-Bundle: org.mule.tooling.ui.widgets; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.ui.widgets; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.ui.widgets [460]
+         Unresolved requirement: Require-Bundle: org.mule.tooling.browser
+  Unresolved requirement: Require-Bundle: org.mule.tooling.ui; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.ui; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.ui [450]
+         Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+              org.mule.tooling.core [417]
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching
+                  -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.ui
+                  -> Bundle-SymbolicName: org.eclipse.jdt.ui; bundle-version="3.32.0.v20240215-0312"; singleton:="true"
+                     org.eclipse.jdt.ui [255]
+                       Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching; bundle-version="[3.19.400,4.0.0)"
+                         -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.ui.widgets; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.ui.widgets; bundle-version="7.21.0.202502052220"; singleton:="true"
+  Unresolved requirement: Require-Bundle: org.mule.tooling.runtime; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.runtime; bundle-version="7.21.0.202502052220"; singleton:="true"
+  Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2073)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:143)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2064)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2004)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1967)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1883)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
+
+!ENTRY org.mule.tooling.ui 4 0 2025-07-02 12:44:15.238
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.mule.tooling.ui [450]
+  Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.core [417]
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching
+           -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+              org.eclipse.jdt.launching [254]
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.debug; bundle-version="[3.21.0,4.0.0)"
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.ui
+           -> Bundle-SymbolicName: org.eclipse.jdt.ui; bundle-version="3.32.0.v20240215-0312"; singleton:="true"
+              org.eclipse.jdt.ui [255]
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching; bundle-version="[3.19.400,4.0.0)"
+                  -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+  Unresolved requirement: Require-Bundle: org.eclipse.jdt.ui
+    -> Bundle-SymbolicName: org.eclipse.jdt.ui; bundle-version="3.32.0.v20240215-0312"; singleton:="true"
+  Unresolved requirement: Require-Bundle: org.mule.tooling.ui.widgets; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.ui.widgets; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.ui.widgets [460]
+         Unresolved requirement: Require-Bundle: org.mule.tooling.browser
+
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2073)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:143)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2064)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2004)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1967)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1883)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
+
+!ENTRY org.mule.tooling.ui.contribution.apigateway 4 0 2025-07-02 12:44:15.243
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.mule.tooling.ui.contribution.apigateway [451]
+  Unresolved requirement: Import-Package: org.mule.tooling.ui.modules.core.widgets.editors
+    -> Export-Package: org.mule.tooling.ui.modules.core.widgets.editors; bundle-symbolic-name="org.mule.tooling.ui.modules.core"; bundle-version="7.21.0.202502052220"; version="0.0.0"
+       org.mule.tooling.ui.modules.core [455]
+         Unresolved requirement: Require-Bundle: org.mule.tooling.ui; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.ui; bundle-version="7.21.0.202502052220"; singleton:="true"
+              org.mule.tooling.ui [450]
+                Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+                  -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+                     org.mule.tooling.core [417]
+                       Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching
+                         -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+                            org.eclipse.jdt.launching [254]
+                              Unresolved requirement: Require-Bundle: org.eclipse.jdt.debug; bundle-version="[3.21.0,4.0.0)"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.ui.widgets; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.ui.widgets; bundle-version="7.21.0.202502052220"; singleton:="true"
+              org.mule.tooling.ui.widgets [460]
+                Unresolved requirement: Require-Bundle: org.mule.tooling.browser
+         Unresolved requirement: Require-Bundle: org.mule.tooling.messageflow; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.messageflow; bundle-version="7.21.0.202502052220"; singleton:="true"
+              org.mule.tooling.messageflow [434]
+                Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+                  -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.ui
+           -> Bundle-SymbolicName: org.eclipse.jdt.ui; bundle-version="3.32.0.v20240215-0312"; singleton:="true"
+              org.eclipse.jdt.ui [255]
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.core.manipulation; bundle-version="[1.15.200,2.0.0)"
+                  -> Bundle-SymbolicName: org.eclipse.jdt.core.manipulation; bundle-version="1.21.0.v20240221-0406"; singleton:="true"
+                     org.eclipse.jdt.core.manipulation [246]
+                       Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching; bundle-version="3.19.400"
+                         -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching; bundle-version="[3.19.400,4.0.0)"
+                  -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.ui.palette; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.ui.palette; bundle-version="7.21.0.202502052220"; singleton:="true"
+              org.mule.tooling.ui.palette [457]
+                Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+                  -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.metadata; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.metadata; bundle-version="7.21.0.202502052220"; singleton:="true"
+              org.mule.tooling.metadata [436]
+                Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+                  -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.client
+           -> Bundle-SymbolicName: org.mule.tooling.client; bundle-version="7.21.0.202502052220"; singleton:="true"
+              org.mule.tooling.client [414]
+                Unresolved requirement: Require-Bundle: org.mule.tooling.core
+                  -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+                Unresolved requirement: Import-Package: org.mule.tooling.runtime.controller
+                  -> Export-Package: org.mule.tooling.runtime.controller; bundle-symbolic-name="org.mule.tooling.runtime"; bundle-version="7.21.0.202502052220"; version="0.0.0"
+                     org.mule.tooling.runtime [443]
+                       Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching
+                         -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.utils.epl; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.utils.epl; bundle-version="7.21.0.202502052220"
+              org.mule.tooling.utils.epl [463]
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.ui
+                  -> Bundle-SymbolicName: org.eclipse.jdt.ui; bundle-version="3.32.0.v20240215-0312"; singleton:="true"
+                Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+                  -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.runtime
+           -> Bundle-SymbolicName: org.mule.tooling.runtime; bundle-version="7.21.0.202502052220"; singleton:="true"
+  Unresolved requirement: Require-Bundle: org.mule.tooling.runtime; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.runtime; bundle-version="7.21.0.202502052220"; singleton:="true"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2073)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:143)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2064)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2004)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1967)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1883)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
+
+!ENTRY org.mule.tooling.ui.contribution.debugger 4 0 2025-07-02 12:44:15.246
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.mule.tooling.ui.contribution.debugger [452]
+  Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.core [417]
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching
+           -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+              org.eclipse.jdt.launching [254]
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.debug; bundle-version="[3.21.0,4.0.0)"
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.ui
+           -> Bundle-SymbolicName: org.eclipse.jdt.ui; bundle-version="3.32.0.v20240215-0312"; singleton:="true"
+              org.eclipse.jdt.ui [255]
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching; bundle-version="[3.19.400,4.0.0)"
+                  -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+  Unresolved requirement: Require-Bundle: org.mule.tooling.ui; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.ui; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.ui [450]
+         Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.ui
+           -> Bundle-SymbolicName: org.eclipse.jdt.ui; bundle-version="3.32.0.v20240215-0312"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.ui.widgets; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.ui.widgets; bundle-version="7.21.0.202502052220"; singleton:="true"
+              org.mule.tooling.ui.widgets [460]
+                Unresolved requirement: Require-Bundle: org.mule.tooling.browser
+  Unresolved requirement: Require-Bundle: org.mule.tooling.messageflow; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.messageflow; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.messageflow [434]
+         Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.ui; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.ui; bundle-version="7.21.0.202502052220"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.ui.widgets; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.ui.widgets; bundle-version="7.21.0.202502052220"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.metadata; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.metadata; bundle-version="7.21.0.202502052220"; singleton:="true"
+              org.mule.tooling.metadata [436]
+                Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+                  -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+                Unresolved requirement: Require-Bundle: org.mule.tooling.ui; bundle-version="[7.21.0,7.22.0)"
+                  -> Bundle-SymbolicName: org.mule.tooling.ui; bundle-version="7.21.0.202502052220"; singleton:="true"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2073)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:143)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2064)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2004)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1967)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1883)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
+
+!ENTRY org.mule.tooling.ui.dfl.contribution 4 0 2025-07-02 12:44:15.252
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.mule.tooling.ui.dfl.contribution [453]
+  Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.core [417]
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching
+           -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+              org.eclipse.jdt.launching [254]
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.debug; bundle-version="[3.21.0,4.0.0)"
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.ui
+           -> Bundle-SymbolicName: org.eclipse.jdt.ui; bundle-version="3.32.0.v20240215-0312"; singleton:="true"
+              org.eclipse.jdt.ui [255]
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching; bundle-version="[3.19.400,4.0.0)"
+                  -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+  Unresolved requirement: Require-Bundle: org.mule.tooling.messageflow; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.messageflow; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.messageflow [434]
+         Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.ui; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.ui; bundle-version="7.21.0.202502052220"; singleton:="true"
+              org.mule.tooling.ui [450]
+                Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+                  -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.ui
+                  -> Bundle-SymbolicName: org.eclipse.jdt.ui; bundle-version="3.32.0.v20240215-0312"; singleton:="true"
+                Unresolved requirement: Require-Bundle: org.mule.tooling.ui.widgets; bundle-version="[7.21.0,7.22.0)"
+                  -> Bundle-SymbolicName: org.mule.tooling.ui.widgets; bundle-version="7.21.0.202502052220"; singleton:="true"
+                     org.mule.tooling.ui.widgets [460]
+                       Unresolved requirement: Require-Bundle: org.mule.tooling.browser
+         Unresolved requirement: Require-Bundle: org.mule.tooling.ui.widgets; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.ui.widgets; bundle-version="7.21.0.202502052220"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.metadata; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.metadata; bundle-version="7.21.0.202502052220"; singleton:="true"
+              org.mule.tooling.metadata [436]
+                Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+                  -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+                Unresolved requirement: Require-Bundle: org.mule.tooling.ui; bundle-version="[7.21.0,7.22.0)"
+                  -> Bundle-SymbolicName: org.mule.tooling.ui; bundle-version="7.21.0.202502052220"; singleton:="true"
+  Unresolved requirement: Require-Bundle: org.mule.tooling.properties; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.properties; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.properties [442]
+         Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.client; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.client; bundle-version="7.21.0.202502052220"; singleton:="true"
+              org.mule.tooling.client [414]
+                Unresolved requirement: Require-Bundle: org.mule.tooling.core
+                  -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+                Unresolved requirement: Import-Package: org.mule.tooling.runtime.controller
+                  -> Export-Package: org.mule.tooling.runtime.controller; bundle-symbolic-name="org.mule.tooling.runtime"; bundle-version="7.21.0.202502052220"; version="0.0.0"
+                     org.mule.tooling.runtime [443]
+                       Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching
+                         -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+                Unresolved requirement: Require-Bundle: org.mule.tooling.runtime
+                  -> Bundle-SymbolicName: org.mule.tooling.runtime; bundle-version="7.21.0.202502052220"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.metadata; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.metadata; bundle-version="7.21.0.202502052220"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.messageflow; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.messageflow; bundle-version="7.21.0.202502052220"; singleton:="true"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2073)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:143)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2064)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2004)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1967)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1883)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
+
+!ENTRY org.mule.tooling.ui.flatfile.contribution 4 0 2025-07-02 12:44:15.257
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.mule.tooling.ui.flatfile.contribution [454]
+  Unresolved requirement: Require-Bundle: org.mule.tooling.ui; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.ui; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.ui [450]
+         Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+              org.mule.tooling.core [417]
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching
+                  -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+                     org.eclipse.jdt.launching [254]
+                       Unresolved requirement: Require-Bundle: org.eclipse.jdt.debug; bundle-version="[3.21.0,4.0.0)"
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.ui
+                  -> Bundle-SymbolicName: org.eclipse.jdt.ui; bundle-version="3.32.0.v20240215-0312"; singleton:="true"
+                     org.eclipse.jdt.ui [255]
+                       Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching; bundle-version="[3.19.400,4.0.0)"
+                         -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.ui
+           -> Bundle-SymbolicName: org.eclipse.jdt.ui; bundle-version="3.32.0.v20240215-0312"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.ui.widgets; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.ui.widgets; bundle-version="7.21.0.202502052220"; singleton:="true"
+              org.mule.tooling.ui.widgets [460]
+                Unresolved requirement: Require-Bundle: org.mule.tooling.browser
+  Unresolved requirement: Require-Bundle: org.mule.tooling.ui.modules.core; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.ui.modules.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.ui.modules.core [455]
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.ui
+           -> Bundle-SymbolicName: org.eclipse.jdt.ui; bundle-version="3.32.0.v20240215-0312"; singleton:="true"
+  Unresolved requirement: Require-Bundle: org.mule.tooling.ui.widgets; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.ui.widgets; bundle-version="7.21.0.202502052220"; singleton:="true"
+  Unresolved requirement: Require-Bundle: org.mule.tooling.metadata; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.metadata; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.metadata [436]
+         Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.ui; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.ui; bundle-version="7.21.0.202502052220"; singleton:="true"
+  Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2073)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:143)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2064)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2004)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1967)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1883)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
+
+!ENTRY org.mule.tooling.ui.modules.core 4 0 2025-07-02 12:44:15.257
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.mule.tooling.ui.modules.core [455]
+  Unresolved requirement: Require-Bundle: org.mule.tooling.ui; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.ui; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.ui [450]
+         Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+              org.mule.tooling.core [417]
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching
+                  -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+                     org.eclipse.jdt.launching [254]
+                       Unresolved requirement: Require-Bundle: org.eclipse.jdt.debug; bundle-version="[3.21.0,4.0.0)"
+  Unresolved requirement: Require-Bundle: org.mule.tooling.ui.widgets; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.ui.widgets; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.ui.widgets [460]
+         Unresolved requirement: Require-Bundle: org.mule.tooling.browser
+  Unresolved requirement: Require-Bundle: org.mule.tooling.messageflow; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.messageflow; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.messageflow [434]
+         Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+  Unresolved requirement: Require-Bundle: org.eclipse.jdt.ui
+    -> Bundle-SymbolicName: org.eclipse.jdt.ui; bundle-version="3.32.0.v20240215-0312"; singleton:="true"
+       org.eclipse.jdt.ui [255]
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.core.manipulation; bundle-version="[1.15.200,2.0.0)"
+           -> Bundle-SymbolicName: org.eclipse.jdt.core.manipulation; bundle-version="1.21.0.v20240221-0406"; singleton:="true"
+              org.eclipse.jdt.core.manipulation [246]
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching; bundle-version="3.19.400"
+                  -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching; bundle-version="[3.19.400,4.0.0)"
+           -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+  Unresolved requirement: Require-Bundle: org.mule.tooling.ui.palette; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.ui.palette; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.ui.palette [457]
+         Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+  Unresolved requirement: Require-Bundle: org.mule.tooling.metadata; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.metadata; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.metadata [436]
+         Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+  Unresolved requirement: Require-Bundle: org.mule.tooling.client
+    -> Bundle-SymbolicName: org.mule.tooling.client; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.client [414]
+         Unresolved requirement: Require-Bundle: org.mule.tooling.core
+           -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+         Unresolved requirement: Import-Package: org.mule.tooling.runtime.controller
+           -> Export-Package: org.mule.tooling.runtime.controller; bundle-symbolic-name="org.mule.tooling.runtime"; bundle-version="7.21.0.202502052220"; version="0.0.0"
+              org.mule.tooling.runtime [443]
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching
+                  -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+  Unresolved requirement: Require-Bundle: org.mule.tooling.utils.epl; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.utils.epl; bundle-version="7.21.0.202502052220"
+       org.mule.tooling.utils.epl [463]
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.ui
+           -> Bundle-SymbolicName: org.eclipse.jdt.ui; bundle-version="3.32.0.v20240215-0312"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+  Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+  Unresolved requirement: Require-Bundle: org.mule.tooling.runtime
+    -> Bundle-SymbolicName: org.mule.tooling.runtime; bundle-version="7.21.0.202502052220"; singleton:="true"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2073)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:143)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2064)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2004)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1967)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1883)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
+
+!ENTRY org.mule.tooling.ui.modules.http 4 0 2025-07-02 12:44:15.263
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.mule.tooling.ui.modules.http [456]
+  Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.core [417]
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching
+           -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+              org.eclipse.jdt.launching [254]
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.debug; bundle-version="[3.21.0,4.0.0)"
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.ui
+           -> Bundle-SymbolicName: org.eclipse.jdt.ui; bundle-version="3.32.0.v20240215-0312"; singleton:="true"
+              org.eclipse.jdt.ui [255]
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching; bundle-version="[3.19.400,4.0.0)"
+                  -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+  Unresolved requirement: Require-Bundle: org.mule.tooling.ui; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.ui; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.ui [450]
+         Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.ui
+           -> Bundle-SymbolicName: org.eclipse.jdt.ui; bundle-version="3.32.0.v20240215-0312"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.ui.widgets; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.ui.widgets; bundle-version="7.21.0.202502052220"; singleton:="true"
+              org.mule.tooling.ui.widgets [460]
+                Unresolved requirement: Require-Bundle: org.mule.tooling.browser
+  Unresolved requirement: Require-Bundle: org.mule.tooling.messageflow; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.messageflow; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.messageflow [434]
+         Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.ui; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.ui; bundle-version="7.21.0.202502052220"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.ui.widgets; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.ui.widgets; bundle-version="7.21.0.202502052220"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.metadata; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.metadata; bundle-version="7.21.0.202502052220"; singleton:="true"
+              org.mule.tooling.metadata [436]
+                Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+                  -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+                Unresolved requirement: Require-Bundle: org.mule.tooling.ui; bundle-version="[7.21.0,7.22.0)"
+                  -> Bundle-SymbolicName: org.mule.tooling.ui; bundle-version="7.21.0.202502052220"; singleton:="true"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2073)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:143)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2064)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2004)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1967)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1883)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
+
+!ENTRY org.mule.tooling.ui.palette 4 0 2025-07-02 12:44:15.266
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.mule.tooling.ui.palette [457]
+  Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.core [417]
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching
+           -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+              org.eclipse.jdt.launching [254]
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.debug; bundle-version="[3.21.0,4.0.0)"
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.ui
+           -> Bundle-SymbolicName: org.eclipse.jdt.ui; bundle-version="3.32.0.v20240215-0312"; singleton:="true"
+              org.eclipse.jdt.ui [255]
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching; bundle-version="[3.19.400,4.0.0)"
+                  -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+  Unresolved requirement: Require-Bundle: org.mule.tooling.ui; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.ui; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.ui [450]
+         Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.ui.widgets; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.ui.widgets; bundle-version="7.21.0.202502052220"; singleton:="true"
+              org.mule.tooling.ui.widgets [460]
+                Unresolved requirement: Require-Bundle: org.mule.tooling.browser
+  Unresolved requirement: Require-Bundle: org.mule.tooling.ui.widgets; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.ui.widgets; bundle-version="7.21.0.202502052220"; singleton:="true"
+  Unresolved requirement: Require-Bundle: org.mule.tooling.templatesrepo; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.templatesrepo; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.templatesrepo [448]
+         Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.ui.widgets; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.ui.widgets; bundle-version="7.21.0.202502052220"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.ui; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.ui; bundle-version="7.21.0.202502052220"; singleton:="true"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2073)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:143)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2064)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2004)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1967)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1883)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
+
+!ENTRY org.mule.tooling.ui.theme.dark 4 0 2025-07-02 12:44:15.268
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.mule.tooling.ui.theme.dark [458]
+  Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.core [417]
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching
+           -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+              org.eclipse.jdt.launching [254]
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.debug; bundle-version="[3.21.0,4.0.0)"
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.ui
+           -> Bundle-SymbolicName: org.eclipse.jdt.ui; bundle-version="3.32.0.v20240215-0312"; singleton:="true"
+              org.eclipse.jdt.ui [255]
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching; bundle-version="[3.19.400,4.0.0)"
+                  -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2073)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:143)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2064)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2004)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1967)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1883)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
+
+!ENTRY org.mule.tooling.ui.theme.light 4 0 2025-07-02 12:44:15.271
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.mule.tooling.ui.theme.light [459]
+  Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.core [417]
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching
+           -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+              org.eclipse.jdt.launching [254]
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.debug; bundle-version="[3.21.0,4.0.0)"
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.ui
+           -> Bundle-SymbolicName: org.eclipse.jdt.ui; bundle-version="3.32.0.v20240215-0312"; singleton:="true"
+              org.eclipse.jdt.ui [255]
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching; bundle-version="[3.19.400,4.0.0)"
+                  -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2073)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:143)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2064)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2004)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1967)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1883)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
+
+!ENTRY org.mule.tooling.ui.widgets 4 0 2025-07-02 12:44:15.273
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.mule.tooling.ui.widgets [460]
+  Unresolved requirement: Require-Bundle: org.mule.tooling.browser
+
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2073)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:143)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2064)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2004)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1967)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1883)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
+
+!ENTRY org.mule.tooling.update 4 0 2025-07-02 12:44:15.276
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.mule.tooling.update [461]
+  Unresolved requirement: Require-Bundle: org.mule.tooling.ui; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.ui; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.ui [450]
+         Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+              org.mule.tooling.core [417]
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching
+                  -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+                     org.eclipse.jdt.launching [254]
+                       Unresolved requirement: Require-Bundle: org.eclipse.jdt.debug; bundle-version="[3.21.0,4.0.0)"
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.ui
+                  -> Bundle-SymbolicName: org.eclipse.jdt.ui; bundle-version="3.32.0.v20240215-0312"; singleton:="true"
+                     org.eclipse.jdt.ui [255]
+                       Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching; bundle-version="[3.19.400,4.0.0)"
+                         -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.ui
+           -> Bundle-SymbolicName: org.eclipse.jdt.ui; bundle-version="3.32.0.v20240215-0312"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.ui.widgets; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.ui.widgets; bundle-version="7.21.0.202502052220"; singleton:="true"
+              org.mule.tooling.ui.widgets [460]
+                Unresolved requirement: Require-Bundle: org.mule.tooling.browser
+  Unresolved requirement: Require-Bundle: org.mule.tooling.ui.widgets; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.ui.widgets; bundle-version="7.21.0.202502052220"; singleton:="true"
+  Unresolved requirement: Import-Package: org.mule.tooling.core.m2
+    -> Export-Package: org.mule.tooling.core.m2; bundle-symbolic-name="org.mule.tooling.core"; bundle-version="7.21.0.202502052220"; version="0.0.0"
+  Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2073)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:143)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2064)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2004)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1967)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1883)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
+
+!ENTRY org.mule.tooling.weave.engine 4 0 2025-07-02 12:44:15.280
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.mule.tooling.weave.engine [464]
+  Unresolved requirement: Require-Bundle: org.mule.tooling.dfl; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.dfl; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.dfl [420]
+         Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+              org.mule.tooling.core [417]
+                Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching
+                  -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+                     org.eclipse.jdt.launching [254]
+                       Unresolved requirement: Require-Bundle: org.eclipse.jdt.debug; bundle-version="[3.21.0,4.0.0)"
+  Unresolved requirement: Require-Bundle: org.mule.tooling.runtime; bundle-version="[7.21.0,7.22.0)"
+    -> Bundle-SymbolicName: org.mule.tooling.runtime; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.runtime [443]
+         Unresolved requirement: Require-Bundle: org.mule.tooling.ui.widgets; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.ui.widgets; bundle-version="7.21.0.202502052220"; singleton:="true"
+              org.mule.tooling.ui.widgets [460]
+                Unresolved requirement: Require-Bundle: org.mule.tooling.browser
+         Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.ui; bundle-version="[7.21.0,7.22.0)"
+           -> Bundle-SymbolicName: org.mule.tooling.ui; bundle-version="7.21.0.202502052220"; singleton:="true"
+              org.mule.tooling.ui [450]
+                Unresolved requirement: Require-Bundle: org.mule.tooling.core; bundle-version="[7.21.0,7.22.0)"
+                  -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.eclipse.jdt.launching
+           -> Bundle-SymbolicName: org.eclipse.jdt.launching; bundle-version="3.21.100.v20240214-1729"; singleton:="true"
+         Unresolved requirement: Require-Bundle: org.mule.tooling.maven
+           -> Bundle-SymbolicName: org.mule.tooling.maven; bundle-version="7.21.0.202502052220"; singleton:="true"
+              org.mule.tooling.maven [429]
+                Unresolved requirement: Import-Package: org.apache.maven.model; provider="anypoint"
+                  -> Export-Package: org.apache.maven.model; bundle-symbolic-name="org.mule.tooling.core"; bundle-version="7.21.0.202502052220"; provider="anypoint"; version="0.0.0"; x-friends:="org.mule.tooling.core.test"; mandatory:="provider"
+  Unresolved requirement: Require-Bundle: org.mule.tooling.core
+    -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+  Unresolved requirement: Require-Bundle: org.mule.tooling.client
+    -> Bundle-SymbolicName: org.mule.tooling.client; bundle-version="7.21.0.202502052220"; singleton:="true"
+       org.mule.tooling.client [414]
+         Unresolved requirement: Require-Bundle: org.mule.tooling.core
+           -> Bundle-SymbolicName: org.mule.tooling.core; bundle-version="7.21.0.202502052220"; singleton:="true"
+         Unresolved requirement: Import-Package: org.mule.tooling.runtime.controller
+           -> Export-Package: org.mule.tooling.runtime.controller; bundle-symbolic-name="org.mule.tooling.runtime"; bundle-version="7.21.0.202502052220"; version="0.0.0"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2073)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:143)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2064)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2004)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1967)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1883)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)
