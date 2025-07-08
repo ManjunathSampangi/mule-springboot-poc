@@ -643,7 +643,7 @@ public class ${entityName}Service {
     
     // Convert camelCase to snake_case
     private String camelToSnake(String camelCase) {
-        return camelCase.replaceAll("([a-z])([A-Z]+)", "`$1_`$2").toLowerCase();
+        return camelCase.replaceAll("([a-z])([A-Z])", "`$1_`$2").toLowerCase();
     }
 "@
     
@@ -792,13 +792,72 @@ $setParams                return ps;
     }
 "@
                 } else {
-                    # Generate generic create
+                    # Generate working create method based on schema
                     $serviceClass += @"
     
     // Create new $entityName
     public $entityName create$entityName($entityName entity) {
-        // TODO: Implement based on your schema
-        throw new UnsupportedOperationException("Create operation not implemented in Mule flows");
+        logger.debug("Creating new ${entityName}: {}", entity);
+        
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        
+        // Generate INSERT query dynamically based on entity fields
+        java.lang.reflect.Field[] fields = entity.getClass().getDeclaredFields();
+        java.util.List<String> columnNames = new java.util.ArrayList<>();
+        java.util.List<String> placeholders = new java.util.ArrayList<>();
+        java.util.List<Object> parameters = new java.util.ArrayList<>();
+        
+        for (java.lang.reflect.Field field : fields) {
+            if ("id".equals(field.getName()) || "serialVersionUID".equals(field.getName())) {
+                continue; // Skip ID and serialVersionUID
+            }
+            
+            field.setAccessible(true);
+            String columnName = camelToSnake(field.getName());
+            columnNames.add(columnName);
+            placeholders.add("?");
+            
+            try {
+                Object value = field.get(entity);
+                parameters.add(value);
+                logger.debug("Field: {} -> Column: {} = {}", field.getName(), columnName, value);
+            } catch (IllegalAccessException e) {
+                logger.warn("Could not access field: {}", field.getName());
+                parameters.add(null);
+            }
+        }
+        
+        String sql = "INSERT INTO $tableName (" + String.join(", ", columnNames) + ") VALUES (" + String.join(", ", placeholders) + ")";
+        logger.debug("Generated SQL: {}", sql);
+        logger.debug("Parameters: {}", parameters);
+        
+        try {
+            int result = jdbcTemplate.update(connection -> {
+                PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                for (int i = 0; i < parameters.size(); i++) {
+                    ps.setObject(i + 1, parameters.get(i));
+                }
+                return ps;
+            }, keyHolder);
+            
+            logger.debug("Insert result: {}", result);
+            
+            // Set the generated ID
+            if (keyHolder.getKey() != null) {
+                Long generatedId = keyHolder.getKey().longValue();
+                entity.setId(generatedId);
+                logger.debug("Generated ID: {}", generatedId);
+            } else {
+                logger.warn("No generated key returned");
+            }
+            
+            logger.debug("Successfully created ${entityName} with ID: {}", entity.getId());
+            return entity;
+            
+        } catch (Exception e) {
+            logger.error("Error creating ${entityName}: {}", e.getMessage(), e);
+            throw new RuntimeException("Error creating ${entityName}: " + e.getMessage(), e);
+        }
     }
 "@
                 }
