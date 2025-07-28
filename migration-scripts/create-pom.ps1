@@ -14,6 +14,13 @@ if (-not $outputPath) {
 $groupId = if ($packageName -match '^([^.]+\.[^.]+)') { $matches[1] } else { "com.example" }
 $artifactId = if ($packageName -match '([^.]+)$') { $matches[1] + "-api" } else { "api" }
 
+# Extract application class name (same logic as create-main-application.ps1)
+$appName = if ($packageName -match '([^.]+)$') { 
+    $matches[1].Substring(0,1).ToUpper() + $matches[1].Substring(1) + "Application" 
+} else { 
+    "ApiApplication" 
+}
+
 # Create pom.xml
 $pomXml = @"
 <?xml version="1.0" encoding="UTF-8"?>
@@ -37,7 +44,43 @@ $pomXml = @"
     
     <properties>
         <java.version>$JavaVersion</java.version>
+        <maven.compiler.source>$JavaVersion</maven.compiler.source>
+        <maven.compiler.target>$JavaVersion</maven.compiler.target>
+        <spring-boot.version>2.7.8</spring-boot.version>
     </properties>
+    
+    <repositories>
+        <repository>
+            <id>central</id>
+            <name>Maven Central Repository</name>
+            <url>https://repo.maven.apache.org/maven2</url>
+        </repository>
+    </repositories>
+    
+    <pluginRepositories>
+        <pluginRepository>
+            <id>central</id>
+            <name>Maven Central Repository</name>
+            <url>https://repo.maven.apache.org/maven2</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>spring-releases</id>
+            <name>Spring Releases</name>
+            <url>https://repo.spring.io/release</url>
+        </pluginRepository>
+    </pluginRepositories>
+    
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>`${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
     
     <dependencies>
         <dependency>

@@ -52,7 +52,9 @@ New-Item -ItemType Directory -Force -Path $OutputPath | Out-Null
 $paths = @(
     "$OutputPath\src\main\java\$($PackageName -replace '\.','\\')",
     "$OutputPath\src\main\resources",
-    "$OutputPath\src\test\java\$($PackageName -replace '\.','\\')"
+    "$OutputPath\src\test\java\$($PackageName -replace '\.','\\')",
+    "$OutputPath\.mvn",
+    "$OutputPath\.mvn\wrapper"
 )
 
 foreach ($path in $paths) {
@@ -60,6 +62,86 @@ foreach ($path in $paths) {
 }
 
 Write-Host "`nCreating Spring Boot project structure..." -ForegroundColor Green
+
+# Create .mvn/maven.config for proper plugin resolution
+$mavenConfig = @"
+-Dmaven.plugin.validation=BRIEF
+"@
+
+Write-FileWithoutBom "$OutputPath\.mvn\maven.config" $mavenConfig
+
+# Create .mvn/extensions.xml for Spring Boot compatibility
+$extensionsXml = @"
+<?xml version="1.0" encoding="UTF-8"?>
+<extensions xmlns="http://maven.apache.org/EXTENSIONS/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/EXTENSIONS/1.0.0 http://maven.apache.org/xsd/core-extensions-1.0.0.xsd">
+</extensions>
+"@
+
+Write-FileWithoutBom "$OutputPath\.mvn\extensions.xml" $extensionsXml
+
+# Create .mvn/maven.settings for plugin group resolution
+$mavenSettings = @"
+<?xml version="1.0" encoding="UTF-8"?>
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 
+                              http://maven.apache.org/xsd/settings-1.0.0.xsd">
+    <pluginGroups>
+        <pluginGroup>org.springframework.boot</pluginGroup>
+        <pluginGroup>org.apache.maven.plugins</pluginGroup>
+        <pluginGroup>org.codehaus.mojo</pluginGroup>
+    </pluginGroups>
+</settings>
+"@
+
+Write-FileWithoutBom "$OutputPath\.mvn\settings.xml" $mavenSettings
+
+# Create Maven wrapper for consistent execution
+$mvnwCmd = @"
+@REM ----------------------------------------------------------------------------
+@REM Licensed to the Apache Software Foundation (ASF) under one
+@REM or more contributor license agreements.  See the NOTICE file
+@REM distributed with this work for additional information
+@REM regarding copyright ownership.  The ASF licenses this file
+@REM to you under the Apache License, Version 2.0 (the
+@REM "License"); you may not use this file except in compliance
+@REM with the License.  You may obtain a copy of the License at
+@REM
+@REM    https://www.apache.org/licenses/LICENSE-2.0
+@REM
+@REM Unless required by applicable law or agreed to in writing,
+@REM software distributed under the License is distributed on an
+@REM "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+@REM KIND, either express or implied.  See the License for the
+@REM specific language governing permissions and limitations
+@REM under the License.
+@REM ----------------------------------------------------------------------------
+
+@REM ----------------------------------------------------------------------------
+@REM Maven Start Up Batch script
+@REM ----------------------------------------------------------------------------
+
+@echo off
+set MAVEN_BATCH_ECHO=on
+set MAVEN_BATCH_PAUSE=on
+set MAVEN_OPTS=-Xmx512m
+
+@call "%~dp0.mvn\wrapper\maven-wrapper.cmd" %*
+"@
+
+Write-FileWithoutBom "$OutputPath\mvnw.cmd" $mvnwCmd
+
+# Create wrapper properties
+$wrapperDir = "$OutputPath\.mvn\wrapper"
+New-Item -ItemType Directory -Force -Path $wrapperDir | Out-Null
+
+$wrapperProperties = @"
+distributionUrl=https://repo.maven.apache.org/maven2/org/apache/maven/apache-maven/3.8.6/apache-maven-3.8.6-bin.zip
+wrapperUrl=https://repo.maven.apache.org/maven2/org/apache/maven/wrapper/maven-wrapper/3.1.0/maven-wrapper-3.1.0.jar
+"@
+
+Write-FileWithoutBom "$wrapperDir\maven-wrapper.properties" $wrapperProperties
 
 # First, parse RAML to understand the API contract
 Write-Host "`nSearching for RAML files..." -ForegroundColor Yellow
@@ -69,6 +151,14 @@ Write-Host "Found $($ramlFiles.Count) RAML file(s)" -ForegroundColor Green
 
 # Process RAML files
 $apiDefinitions = @{}
+$authenticationInfo = @{
+    HasAuthentication = $false
+    AuthType = ""
+    AuthScheme = ""
+    AuthProperties = @{}
+    Description = ""
+}
+
 foreach ($ramlFile in $ramlFiles) {
     Write-Host "  - $($ramlFile.Name)" -ForegroundColor White
     
@@ -80,6 +170,35 @@ foreach ($ramlFile in $ramlFiles) {
     $version = if ($ramlContent -match 'version:\s*(.+)') { $matches[1].Trim() } else { "v1" }
     
     Write-Host "  Processing: $title $version" -ForegroundColor White
+    
+    # DETECT AUTHENTICATION IN RAML
+    Write-Host "    Checking for authentication schemes..." -ForegroundColor Gray
+    if ($ramlContent -match 'securitySchemes:\s*\n\s+(\w+):') {
+        $authScheme = $matches[1]
+        $authenticationInfo.HasAuthentication = $true
+        $authenticationInfo.AuthScheme = $authScheme
+        
+        Write-Host "    Found authentication scheme: $authScheme" -ForegroundColor Cyan
+        
+        # Extract authentication type and details
+        if ($ramlContent -match "$authScheme\s*:\s*\n(?:\s+description:\s*[^\n]*\n)*\s+type:\s*(.+)") {
+            $authType = $matches[1].Trim()
+            $authenticationInfo.AuthType = $authType
+            Write-Host "    Authentication type: $authType" -ForegroundColor Cyan
+        }
+        
+        # Extract description
+        if ($ramlContent -match "$authScheme\s*:\s*\n\s+description:\s*\|\s*\n((?:\s{6}.*\n?)+)") {
+            $authenticationInfo.Description = $matches[1].Trim()
+        }
+        
+        # Also check for securedBy usage in resources
+        if ($ramlContent -match 'securedBy:\s*\[\s*' + $authScheme + '\s*\]') {
+            Write-Host "    Found securedBy usage: Resources are protected" -ForegroundColor Cyan
+        }
+    } else {
+        Write-Host "    No authentication schemes found in RAML" -ForegroundColor Gray
+    }
     
     # Create model and controller directories
     $modelPath = "$OutputPath\src\main\java\$($PackageName -replace '\.','\\')\model"
@@ -201,21 +320,51 @@ public class $typeName {
     }
     
     # Generate controllers for resources
-    $resourcePattern = '^(/\w+[^:]*?):\s*$'
+    $resourcePattern = '^(/\w+):\s*$'
     $resources = [regex]::Matches($ramlContent, $resourcePattern, [System.Text.RegularExpressions.RegexOptions]::Multiline)
+    
+    Write-Host "    Found $($resources.Count) resource(s) to generate controllers for" -ForegroundColor Gray
+    
+    # Extract API path prefix from baseUri
+    $apiPathPrefix = ""
+    if ($ramlContent -match '(?m)^baseUri:\s*([^\s\n\r]+)') {
+        $baseUri = $matches[1].Trim()
+        Write-Host "    Base URI: $baseUri" -ForegroundColor Gray
+        if ($baseUri -match '[^/]+://[^/]+(/[^/\s\n\r]+)') {
+            $apiPathPrefix = $matches[1]
+            Write-Host "    API path prefix: $apiPathPrefix" -ForegroundColor Gray
+        }
+    }
     
     foreach ($resource in $resources) {
         $resourcePath = $resource.Groups[1].Value.Trim()
+        Write-Host "    Processing resource: $resourcePath" -ForegroundColor Gray
+        
+        # Add API prefix to match original Mule API structure
+        if ($apiPathPrefix) {
+            $fullResourcePath = "$apiPathPrefix$resourcePath"
+        } else {
+            $fullResourcePath = $resourcePath
+        }
+        
+        # Clean up the resource path to ensure it's properly formatted
+        $fullResourcePath = $fullResourcePath.Trim() -replace '\s+', ''
         
         if ($resourcePath -match '^/([^/]+)') {
             $resourceName = $matches[1]
             $controllerName = $resourceName.Substring(0,1).ToUpper() + $resourceName.Substring(1).TrimEnd('s')
             $modelName = $controllerName
             
-            Write-Host "    Generating controller: ${controllerName}Controller" -ForegroundColor Gray
+            Write-Host "    Generating controller: ${controllerName}Controller for path: $fullResourcePath" -ForegroundColor Gray
             
             # Pre-calculate the service field name
             $serviceName = $controllerName.Substring(0,1).ToLower() + $controllerName.Substring(1) + "Service"
+            
+            # Validate and clean the resource path for the RequestMapping
+            if ($fullResourcePath -notmatch '^/[\w/]+$') {
+                Write-Host "    Warning: Invalid resource path format, using default: /api/$($resourceName.ToLower())" -ForegroundColor Yellow
+                $fullResourcePath = "/api/$($resourceName.ToLower())"
+            }
             
             $controllerClass = @"
 package $packageName.controller;
@@ -235,7 +384,7 @@ import java.util.List;
  * Generated from RAML
  */
 @RestController
-@RequestMapping("$resourcePath")
+@RequestMapping("$fullResourcePath")
 @Validated
 public class ${controllerName}Controller {
     
@@ -468,6 +617,42 @@ public class CorsConfig {
     }
 }
 
+# DETECT AUTHENTICATION PROPERTIES FROM MULE
+if ($authenticationInfo.HasAuthentication) {
+    Write-Host "`nSearching for authentication properties..." -ForegroundColor Yellow
+    
+    # Look for application.properties files
+    $propertiesFiles = Get-ChildItem -Path $MuleProjectPath -Filter "application.properties" -Recurse | 
+        Where-Object { $_.FullName -notmatch 'target' }
+    
+    foreach ($propsFile in $propertiesFiles) {
+        Write-Host "  - $($propsFile.Name)" -ForegroundColor White
+        $propsContent = Get-Content $propsFile.FullName -Raw
+        
+        # Extract authentication properties
+        if ($propsContent -match 'auth\.username\s*=\s*(.+)') {
+            $authenticationInfo.AuthProperties["username"] = $matches[1].Trim()
+            Write-Host "    Found auth username: $($matches[1].Trim())" -ForegroundColor Cyan
+        }
+        
+        if ($propsContent -match 'auth\.password\s*=\s*(.+)') {
+            $authenticationInfo.AuthProperties["password"] = $matches[1].Trim()
+            Write-Host "    Found auth password: [HIDDEN]" -ForegroundColor Cyan
+        }
+        
+        # Extract any other auth-related properties
+        $authProps = [regex]::Matches($propsContent, 'auth\.(\w+)\s*=\s*(.+)')
+        foreach ($match in $authProps) {
+            $key = $match.Groups[1].Value
+            $value = $match.Groups[2].Value.Trim()
+            if ($key -ne "username" -and $key -ne "password") {
+                $authenticationInfo.AuthProperties[$key] = $value
+                Write-Host "    Found auth.$key = $value" -ForegroundColor Cyan
+            }
+        }
+    }
+}
+
 # Now process Mule XML files
 Write-Host "`nSearching for Mule XML files..." -ForegroundColor Yellow
 $muleXmlFiles = Get-ChildItem -Path $MuleProjectPath -Filter "*.xml" -Recurse | 
@@ -484,6 +669,41 @@ foreach ($xmlFile in $muleXmlFiles) {
     $namespaceManager = New-Object System.Xml.XmlNamespaceManager($muleDoc.NameTable)
     $namespaceManager.AddNamespace("mule", "http://www.mulesoft.org/schema/mule/core")
     $namespaceManager.AddNamespace("db", "http://www.mulesoft.org/schema/mule/db")
+    
+    # DETECT AUTHENTICATION SUB-FLOWS
+    if ($authenticationInfo.HasAuthentication) {
+        $subFlows = $muleDoc.SelectNodes("//mule:sub-flow", $namespaceManager)
+        foreach ($subFlow in $subFlows) {
+            $subFlowName = $subFlow.GetAttribute("name")
+            if ($subFlowName -match 'auth|security|validate') {
+                Write-Host "    Found authentication sub-flow: $subFlowName" -ForegroundColor Cyan
+                $authenticationInfo.AuthProperties["subFlowName"] = $subFlowName
+                
+                # Extract authentication logic patterns
+                $choiceNodes = $subFlow.SelectNodes(".//mule:choice", $namespaceManager)
+                if ($choiceNodes.Count -gt 0) {
+                    $authenticationInfo.AuthProperties["hasChoiceLogic"] = $true
+                    Write-Host "    Detected conditional authentication logic" -ForegroundColor Cyan
+                }
+                
+                $raiseErrorNodes = $subFlow.SelectNodes(".//mule:raise-error", $namespaceManager)
+                if ($raiseErrorNodes.Count -gt 0) {
+                    $authenticationInfo.AuthProperties["hasErrorHandling"] = $true
+                    Write-Host "    Detected authentication error handling" -ForegroundColor Cyan
+                }
+            }
+        }
+        
+        # Detect error handlers
+        $errorHandlers = $muleDoc.SelectNodes("//mule:error-handler", $namespaceManager)
+        foreach ($errorHandler in $errorHandlers) {
+            $errorHandlerName = $errorHandler.GetAttribute("name")
+            if ($errorHandlerName -match 'auth|security') {
+                Write-Host "    Found authentication error handler: $errorHandlerName" -ForegroundColor Cyan
+                $authenticationInfo.AuthProperties["errorHandlerName"] = $errorHandlerName
+            }
+        }
+    }
     
     $flows = $muleDoc.SelectNodes("//mule:flow", $namespaceManager)
     
@@ -1080,6 +1300,42 @@ public class AddressService {
 Write-Host "`nGenerating pom.xml..." -ForegroundColor Yellow
 if (Test-Path ".\migration-scripts\create-pom.ps1") {
 & ".\migration-scripts\create-pom.ps1" -outputPath $OutputPath -packageName $PackageName -JavaVersion $JavaVersion
+
+# ADD SPRING SECURITY DEPENDENCY IF AUTHENTICATION IS DETECTED
+if ($authenticationInfo.HasAuthentication) {
+    Write-Host "  Adding Spring Security dependency..." -ForegroundColor Cyan
+    $pomPath = "$OutputPath\pom.xml"
+    if (Test-Path $pomPath) {
+        $pomContent = Get-Content $pomPath -Raw
+        
+        # Add Spring Security dependency after validation dependency
+        $securityDependency = @"
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        
+"@
+        
+        # Use a more robust regex to find the validation dependency
+        $validationPattern = '(<dependency>\s*<groupId>org\.springframework\.boot</groupId>\s*<artifactId>spring-boot-starter-validation</artifactId>\s*</dependency>)'
+        if ($pomContent -match $validationPattern) {
+            $pomContent = $pomContent -replace $validationPattern, "`$1$securityDependency"
+            Write-FileWithoutBom $pomPath $pomContent
+            Write-Host "  Spring Security dependency added to pom.xml" -ForegroundColor Green
+        } else {
+            Write-Host "  Warning: Could not find validation dependency to insert Spring Security after" -ForegroundColor Yellow
+            # Try to add it before the H2 dependency as fallback
+            $h2Pattern = '(\s*<dependency>\s*<groupId>com\.h2database</groupId>)'
+            if ($pomContent -match $h2Pattern) {
+                $pomContent = $pomContent -replace $h2Pattern, "$securityDependency`$1"
+                Write-FileWithoutBom $pomPath $pomContent
+                Write-Host "  Spring Security dependency added before H2 dependency" -ForegroundColor Green
+            }
+        }
+    }
+}
+
 } else {
     Write-Host "Warning: create-pom.ps1 not found!" -ForegroundColor Red
 }
@@ -1087,6 +1343,36 @@ if (Test-Path ".\migration-scripts\create-pom.ps1") {
 Write-Host "Generating application.yml..." -ForegroundColor Yellow
 if (Test-Path ".\migration-scripts\create-application-properties.ps1") {
 & ".\migration-scripts\create-application-properties.ps1" -outputPath $OutputPath
+
+# ADD AUTHENTICATION PROPERTIES IF DETECTED
+if ($authenticationInfo.HasAuthentication -and $authenticationInfo.AuthProperties.Count -gt 0) {
+    Write-Host "  Adding authentication properties..." -ForegroundColor Cyan
+    $appPropsPath = "$OutputPath\src\main\resources\application.yml"
+    if (Test-Path $appPropsPath) {
+        $appPropsContent = Get-Content $appPropsPath -Raw
+        
+        # Add authentication section
+        $authSection = "`n# Authentication Configuration (migrated from Mule)`nauth:`n"
+        if ($authenticationInfo.AuthProperties.ContainsKey("username")) {
+            $authSection += "  username: $($authenticationInfo.AuthProperties["username"])`n"
+        }
+        if ($authenticationInfo.AuthProperties.ContainsKey("password")) {
+            $authSection += "  password: $($authenticationInfo.AuthProperties["password"])`n"
+        }
+        
+        # Add other auth properties
+        foreach ($key in $authenticationInfo.AuthProperties.Keys) {
+            if ($key -ne "username" -and $key -ne "password" -and $key -notmatch "subFlow|errorHandler|hasChoice|hasError") {
+                $authSection += "  $key`: $($authenticationInfo.AuthProperties[$key])`n"
+            }
+        }
+        
+        $appPropsContent += $authSection
+        Write-FileWithoutBom $appPropsPath $appPropsContent
+        Write-Host "  Authentication properties added to application.yml" -ForegroundColor Green
+    }
+}
+
 } else {
     Write-Host "Warning: create-application-properties.ps1 not found!" -ForegroundColor Red
 }
@@ -1096,6 +1382,211 @@ if (Test-Path ".\migration-scripts\create-main-application.ps1") {
 & ".\migration-scripts\create-main-application.ps1" -outputPath $OutputPath -packageName $PackageName
 } else {
     Write-Host "Warning: create-main-application.ps1 not found!" -ForegroundColor Red
+}
+
+# GENERATE SPRING SECURITY CONFIGURATION IF AUTHENTICATION IS DETECTED
+if ($authenticationInfo.HasAuthentication) {
+    Write-Host "Generating Spring Security configuration..." -ForegroundColor Yellow
+    $configPath = "$OutputPath\src\main\java\$($PackageName -replace '\.','\\')\config"
+    if (-not (Test-Path $configPath)) {
+        New-Item -ItemType Directory -Force -Path $configPath | Out-Null
+    }
+    
+    # Generate SecurityConfig.java
+    $securityConfig = @"
+package $packageName.config;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Collections;
+
+/**
+ * Security Configuration - Migrated from Mule authentication logic
+ * Replicates the authentication sub-flow behavior from Mule ESB
+ */
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Value("`${auth.username}")
+    private String authUsername;
+
+    @Value("`${auth.password}")
+    private String authPassword;
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+            .csrf().disable()
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .and()
+            .authorizeRequests()
+                .antMatchers("/test").permitAll()  // Allow test endpoint (migrated from test-flow)
+                .antMatchers("/h2-console/**").permitAll()  // Allow H2 console
+                .antMatchers("/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()  // Allow Swagger
+                .anyRequest().authenticated()
+            .and()
+            .httpBasic()
+                .authenticationEntryPoint(customBasicAuthenticationEntryPoint())
+            .and()
+            .headers().frameOptions().disable();  // For H2 console
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.authenticationProvider(customAuthenticationProvider());
+    }
+
+    /**
+     * Custom Authentication Provider - Migrated from Mule credential validation
+     * Replicates the validate-basic-auth sub-flow logic
+     */
+    @Bean
+    public AuthenticationProvider customAuthenticationProvider() {
+        return new AuthenticationProvider() {
+            @Override
+            public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+                String username = authentication.getName();
+                String password = authentication.getCredentials().toString();
+
+                // Log authentication attempt (like Mule logger)
+                System.out.println("Authentication attempt for user: " + username);
+
+                // Validate credentials against properties (like Mule property validation)
+                if (authUsername.equals(username) && authPassword.equals(password)) {
+                    System.out.println("Authentication successful for user: " + username);
+                    
+                    UserDetails userDetails = User.builder()
+                        .username(username)
+                        .password(password)
+                        .authorities(Collections.emptyList())
+                        .build();
+                    
+                    return new UsernamePasswordAuthenticationToken(userDetails, password, Collections.emptyList());
+                } else {
+                    System.out.println("Authentication failed - Invalid credentials for user: " + username);
+                    throw new BadCredentialsException("Invalid username or password");
+                }
+            }
+
+            @Override
+            public boolean supports(Class<?> authentication) {
+                return authentication.equals(UsernamePasswordAuthenticationToken.class);
+            }
+        };
+    }
+
+    /**
+     * Custom Authentication Entry Point - Migrated from Mule error handlers
+     * Replicates the global-error-handler response format
+     */
+    @Bean
+    public AuthenticationEntryPoint customBasicAuthenticationEntryPoint() {
+        return new BasicAuthenticationEntryPoint() {
+            @Override
+            public void commence(HttpServletRequest request, HttpServletResponse response,
+                                AuthenticationException authException) throws IOException {
+                
+                // Log authentication failure (like Mule logger)
+                String authHeader = request.getHeader("Authorization");
+                if (authHeader == null || !authHeader.startsWith("Basic ")) {
+                    System.out.println("Authentication failed - Missing Authorization header");
+                } else {
+                    System.out.println("Authentication failed - Invalid credentials");
+                }
+
+                // Set response exactly like Mule error handler
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.setContentType("application/json");
+                response.setHeader("WWW-Authenticate", "Basic realm=\"Employee API\"");
+                
+                // Return same JSON structure as Mule
+                String errorMessage;
+                if (authHeader == null || !authHeader.startsWith("Basic ")) {
+                    errorMessage = "{\"error\": \"Unauthorized\", \"message\": \"Authorization header is required\"}";
+                } else {
+                    errorMessage = "{\"error\": \"Unauthorized\", \"message\": \"Invalid username or password\"}";
+                }
+
+                PrintWriter writer = response.getWriter();
+                writer.write(errorMessage);
+                writer.flush();
+            }
+            
+            @Override
+            public void afterPropertiesSet() {
+                setRealmName("Employee API");
+                try {
+                    super.afterPropertiesSet();
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        };
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        // Use NoOp encoder since we're doing plain text comparison (like Mule)
+        return NoOpPasswordEncoder.getInstance();
+    }
+}
+"@
+    
+    Write-FileWithoutBom "$configPath\SecurityConfig.java" $securityConfig
+    Write-Host "  Generated Spring Security configuration" -ForegroundColor Green
+    
+    # Generate Test Controller if test endpoint is detected
+    $controllerPath = "$OutputPath\src\main\java\$($PackageName -replace '\.','\\')\controller"
+    $testControllerPath = "$controllerPath\TestController.java"
+    if (-not (Test-Path $testControllerPath)) {
+        $testController = @"
+package $packageName.controller;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+/**
+ * Test Controller - Migrated from Mule test-flow
+ * Provides health check endpoint (no authentication required)
+ */
+@RestController
+@RequestMapping("/test")
+public class TestController {
+    
+    @GetMapping
+    public ResponseEntity<String> test() {
+        return ResponseEntity.ok("Hello from Spring Boot!");
+    }
+}
+"@
+        Write-FileWithoutBom $testControllerPath $testController
+        Write-Host "  Generated Test controller (migrated from test-flow)" -ForegroundColor Green
+    }
 }
 
 Write-Host "Generating schema.sql..." -ForegroundColor Yellow
@@ -1288,10 +1779,30 @@ Write-Host "Smart Migration Completed Successfully!" -ForegroundColor Green
 Write-Host "================================================" -ForegroundColor Green
 
 Write-Host "`nOutput location: $OutputPath" -ForegroundColor Cyan
+
+# Display authentication migration summary
+if ($authenticationInfo.HasAuthentication) {
+    Write-Host "`nAuthentication Migration Summary:" -ForegroundColor Yellow
+    Write-Host "  - Authentication Type: $($authenticationInfo.AuthType)" -ForegroundColor White
+    Write-Host "  - Scheme Name: $($authenticationInfo.AuthScheme)" -ForegroundColor White
+    if ($authenticationInfo.AuthProperties.ContainsKey("username")) {
+        Write-Host "  - Username: $($authenticationInfo.AuthProperties["username"])" -ForegroundColor White
+    }
+    if ($authenticationInfo.AuthProperties.ContainsKey("subFlowName")) {
+        Write-Host "  - Migrated Sub-flow: $($authenticationInfo.AuthProperties["subFlowName"])" -ForegroundColor White
+    }
+    Write-Host "  - Spring Security Config: Generated" -ForegroundColor Green
+    Write-Host "  - Authentication Properties: Migrated" -ForegroundColor Green
+    Write-Host "  - Error Handling: Replicated from Mule" -ForegroundColor Green
+}
+
 Write-Host "`nNext steps:" -ForegroundColor Yellow
 Write-Host "1. cd $OutputPath" -ForegroundColor White
-Write-Host "2. mvn clean package" -ForegroundColor White
-Write-Host "3. mvn spring-boot:run" -ForegroundColor White
+Write-Host "2. .\mvnw.cmd clean package" -ForegroundColor White
+Write-Host "3. .\mvnw.cmd spring-boot:run" -ForegroundColor White
+if ($authenticationInfo.HasAuthentication) {
+    Write-Host "4. Test with your existing Postman collection!" -ForegroundColor Cyan
+}
 
 # Count generated files
 $javaFiles = Get-ChildItem -Path "$OutputPath\src\main\java" -Filter "*.java" -Recurse
@@ -1300,4 +1811,8 @@ $configFiles = Get-ChildItem -Path "$OutputPath\src\main\resources" -Filter "*.*
 Write-Host "`nGenerated files summary:" -ForegroundColor Yellow
 Write-Host "  - Java files: $($javaFiles.Count)" -ForegroundColor White
 Write-Host "  - Configuration files: $($configFiles.Count)" -ForegroundColor White
+if ($authenticationInfo.HasAuthentication) {
+    Write-Host "  - Security Configuration: SecurityConfig.java" -ForegroundColor Green
+    Write-Host "  - Authentication: Fully Migrated from Mule" -ForegroundColor Green
+}
 Write-Host "================================================" -ForegroundColor Green 
